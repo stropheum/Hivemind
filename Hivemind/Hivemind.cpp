@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 		for (int j = 0; j < beeCols; j++)
 		{
 			auto positionOffset = bee[i][j].getRadius() * 2 + 25;
-			bee[i][j].setPosition(sf::Vector2f(positionOffset * j, positionOffset * i));
+			bee[i][j].setPosition(sf::Vector2f(-200 + positionOffset * j, -200 + positionOffset * i));
 		}
 	}
 

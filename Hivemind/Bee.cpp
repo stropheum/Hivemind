@@ -26,7 +26,8 @@ void Bee::update(sf::RenderWindow& window)
 	auto xDif = abs(mousePosition.x - facePosition.x);
 	auto yDif = abs(mousePosition.y - facePosition.y);
 	auto distance = sqrt(xDif * xDif + yDif * yDif);
-	speed = (distance > 20) ? 10000 / (distance * 50) : 0;
+	speed = 1000 / distance;
+	if (speed > 50) speed = 50;
 	mPosition.x += cos(rotationRadians) * speed;
 	mPosition.y += sin(rotationRadians) * speed;
 
