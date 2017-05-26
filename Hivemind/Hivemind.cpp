@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
 #endif
 
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Hivemind");
+	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Default);
 
 	const int beeRows = 50;
 	const int beeCols = 50;
