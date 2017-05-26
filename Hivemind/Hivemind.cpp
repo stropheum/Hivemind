@@ -1,10 +1,14 @@
 #include "pch.h"
 #include <iostream>
 #include <windows.h>
+#include <chrono>
 #include "Bee.h"
 
 
 using namespace std;
+using namespace std::chrono;
+
+const float FRAME_INTERVAL = 1.0f / 60.0f * 1000;
 
 int main(int argc, char* argv[])
 {
@@ -17,8 +21,10 @@ int main(int argc, char* argv[])
 
 	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Default);
 
-	const int beeRows = 50;
-	const int beeCols = 50;
+	float deltaTime = 0.0f;
+	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
+	const int beeRows = 100;
+	const int beeCols = 100;
 	Bee bee[beeRows][beeCols];
 
 	for (int i = 0; i < beeRows; i++)
@@ -48,14 +54,20 @@ int main(int argc, char* argv[])
 		}
 
 		window.clear();
-		
-		for (int i = 0; i < beeRows; i++)
+
+		deltaTime += duration_cast<milliseconds>(high_resolution_clock::now() - lastFrame).count();
+
+		if (deltaTime >= FRAME_INTERVAL)
 		{
-			for (int j = 0; j < beeCols; j++)
+			for (int i = 0; i < beeRows; i++)
 			{
-				bee[i][j].update(window);
-				bee[i][j].render(window);
+				for (int j = 0; j < beeCols; j++)
+				{
+					bee[i][j].update(window);
+					bee[i][j].render(window);
+				}
 			}
+			deltaTime = 0.0f;
 		}
 
 		window.display();
@@ -63,4 +75,3 @@ int main(int argc, char* argv[])
 
     return EXIT_SUCCESS;
 }
-
