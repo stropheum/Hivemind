@@ -10,8 +10,9 @@
 #include <tchar.h>
 
 
-// TODO: reference additional headers your program requires here
-
+//////////////////////////////
+//  Program Dependencies  ///
+////////////////////////////
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
 #include <iostream>
