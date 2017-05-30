@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <chrono>
 #include "Bee.h"
+#include "BeeManager.h"
 
 
 using namespace std;
@@ -23,16 +24,16 @@ int main(int argc, char* argv[])
 
 	float deltaTime = 0.0f;
 	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
-	const int beeRows = 100;
-	const int beeCols = 100;
-	Bee bee[beeRows][beeCols];
+	const int beeRows = 25;
+	const int beeCols = 25;
+
+	BeeManager* beeManager = BeeManager::getInstance();
 
 	for (int i = 0; i < beeRows; i++)
 	{
 		for (int j = 0; j < beeCols; j++)
 		{
-			auto positionOffset = bee[i][j].getRadius() * 2 + 25;
-			bee[i][j].setPosition(sf::Vector2f(-200 + positionOffset * j, -200 + positionOffset * i));
+			beeManager->spawnBee(Bee(sf::Vector2f(200 + j * 55, 200 + i * 55)));
 		}
 	}
 
@@ -59,14 +60,16 @@ int main(int argc, char* argv[])
 
 		if (deltaTime >= FRAME_INTERVAL)
 		{
-			for (int i = 0; i < beeRows; i++)
-			{
-				for (int j = 0; j < beeCols; j++)
-				{
-					bee[i][j].update(window);
-					bee[i][j].render(window);
-				}
-			}
+//			for (int i = 0; i < beeRows; i++)
+//			{
+//				for (int j = 0; j < beeCols; j++)
+//				{
+//					bee[i][j].update(window);
+//					bee[i][j].render(window);
+//				}
+//			}
+			beeManager->update(window);
+			beeManager->render(window);
 			deltaTime = 0.0f;
 		}
 

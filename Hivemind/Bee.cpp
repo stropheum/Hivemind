@@ -1,10 +1,20 @@
 #include "pch.h"
 #include "Bee.h"
 #include <math.h>
+#include "BeeManager.h"
 
 
 Bee::Bee():
 	mBody(mBodyRadius), mFace(sf::Vector2f(mBodyRadius, 2)), mPosition(sf::Vector2f(200, 200)), speed(0.01f)
+{
+	mBody.setFillColor(sf::Color(0, 128, 128));
+	mFace.setFillColor(sf::Color::Black);
+	mBody.setPosition(mPosition);
+	mFace.setPosition(mBody.getPosition().x + mBodyRadius, mBody.getPosition().y + mBodyRadius);
+}
+
+Bee::Bee(const sf::Vector2f& position):
+	mBody(mBodyRadius), mFace(sf::Vector2f(mBodyRadius, 2)), mPosition(position), speed(0.01f)
 {
 	mBody.setFillColor(sf::Color(0, 128, 128));
 	mFace.setFillColor(sf::Color::Black);
@@ -30,8 +40,33 @@ void Bee::update(sf::RenderWindow& window)
 	//	speed = (distance < 500) ? 500 / distance : 0;
 	speed = 500 / distance;
 	if (speed > 25) speed = 25;
-	mPosition.x += cos(rotationRadians) * speed;
-	mPosition.y += sin(rotationRadians) * speed;
+	
+	sf::Vector2f newPosition(
+		mPosition.x + cos(rotationRadians) * speed, 
+		mPosition.y + sin(rotationRadians) * speed);
+	bool validPosition = true;
+	auto beeManager = BeeManager::getInstance();
+	
+	for (auto iter = beeManager->begin(); iter != beeManager->end(); ++iter)
+	{
+		if (&(*iter) != this)
+		{	// Disregard checking identical bees
+			float beeDistance = distanceBetween(newPosition, iter->getPosition());
+			if (beeDistance < (mBodyRadius + iter->getRadius() / 2.0f))
+			{
+				validPosition = false;
+				break;
+			}
+		}
+	}
+
+	if (validPosition)
+	{
+		mPosition = newPosition;
+	}
+
+//	mPosition.x += cos(rotationRadians) * speed;
+//	mPosition.y += sin(rotationRadians) * speed;
 
 	mFace.setRotation(rotationAngle);
 }
@@ -55,4 +90,11 @@ const sf::Vector2f& Bee::getPosition() const
 float Bee::getRadius() const
 {
 	return mBodyRadius;
+}
+
+float Bee::distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2) const
+{
+	auto xDif = abs(position_1.x - position_2.x);
+	auto yDif = abs(position_1.y - position_2.y);
+	return sqrt((xDif * xDif) + (yDif * yDif));
 }

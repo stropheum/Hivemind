@@ -24,6 +24,9 @@
     <ClInclude Include="Bee.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BeeManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Hivemind.cpp">
@@ -33,6 +36,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bee.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BeeManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

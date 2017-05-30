@@ -3,6 +3,7 @@ class Bee
 {
 public:
 	Bee();
+	explicit Bee(const sf::Vector2f& position);
 	~Bee() = default;
 	void update(sf::RenderWindow& window);
 	void render(sf::RenderWindow& window) const;
@@ -13,6 +14,8 @@ public:
 private:
 	const float mBodyRadius = 7.0f;
 	const float pi = 3.14159265359;
+
+	float distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2) const;
 	
 	sf::CircleShape mBody;
 	sf::RectangleShape mFace;
