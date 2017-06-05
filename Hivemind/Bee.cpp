@@ -5,7 +5,7 @@
 
 
 Bee::Bee():
-	mBody(mBodyRadius), mFace(sf::Vector2f(mBodyRadius, 2)), mPosition(sf::Vector2f(200, 200)), speed(1.0f)
+	mBody(mBodyRadius), mFace(sf::Vector2f(mBodyRadius, 2)), mPosition(sf::Vector2f(200, 200)), speed(25.0f)
 {
 	mBody.setFillColor(sf::Color(0, 128, 128));
 	mFace.setFillColor(sf::Color::Black);
@@ -14,7 +14,7 @@ Bee::Bee():
 }
 
 Bee::Bee(const sf::Vector2f& position):
-	mBody(mBodyRadius), mFace(sf::Vector2f(mBodyRadius, 2)), mPosition(position), speed(0.01f)
+	mBody(mBodyRadius), mFace(sf::Vector2f(mBodyRadius, 2)), mPosition(position), speed(25.0f)
 {
 	mBody.setFillColor(sf::Color(0, 128, 128));
 	mFace.setFillColor(sf::Color::Black);
@@ -60,9 +60,6 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 	{
 		mPosition = newPosition;
 	}
-
-//	mPosition.x += cos(rotationRadians) * speed;
-//	mPosition.y += sin(rotationRadians) * speed;
 
 	mFace.setRotation(rotationAngle);
 }
