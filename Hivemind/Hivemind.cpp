@@ -2,6 +2,7 @@
 #include <iostream>
 #include <windows.h>
 #include <chrono>
+#include <sstream>
 #include "Bee.h"
 #include "BeeManager.h"
 
@@ -23,7 +24,15 @@ int main(int argc, char* argv[])
 #endif
 
 	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Fullscreen);
+	sf::Text fpsMeter;
+	sf::Font font;
+	font.loadFromFile("Hack-Regular.ttf");
+	fpsMeter.setFont(font);
+	fpsMeter.setCharacterSize(16);
+	fpsMeter.setPosition(0, 0);
+	fpsMeter.setFillColor(sf::Color(200, 200, 200));
 
+	bool running = false;
 	float deltaTime = 0.0f;
 	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
 	const int beeRows = 25;
@@ -54,6 +63,14 @@ int main(int argc, char* argv[])
 			{
 				window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
 			}
+
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::Space)
+				{
+					running = !running;
+				}
+			}
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -61,29 +78,30 @@ int main(int argc, char* argv[])
 			window.close();
 		}
 
-		deltaTime += duration_cast<milliseconds>(high_resolution_clock::now() - lastFrame).count() / 1000.0f;
+		deltaTime += (duration_cast<milliseconds>(high_resolution_clock::now() - lastFrame).count() / 1000.0f);
 
-		if (deltaTime >= FRAME_INTERVAL)
+		if (deltaTime > FRAME_INTERVAL)
 		{
+			// Reset last frame so time isn't dilated between updates
+			lastFrame = high_resolution_clock::now();
+
+			// Handle business logic updates
+			if (running)
+			{
+				beeManager->update(window, deltaTime);
+			}
+
+			// Handle rendering
 			window.clear();
-			beeManager->update(window, deltaTime);
-
-			sf::Text fps;
-			sf::Font font;
-			font.loadFromFile("Hack-Regular.ttf");
-			fps.setFont(font);
-			fps.setPosition(800, 0);
-			fps.setFillColor(sf::Color::White);
-			fps.setString(computeFrameRate());
-			window.draw(fps);
-
+			fpsMeter.setString(computeFrameRate());
+			window.draw(fpsMeter);
 			beeManager->render(window);
 			window.display();
 
+			// Reset delta time
 			deltaTime = 0.0f;
-			lastFrame = high_resolution_clock::now();
 		}
-
+		
 	}
 
     return EXIT_SUCCESS;
@@ -105,9 +123,12 @@ string computeFrameRate()
 	int timeSinceStart = duration_cast<milliseconds>(high_resolution_clock::now() - startTime).count() / 1000.0f;
 
 	string result = timeSinceStart != 0 ? to_string(frameCount / timeSinceStart) : "0";
-	if (result == "inf")
-	{
-		cout << "Debugging" << endl;
-	}
-	return result;
+
+	stringstream ss;
+	ss << "frameCount: " << frameCount << endl;
+	ss << "time since start: " << timeSinceStart << endl;
+	ss << "fps: " << result << endl << endl;
+
+	return ss.str();
+//	return result;
 }
