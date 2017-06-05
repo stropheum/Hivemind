@@ -4,34 +4,22 @@
 #include "BeeManager.h"
 
 
-Bee::Bee():
-	mBody(mBodyRadius), mFace(sf::Vector2f(mBodyRadius, 2)), mPosition(sf::Vector2f(200, 200)), speed(25.0f)
-{
-	mBody.setFillColor(sf::Color(0, 128, 128));
-	mFace.setFillColor(sf::Color::Black);
-	mBody.setPosition(mPosition);
-	mFace.setPosition(mBody.getPosition().x + mBodyRadius, mBody.getPosition().y + mBodyRadius);
-}
-
 Bee::Bee(const sf::Vector2f& position):
-	mBody(mBodyRadius), mFace(sf::Vector2f(mBodyRadius, 2)), mPosition(position), speed(25.0f)
+	mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), mPosition(position), speed(STANDARD_BEE_SPEED)
 {
 	mBody.setFillColor(sf::Color(0, 128, 128));
 	mFace.setFillColor(sf::Color::Black);
 	mBody.setPosition(mPosition);
-	mFace.setPosition(mBody.getPosition().x + mBodyRadius, mBody.getPosition().y + mBodyRadius);
+	mFace.setPosition(mBody.getPosition().x + BODY_RADIUS, mBody.getPosition().y + BODY_RADIUS);
 }
 
 void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 {
-	mBody.setPosition(mPosition);
-	mFace.setPosition(mPosition.x + mBodyRadius, mPosition.y + mBodyRadius);
-
 	auto mousePosition = sf::Mouse::getPosition(window);
 	auto facePosition = mFace.getPosition();
 
 	float rotationRadians = atan2(mousePosition.y - facePosition.y, mousePosition.x - facePosition.x);
-	float rotationAngle = rotationRadians * (180 / pi);
+	float rotationAngle = rotationRadians * (180 / PI);
 	
 	auto xDif = abs(mousePosition.x - facePosition.x);
 	auto yDif = abs(mousePosition.y - facePosition.y);
@@ -43,22 +31,26 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 	bool validPosition = true;
 	auto beeManager = BeeManager::getInstance();
 	
-	for (auto iter = beeManager->begin(); iter != beeManager->end(); ++iter)
-	{
-		if (&(*iter) != this)
-		{	// Disregard checking identical bees
-			float beeDistance = distanceBetween(newPosition, iter->getPosition());
-			if (beeDistance < (mBodyRadius + iter->getRadius()))
-			{
-				validPosition = false;
-				break;
-			}
-		}
-	}
+	// probably don't need this collision stuff since it's so heavy. subdividing into sectors could help, 
+	// but only useful for visuals
+//	for (auto iter = beeManager->begin(); iter != beeManager->end(); ++iter)
+//	{
+//		if (&(*iter) != this)
+//		{	// Disregard checking identical bees
+//			float beeDistance = distanceBetween(newPosition, iter->getPosition());
+//			if (beeDistance < (BODY_RADIUS + iter->getRadius()))
+//			{
+//				validPosition = false;
+//				break;
+//			}
+//		}
+//	}
 
 	if (validPosition)
 	{
 		mPosition = newPosition;
+		mBody.setPosition(mPosition);
+		mFace.setPosition(mPosition.x + BODY_RADIUS, mPosition.y + BODY_RADIUS);
 	}
 
 	mFace.setRotation(rotationAngle);
@@ -82,7 +74,7 @@ const sf::Vector2f& Bee::getPosition() const
 
 float Bee::getRadius() const
 {
-	return mBodyRadius;
+	return BODY_RADIUS;
 }
 
 float Bee::distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2) const
@@ -90,4 +82,8 @@ float Bee::distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& p
 	auto xDif = abs(position_1.x - position_2.x);
 	auto yDif = abs(position_1.y - position_2.y);
 	return sqrt((xDif * xDif) + (yDif * yDif));
+}
+
+bool Bee::collidingWithFoodSource(const FoodSource& foodSource)
+{
 }

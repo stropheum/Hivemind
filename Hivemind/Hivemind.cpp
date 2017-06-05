@@ -5,6 +5,8 @@
 #include <sstream>
 #include "Bee.h"
 #include "BeeManager.h"
+#include "FoodSource.h"
+#include "FoodSourceManager.h"
 
 
 using namespace std;
@@ -37,16 +39,21 @@ int main(int argc, char* argv[])
 	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
 	const int beeRows = 25;
 	const int beeCols = 25;
+	const int horizontalSpacing = window.getSize().x / beeCols;
+	const int verticalSpacing = window.getSize().y / beeRows;
 
 	BeeManager* beeManager = BeeManager::getInstance();
+	FoodSourceManager* foodSourceManager = FoodSourceManager::getInstance();
 
 	for (int i = 0; i < beeRows; i++)
 	{
 		for (int j = 0; j < beeCols; j++)
-		{
-			beeManager->spawnBee(Bee(sf::Vector2f(200 + j * 55, 200 + i * 55)));
+		{	// Distribute bees evenly across the screen
+			beeManager->spawnBee(Bee(sf::Vector2f(horizontalSpacing / 2 + horizontalSpacing * j, verticalSpacing / 2 + verticalSpacing * i)));
 		}
 	}
+
+	foodSourceManager->spawnFoodSource(sf::Vector2f(window.getSize().x / 2 - 50, window.getSize().y / 2 - 50));
 
 	while (window.isOpen())
 	{
@@ -93,9 +100,15 @@ int main(int argc, char* argv[])
 
 			// Handle rendering
 			window.clear();
+
 			fpsMeter.setString(computeFrameRate());
 			window.draw(fpsMeter);
+
+			// Rendering temporary food source
+			foodSourceManager->render(window);
+
 			beeManager->render(window);
+
 			window.display();
 
 			// Reset delta time
@@ -130,5 +143,4 @@ string computeFrameRate()
 	ss << "fps: " << result << endl << endl;
 
 	return ss.str();
-//	return result;
 }
