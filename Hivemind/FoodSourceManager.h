@@ -1,5 +1,5 @@
 #pragma once
-class FoodSource;
+#include "FoodSource.h"
 
 class FoodSourceManager
 {
@@ -9,6 +9,7 @@ public:
 	void spawnFoodSource(const sf::Vector2f& position);
 	void update(sf::RenderWindow& window, const float& deltaTime);
 	void render(sf::RenderWindow& window);
+	std::uint32_t getFoodsourceCount() const;
 	std::vector<FoodSource>::iterator begin();
 	std::vector<FoodSource>::iterator end();
 

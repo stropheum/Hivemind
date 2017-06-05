@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BeeManager.h"
+#include "FoodSourceManager.h"
 
 
 BeeManager* BeeManager::sInstance = nullptr;
@@ -30,9 +31,22 @@ void BeeManager::spawnBee(const Bee& bee)
 
 void BeeManager::update(sf::RenderWindow& window, const float& deltaTime)
 {
+	auto foodSourceManager = FoodSourceManager::getInstance();
+
 	for (auto iter = mBees.begin(); iter != mBees.end(); ++iter)
 	{
 		iter->update(window, deltaTime);
+		
+		bool collidingWithFoodSource = false;
+		for (auto foodIter = foodSourceManager->begin(); foodIter != foodSourceManager->end(); ++foodIter)
+		{
+			if (iter->collidingWithFoodSource(*foodIter))
+			{
+				collidingWithFoodSource = true;
+			}
+		}
+
+		iter->setColor(collidingWithFoodSource ? Bee::ALERT_COLOR : Bee::NORMAL_COLOR);
 	}
 }
 

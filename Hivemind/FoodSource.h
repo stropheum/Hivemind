@@ -17,6 +17,8 @@ public:
 	void render(sf::RenderWindow& window) const;
 	float getFoodAmount() const;
 	void setFoodAmount(const float& foodAmount);
+	const sf::Vector2f& getPosition() const;
+	const sf::Vector2f& getDimensions() const;
 
 private:
 	/// Constants
@@ -26,7 +28,7 @@ private:
 	/// Private API
 
 	/// Fields
-	float mWidth, mHeight;
+	sf::Vector2f mDimensions;
 	sf::RectangleShape mBody;
 	float mFoodAmount;
 };

@@ -2,6 +2,10 @@
 class Bee
 {
 public:
+	const static float STANDARD_BEE_SPEED;
+	const static float BODY_RADIUS;
+	const static sf::Color NORMAL_COLOR;
+	const static sf::Color ALERT_COLOR;
 
 	/// Constructors/destructor
 	explicit Bee(const sf::Vector2f& position);
@@ -19,16 +23,15 @@ public:
 	void setPosition(const sf::Vector2f& position);
 	const sf::Vector2f& getPosition() const;
 	float getRadius() const;
+	bool collidingWithFoodSource(const class FoodSource& foodSource) const;
+	void setColor(const sf::Color& color);
 
 private:
 	/// Constants
-	const float STANDARD_BEE_SPEED = 10.0f;
-	const float BODY_RADIUS = 7.0f;
 	const float PI = 3.14159265359f;
 
 	/// Private API
 	float distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2) const;
-	bool collidingWithFoodSource(const class FoodSource& foodSource);
 	
 	/// Private fields
 	sf::CircleShape mBody;
@@ -36,4 +39,3 @@ private:
 	sf::Vector2f mPosition;
 	float speed;
 };
-

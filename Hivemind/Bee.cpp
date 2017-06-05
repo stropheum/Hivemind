@@ -2,15 +2,23 @@
 #include "Bee.h"
 #include <math.h>
 #include "BeeManager.h"
+#include "FoodSource.h"
 
+
+const float Bee::STANDARD_BEE_SPEED = 10.0f;
+const float Bee::BODY_RADIUS = 7.0f;
+const sf::Color Bee::NORMAL_COLOR = sf::Color(200, 200, 200);
+const sf::Color Bee::ALERT_COLOR = sf::Color::Red;
 
 Bee::Bee(const sf::Vector2f& position):
 	mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), mPosition(position), speed(STANDARD_BEE_SPEED)
 {
 	mBody.setFillColor(sf::Color(0, 128, 128));
+	mBody.setOutlineColor(NORMAL_COLOR);
+	mBody.setOutlineThickness(2);
 	mFace.setFillColor(sf::Color::Black);
-	mBody.setPosition(mPosition);
-	mFace.setPosition(mBody.getPosition().x + BODY_RADIUS, mBody.getPosition().y + BODY_RADIUS);
+	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
+	mFace.setPosition(mBody.getPosition().x, mBody.getPosition().y + BODY_RADIUS);
 }
 
 void Bee::update(sf::RenderWindow& window, const float& deltaTime)
@@ -49,8 +57,8 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 	if (validPosition)
 	{
 		mPosition = newPosition;
-		mBody.setPosition(mPosition);
-		mFace.setPosition(mPosition.x + BODY_RADIUS, mPosition.y + BODY_RADIUS);
+		mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
+		mFace.setPosition(mPosition.x, mPosition.y);
 	}
 
 	mFace.setRotation(rotationAngle);
@@ -84,6 +92,23 @@ float Bee::distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& p
 	return sqrt((xDif * xDif) + (yDif * yDif));
 }
 
-bool Bee::collidingWithFoodSource(const FoodSource& foodSource)
+bool Bee::collidingWithFoodSource(const FoodSource& foodSource) const
 {
+	auto foodPosition = foodSource.getPosition();
+	auto foodDimensions = foodSource.getDimensions();
+	auto leftWall = foodPosition.x;
+	auto rightWall = foodPosition.x + foodDimensions.x;
+	auto topWall = foodPosition.y;
+	auto bottomWall = foodPosition.y + foodDimensions.y;
+	return
+		(mPosition.x + BODY_RADIUS > leftWall) &&
+		(mPosition.x - BODY_RADIUS < rightWall) &&
+		(mPosition.y + BODY_RADIUS > topWall) &&
+		(mPosition.y - BODY_RADIUS < bottomWall);
+
+}
+
+void Bee::setColor(const sf::Color& color)
+{
+	mBody.setOutlineColor(color);
 }

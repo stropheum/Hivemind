@@ -53,7 +53,12 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	foodSourceManager->spawnFoodSource(sf::Vector2f(window.getSize().x / 2 - 50, window.getSize().y / 2 - 50));
+	auto windowSize = window.getSize();
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 2 - 50, windowSize.y / 2 - 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 4 - 50, windowSize.y / 4 - 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - windowSize.x / 4 - 50, windowSize.y / 4 - 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 4 - 50, windowSize.y -  windowSize.y / 4 - 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - windowSize.x / 4 - 50, windowSize.y - windowSize.y / 4 - 50));
 
 	while (window.isOpen())
 	{

@@ -3,7 +3,7 @@
 
 
 FoodSource::FoodSource(const sf::Vector2f& position): 
-	mWidth(STANDARD_WIDTH), mHeight(STANDARD_HEIGHT), mBody(sf::Vector2f(mWidth, mHeight)), mFoodAmount(100.0f)
+	mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), mFoodAmount(100.0f)
 {
 	mBody.setPosition(position);
 	mBody.setOutlineThickness(5);
@@ -28,4 +28,14 @@ float FoodSource::getFoodAmount() const
 void FoodSource::setFoodAmount(const float& foodAmount)
 {
 	mFoodAmount = foodAmount;
+}
+
+const sf::Vector2f& FoodSource::getPosition() const
+{
+	return mBody.getPosition();
+}
+
+const sf::Vector2f& FoodSource::getDimensions() const
+{
+	return mDimensions;
 }
