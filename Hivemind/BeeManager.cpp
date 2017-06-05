@@ -28,11 +28,11 @@ void BeeManager::spawnBee(const Bee& bee)
 	mBees.push_back(bee);
 }
 
-void BeeManager::update(sf::RenderWindow& window)
+void BeeManager::update(sf::RenderWindow& window, const float& deltaTime)
 {
 	for (auto iter = mBees.begin(); iter != mBees.end(); ++iter)
 	{
-		iter->update(window);
+		iter->update(window, deltaTime);
 	}
 }
 

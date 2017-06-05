@@ -5,7 +5,7 @@
 
 
 Bee::Bee():
-	mBody(mBodyRadius), mFace(sf::Vector2f(mBodyRadius, 2)), mPosition(sf::Vector2f(200, 200)), speed(0.01f)
+	mBody(mBodyRadius), mFace(sf::Vector2f(mBodyRadius, 2)), mPosition(sf::Vector2f(200, 200)), speed(1.0f)
 {
 	mBody.setFillColor(sf::Color(0, 128, 128));
 	mFace.setFillColor(sf::Color::Black);
@@ -22,7 +22,7 @@ Bee::Bee(const sf::Vector2f& position):
 	mFace.setPosition(mBody.getPosition().x + mBodyRadius, mBody.getPosition().y + mBodyRadius);
 }
 
-void Bee::update(sf::RenderWindow& window)
+void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 {
 	mBody.setPosition(mPosition);
 	mFace.setPosition(mPosition.x + mBodyRadius, mPosition.y + mBodyRadius);
@@ -37,13 +37,9 @@ void Bee::update(sf::RenderWindow& window)
 	auto yDif = abs(mousePosition.y - facePosition.y);
 	auto distance = sqrt(xDif * xDif + yDif * yDif);
 
-	//	speed = (distance < 500) ? 500 / distance : 0;
-	speed = 500 / distance;
-	if (speed > 25) speed = 25;
-	
 	sf::Vector2f newPosition(
-		mPosition.x + cos(rotationRadians) * speed, 
-		mPosition.y + sin(rotationRadians) * speed);
+		mPosition.x + cos(rotationRadians) * speed * deltaTime, 
+		mPosition.y + sin(rotationRadians) * speed * deltaTime);
 	bool validPosition = true;
 	auto beeManager = BeeManager::getInstance();
 	
@@ -52,7 +48,7 @@ void Bee::update(sf::RenderWindow& window)
 		if (&(*iter) != this)
 		{	// Disregard checking identical bees
 			float beeDistance = distanceBetween(newPosition, iter->getPosition());
-			if (beeDistance < (mBodyRadius + iter->getRadius() / 2.0f))
+			if (beeDistance < (mBodyRadius + iter->getRadius()))
 			{
 				validPosition = false;
 				break;

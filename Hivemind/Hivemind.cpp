@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
 #endif
 
-	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Default);
+	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Fullscreen);
 
 	float deltaTime = 0.0f;
 	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
@@ -54,26 +54,22 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		window.clear();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		{	// Check for manually closing simulation. This will later be the pause menu
+			window.close();
+		}
 
-		deltaTime += duration_cast<milliseconds>(high_resolution_clock::now() - lastFrame).count();
+		deltaTime += duration_cast<seconds>(high_resolution_clock::now() - lastFrame).count();
 
 		if (deltaTime >= FRAME_INTERVAL)
 		{
-//			for (int i = 0; i < beeRows; i++)
-//			{
-//				for (int j = 0; j < beeCols; j++)
-//				{
-//					bee[i][j].update(window);
-//					bee[i][j].render(window);
-//				}
-//			}
-			beeManager->update(window);
+			window.clear();
+			beeManager->update(window, deltaTime);
 			beeManager->render(window);
 			deltaTime = 0.0f;
+			window.display();
 		}
 
-		window.display();
 	}
 
     return EXIT_SUCCESS;
