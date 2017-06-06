@@ -65,6 +65,24 @@ This is obviously just a first rough pass, but it has the basic implementation o
 
 
 Here you can see a small swarm of bees converging on a mouse pointer in the current simulation
+
 ![Simple Bee Swarm](http://i.imgur.com/bXtLkiJ.png "Simple bee swarm")
 
 In the coming week, I hope to have the basic implementation of the ABC algorithm implemented - implemented food sources, employed bees scouting, waggle dancing, and onlooker food source evaluation are my primary goals, as well as on the visualization end, I hope to get a more realistic movement system for the bees where they collide to avoid perfect stacking on one another, but still have that swarming aspect where they will push around each other to get as close to the destination as possible.
+
+## Week 2 - The Pursuit of Foraging
+
+I've now gotten basic movement working and the concept of a target roughly implemented, so the next goal is to create real objects in the simulation space for the bees to target and travel to. To start this, I created a food source class and an associated food source manager singleton, which would be responsible for creating and managing all of the food sources, similar to the Bee/BeeManager singleton relationship that already exists. Along with refactoring the UI to be a little easier on the eyes, I modified the Bee class to reassign itself a new target once its current target is reached
+
+Below you can see a video of the current simulation in progress.
+
+[![Hivemind Update 6-6](https://img.youtube.com/vi/6uNdDS5cils/0.jpg)](https://youtu.be/6uNdDS5cils)
+- The Bees have been modified to have an outer skin which makes them stand out more clearly against all backgrounds as well as being colorable. This will allow me to visually display status changes without cluttering the screen
+- The Green Squares are food sources. Currently they can take up any quadrilateral space, but I've defaulted them to squares for now
+- When a bee collides with a food source, his body changes color to red to indicate that he is within the bounds of the food source
+- Once a bee reaches its target, it randomly selects a new food source and runs to that
+- To progress from here, I will need to do the following:
+	- Implement a hive instead of a food source at the center
+	- Create a "wandering" idle algorithm for bees so they will putter around the hive or food source until their task is complete
+	- Factor in more robust logic, ie -> forage until either food capacity of the bee ix maxed or until the food source runs out, then return to the hive, and spend x amount of time depositing the food
+	- Establish the concept of food in hives as well as food sources
