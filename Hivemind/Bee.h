@@ -22,20 +22,22 @@ public:
 	void render(sf::RenderWindow& window) const;
 	void setPosition(const sf::Vector2f& position);
 	const sf::Vector2f& getPosition() const;
-	float getRadius() const;
 	bool collidingWithFoodSource(const class FoodSource& foodSource) const;
 	void setColor(const sf::Color& color);
+	void setTarget(const sf::Vector2f& position);
+	const sf::Vector2f& getTarget() const;
+	float distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2) const;
+	bool hasTarget() const;
 
 private:
 	/// Constants
 	const float PI = 3.14159265359f;
 
-	/// Private API
-	float distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2) const;
-	
 	/// Private fields
 	sf::CircleShape mBody;
 	sf::RectangleShape mFace;
 	sf::Vector2f mPosition;
-	float speed;
+	sf::Vector2f mTarget;
+	float mSpeed;
+	bool mTargeting;
 };

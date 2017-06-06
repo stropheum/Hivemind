@@ -35,6 +35,11 @@ const sf::Vector2f& FoodSource::getPosition() const
 	return mBody.getPosition();
 }
 
+const sf::Vector2f& FoodSource::getCenterTarget() const
+{
+	return sf::Vector2f(mBody.getPosition().x + mDimensions.x / 2, mBody.getPosition().y + mDimensions.y / 2);
+}
+
 const sf::Vector2f& FoodSource::getDimensions() const
 {
 	return mDimensions;

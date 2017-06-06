@@ -5,13 +5,13 @@
 #include "FoodSource.h"
 
 
-const float Bee::STANDARD_BEE_SPEED = 10.0f;
+const float Bee::STANDARD_BEE_SPEED = 20.0f;
 const float Bee::BODY_RADIUS = 7.0f;
 const sf::Color Bee::NORMAL_COLOR = sf::Color(200, 200, 200);
 const sf::Color Bee::ALERT_COLOR = sf::Color::Red;
 
 Bee::Bee(const sf::Vector2f& position):
-	mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), mPosition(position), speed(STANDARD_BEE_SPEED)
+	mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), mPosition(position), mTarget(position), mSpeed(STANDARD_BEE_SPEED), mTargeting(false)
 {
 	mBody.setFillColor(sf::Color(0, 128, 128));
 	mBody.setOutlineColor(NORMAL_COLOR);
@@ -23,36 +23,20 @@ Bee::Bee(const sf::Vector2f& position):
 
 void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 {
-	auto mousePosition = sf::Mouse::getPosition(window);
 	auto facePosition = mFace.getPosition();
 
-	float rotationRadians = atan2(mousePosition.y - facePosition.y, mousePosition.x - facePosition.x);
+	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 	float rotationAngle = rotationRadians * (180 / PI);
 	
-	auto xDif = abs(mousePosition.x - facePosition.x);
-	auto yDif = abs(mousePosition.y - facePosition.y);
+	auto xDif = abs(mTarget.x - facePosition.x);
+	auto yDif = abs(mTarget.y - facePosition.y);
 	auto distance = sqrt(xDif * xDif + yDif * yDif);
 
 	sf::Vector2f newPosition(
-		mPosition.x + cos(rotationRadians) * speed * deltaTime, 
-		mPosition.y + sin(rotationRadians) * speed * deltaTime);
+		mPosition.x + cos(rotationRadians) * mSpeed * deltaTime, 
+		mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
 	bool validPosition = true;
 	auto beeManager = BeeManager::getInstance();
-	
-	// probably don't need this collision stuff since it's so heavy. subdividing into sectors could help, 
-	// but only useful for visuals
-//	for (auto iter = beeManager->begin(); iter != beeManager->end(); ++iter)
-//	{
-//		if (&(*iter) != this)
-//		{	// Disregard checking identical bees
-//			float beeDistance = distanceBetween(newPosition, iter->getPosition());
-//			if (beeDistance < (BODY_RADIUS + iter->getRadius()))
-//			{
-//				validPosition = false;
-//				break;
-//			}
-//		}
-//	}
 
 	if (validPosition)
 	{
@@ -80,16 +64,16 @@ const sf::Vector2f& Bee::getPosition() const
 	return mPosition;
 }
 
-float Bee::getRadius() const
-{
-	return BODY_RADIUS;
-}
-
 float Bee::distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2) const
 {
 	auto xDif = abs(position_1.x - position_2.x);
 	auto yDif = abs(position_1.y - position_2.y);
 	return sqrt((xDif * xDif) + (yDif * yDif));
+}
+
+bool Bee::hasTarget() const
+{
+	return mTargeting;
 }
 
 bool Bee::collidingWithFoodSource(const FoodSource& foodSource) const
@@ -111,4 +95,15 @@ bool Bee::collidingWithFoodSource(const FoodSource& foodSource) const
 void Bee::setColor(const sf::Color& color)
 {
 	mBody.setOutlineColor(color);
+}
+
+void Bee::setTarget(const sf::Vector2f& position)
+{
+	mTarget = position;
+	mTargeting = true;
+}
+
+const sf::Vector2f& Bee::getTarget() const
+{
+	return mTarget;
 }

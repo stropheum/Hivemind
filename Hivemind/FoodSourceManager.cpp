@@ -58,3 +58,13 @@ std::vector<FoodSource>::iterator FoodSourceManager::end()
 {
 	return mFoodSources.end();
 }
+
+const FoodSource& FoodSourceManager::getFoodSource(const std::uint32_t& index)
+{
+	if (index >= mFoodSources.size())
+	{
+		throw std::exception("Index out of bounds");
+	}
+
+	return mFoodSources[index];
+}

@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "BeeManager.h"
 #include "FoodSourceManager.h"
+#include <random>
 
 
 BeeManager* BeeManager::sInstance = nullptr;
 
 BeeManager::BeeManager():
-	mBees()
+	mBees(), mTimeSinceRetarget(0.0f), generator()
 {
 }
 
@@ -40,9 +41,30 @@ void BeeManager::update(sf::RenderWindow& window, const float& deltaTime)
 		bool collidingWithFoodSource = false;
 		for (auto foodIter = foodSourceManager->begin(); foodIter != foodSourceManager->end(); ++foodIter)
 		{
+			if (!iter->hasTarget())
+			{	// Set initial target
+				std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
+				int targetIndex = distribution(generator);
+				sf::Vector2f newTarget = foodSourceManager->getFoodSource(targetIndex).getCenterTarget();
+
+				iter->setTarget(newTarget);
+			}
+
 			if (iter->collidingWithFoodSource(*foodIter))
 			{
 				collidingWithFoodSource = true;
+				if (iter->distanceBetween(iter->getPosition(), iter->getTarget()) <= Bee::BODY_RADIUS)
+				{
+					sf::Vector2f newTarget;
+					do
+					{
+						std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
+						int targetIndex = distribution(generator);
+						newTarget = foodSourceManager->getFoodSource(targetIndex).getCenterTarget();
+					} while (newTarget == iter->getTarget());
+
+					iter->setTarget(newTarget);
+				}
 			}
 		}
 
