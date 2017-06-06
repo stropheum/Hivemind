@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 	float deltaTime = 0.0f;
 	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
 	const int beeRows = 30;
-	const int beeCols = 30;
+	const int beeCols = 48;
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
 			}
 
 			// Handle rendering
-			window.clear();
+			window.clear(sf::Color(32, 32, 32));
 
 			fpsMeter.setString(computeFrameRate());
 			window.draw(fpsMeter);
@@ -143,9 +143,7 @@ string computeFrameRate()
 	string result = timeSinceStart != 0 ? to_string(frameCount / timeSinceStart) : "0";
 
 	stringstream ss;
-	ss << "frameCount: " << frameCount << endl;
-	ss << "time since start: " << timeSinceStart << endl;
-	ss << "fps: " << result << endl << endl;
+	ss << "FPS: " << result << endl << endl;
 
 	return ss.str();
 }

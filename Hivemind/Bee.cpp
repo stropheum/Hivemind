@@ -6,7 +6,7 @@
 
 
 const float Bee::STANDARD_BEE_SPEED = 20.0f;
-const float Bee::BODY_RADIUS = 7.0f;
+const float Bee::BODY_RADIUS = 5.0f;
 const sf::Color Bee::NORMAL_COLOR = sf::Color(200, 200, 200);
 const sf::Color Bee::ALERT_COLOR = sf::Color::Red;
 
@@ -16,7 +16,7 @@ Bee::Bee(const sf::Vector2f& position):
 	mBody.setFillColor(sf::Color(0, 128, 128));
 	mBody.setOutlineColor(NORMAL_COLOR);
 	mBody.setOutlineThickness(2);
-	mFace.setFillColor(sf::Color::Black);
+	mFace.setFillColor(sf::Color::White);
 	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
 	mFace.setPosition(mBody.getPosition().x, mBody.getPosition().y + BODY_RADIUS);
 }
