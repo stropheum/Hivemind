@@ -9,7 +9,7 @@ FoodSource::FoodSource(const sf::Vector2f& position):
 	mBody.setPosition(position);
 	mBody.setOutlineThickness(5);
 	mBody.setOutlineColor(sf::Color::White);
-	mBody.setFillColor(sf::Color::Green);
+	mBody.setFillColor(sf::Color(32, 128, 32));
 }
 
 void FoodSource::update(sf::RenderWindow& window, const float& deltaTime)
@@ -38,7 +38,7 @@ const sf::Vector2f& FoodSource::getPosition() const
 	return mBody.getPosition();
 }
 
-const sf::Vector2f FoodSource::getCenterTarget() const
+sf::Vector2f FoodSource::getCenterTarget() const
 {
 	return sf::Vector2f(mBody.getPosition().x + mDimensions.x / 2, mBody.getPosition().y + mDimensions.y / 2);
 }
