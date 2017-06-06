@@ -1,6 +1,5 @@
 #include "pch.h"
 #include <iostream>
-#include <windows.h>
 #include <chrono>
 #include <sstream>
 #include "Bee.h"
@@ -18,6 +17,8 @@ string computeFrameRate();
 
 int main(int argc, char* argv[])
 {
+	UNREFERENCED_PARAMETER(argc);
+	UNREFERENCED_PARAMETER(argv);
 	// Allows console window to be shone for debugging, to display triggers or not otherwise rendered data points
 #if _DEBUG
 	ShowWindow(GetConsoleWindow(), SW_RESTORE);
@@ -38,7 +39,7 @@ int main(int argc, char* argv[])
 	float deltaTime = 0.0f;
 	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
 	const int beeRows = 30;
-	const int beeCols = 48;
+	const int beeCols = 30;
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
@@ -49,16 +50,16 @@ int main(int argc, char* argv[])
 	{
 		for (int j = 0; j < beeCols; j++)
 		{	// Distribute bees evenly across the screen
-			beeManager->spawnBee(Bee(sf::Vector2f(horizontalSpacing / 2 + horizontalSpacing * j, verticalSpacing / 2 + verticalSpacing * i)));
+			beeManager->spawnBee(Bee(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i)));
 		}
 	}
 
 	auto windowSize = window.getSize();
-	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 2 - 50, windowSize.y / 2 - 50));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 4 - 50, windowSize.y / 4 - 50));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - windowSize.x / 4 - 50, windowSize.y / 4 - 50));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 4 - 50, windowSize.y -  windowSize.y / 4 - 50));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - windowSize.x / 4 - 50, windowSize.y - windowSize.y / 4 - 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(float(windowSize.x / 2) - 50, float(windowSize.y / 2) - 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(float(windowSize.x / 4) - 50, float(windowSize.y / 4) - 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - float(windowSize.x / 4) - 50, float(windowSize.y / 4) - 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(float(windowSize.x / 4) - 50, windowSize.y -  float(windowSize.y / 4) - 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - float(windowSize.x / 4) - 50, windowSize.y - float(windowSize.y / 4) - 50));
 
 	while (window.isOpen())
 	{
@@ -73,7 +74,7 @@ int main(int argc, char* argv[])
 
 			if (event.type == sf::Event::Resized)
 			{
-				window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+				window.setView(sf::View(sf::FloatRect(0, 0, float(event.size.width), float(event.size.height))));
 			}
 
 			if (event.type == sf::Event::KeyPressed)
@@ -138,7 +139,7 @@ string computeFrameRate()
 		frameCount = 0;
 	}
 
-	int timeSinceStart = duration_cast<milliseconds>(high_resolution_clock::now() - startTime).count() / 1000.0f;
+	int timeSinceStart = static_cast<int>(duration_cast<milliseconds>(high_resolution_clock::now() - startTime).count() / 1000.0f);
 
 	string result = timeSinceStart != 0 ? to_string(frameCount / timeSinceStart) : "0";
 

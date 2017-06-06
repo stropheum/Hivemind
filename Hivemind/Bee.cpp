@@ -3,6 +3,7 @@
 #include <math.h>
 #include "BeeManager.h"
 #include "FoodSource.h"
+#include <winnt.h>
 
 
 const float Bee::STANDARD_BEE_SPEED = 20.0f;
@@ -23,28 +24,20 @@ Bee::Bee(const sf::Vector2f& position):
 
 void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 {
+	UNREFERENCED_PARAMETER(window);
+
 	auto facePosition = mFace.getPosition();
 
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 	float rotationAngle = rotationRadians * (180 / PI);
-	
-	auto xDif = abs(mTarget.x - facePosition.x);
-	auto yDif = abs(mTarget.y - facePosition.y);
-	auto distance = sqrt(xDif * xDif + yDif * yDif);
 
 	sf::Vector2f newPosition(
 		mPosition.x + cos(rotationRadians) * mSpeed * deltaTime, 
 		mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
-	bool validPosition = true;
-	auto beeManager = BeeManager::getInstance();
 
-	if (validPosition)
-	{
-		mPosition = newPosition;
-		mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
-		mFace.setPosition(mPosition.x, mPosition.y);
-	}
-
+	mPosition = newPosition;
+	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
+	mFace.setPosition(mPosition.x, mPosition.y);
 	mFace.setRotation(rotationAngle);
 }
 

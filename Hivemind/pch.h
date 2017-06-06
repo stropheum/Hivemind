@@ -13,6 +13,7 @@
 //////////////////////////////
 //  Program Dependencies  ///
 ////////////////////////////
+#include <windows.h>
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
 #include <iostream>

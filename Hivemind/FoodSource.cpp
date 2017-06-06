@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "FoodSource.h"
+#include <winnt.h>
 
 
 FoodSource::FoodSource(const sf::Vector2f& position): 
@@ -13,6 +14,8 @@ FoodSource::FoodSource(const sf::Vector2f& position):
 
 void FoodSource::update(sf::RenderWindow& window, const float& deltaTime)
 {
+	UNREFERENCED_PARAMETER(window);
+	UNREFERENCED_PARAMETER(deltaTime);
 }
 
 void FoodSource::render(sf::RenderWindow& window) const
@@ -35,7 +38,7 @@ const sf::Vector2f& FoodSource::getPosition() const
 	return mBody.getPosition();
 }
 
-const sf::Vector2f& FoodSource::getCenterTarget() const
+const sf::Vector2f FoodSource::getCenterTarget() const
 {
 	return sf::Vector2f(mBody.getPosition().x + mDimensions.x / 2, mBody.getPosition().y + mDimensions.y / 2);
 }

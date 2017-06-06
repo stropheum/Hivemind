@@ -46,7 +46,7 @@ void FoodSourceManager::render(sf::RenderWindow& window)
 
 std::uint32_t FoodSourceManager::getFoodsourceCount() const
 {
-	return mFoodSources.size();
+	return static_cast<std::uint32_t>(mFoodSources.size());
 }
 
 std::vector<FoodSource>::iterator FoodSourceManager::begin()

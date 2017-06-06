@@ -18,7 +18,7 @@ public:
 	float getFoodAmount() const;
 	void setFoodAmount(const float& foodAmount);
 	const sf::Vector2f& getPosition() const;
-	const sf::Vector2f& getCenterTarget() const;
+	const sf::Vector2f getCenterTarget() const;
 	const sf::Vector2f& getDimensions() const;
 
 private:
