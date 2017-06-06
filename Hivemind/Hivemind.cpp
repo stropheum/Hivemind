@@ -27,6 +27,9 @@ int main(int argc, char* argv[])
 #endif
 
 	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Default);
+	window.setSize(sf::Vector2u(1920, 1080));
+	window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - window.getSize().x / 2 - 8,
+		sf::VideoMode::getDesktopMode().height / 2 - window.getSize().y / 2));
 	sf::Text fpsMeter;
 	sf::Font font;
 	font.loadFromFile("Hack-Regular.ttf");
@@ -38,8 +41,8 @@ int main(int argc, char* argv[])
 	bool running = false;
 	float deltaTime = 0.0f;
 	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
-	const int beeRows = 30;
-	const int beeCols = 30;
+	const int beeRows = 1;
+	const int beeCols = 1;
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
