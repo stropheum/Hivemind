@@ -6,7 +6,7 @@
 #include <winnt.h>
 
 
-const float Bee::STANDARD_BEE_SPEED = 20.0f;
+const float Bee::STANDARD_BEE_SPEED = 200.0f;
 const float Bee::BODY_RADIUS = 7.5f;
 const sf::Color Bee::NORMAL_COLOR = sf::Color(200, 200, 200);
 const sf::Color Bee::ALERT_COLOR = sf::Color::Red;

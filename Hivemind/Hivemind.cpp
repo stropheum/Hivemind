@@ -11,7 +11,7 @@
 using namespace std;
 using namespace std::chrono;
 
-const float FRAME_INTERVAL = 1.0f / 60.0f;
+const float FRAME_INTERVAL = 1.0f / 120.0f;
 
 string computeFrameRate();
 
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 			window.close();
 		}
 
-		deltaTime += (duration_cast<milliseconds>(high_resolution_clock::now() - lastFrame).count() / 1000.0f);
+		deltaTime = (duration_cast<milliseconds>(high_resolution_clock::now() - lastFrame).count() / 1000.0f);
 
 		if (deltaTime > FRAME_INTERVAL)
 		{
@@ -131,23 +131,22 @@ int main(int argc, char* argv[])
 
 string computeFrameRate()
 {
-	static const int MAX_FRAMES = 10000;
+	stringstream ss;
+	static const int MAX_FRAMES = 1000000;
 	static high_resolution_clock::time_point startTime = high_resolution_clock::now();
 	static uint32_t frameCount = 0;
 	frameCount++;
-	
+
+	int timeSinceStart = static_cast<int>(duration_cast<milliseconds>(high_resolution_clock::now() - startTime).count() / 1000.0f);
+
+	string result = timeSinceStart != 0 ? to_string(frameCount / timeSinceStart) : "0";
+	ss << "FPS: " << result << endl << endl;
+
 	if (frameCount >= MAX_FRAMES)
 	{	// If we surpass max frames then we reset the FPS counter
 		startTime = high_resolution_clock::now();
 		frameCount = 0;
 	}
-
-	int timeSinceStart = static_cast<int>(duration_cast<milliseconds>(high_resolution_clock::now() - startTime).count() / 1000.0f);
-
-	string result = timeSinceStart != 0 ? to_string(frameCount / timeSinceStart) : "0";
-
-	stringstream ss;
-	ss << "FPS: " << result << endl << endl;
 
 	return ss.str();
 }
