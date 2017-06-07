@@ -2,9 +2,7 @@
 #include <iostream>
 #include <chrono>
 #include <sstream>
-#include "Bee.h"
 #include "BeeManager.h"
-#include "FoodSource.h"
 #include "FoodSourceManager.h"
 
 
@@ -53,7 +51,7 @@ int main(int argc, char* argv[])
 	{
 		for (int j = 0; j < beeCols; j++)
 		{	// Distribute bees evenly across the screen
-			beeManager->spawnBee(Bee(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i)));
+			beeManager->spawnBee(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i));
 		}
 	}
 

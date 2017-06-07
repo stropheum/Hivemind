@@ -25,9 +25,9 @@ BeeManager::~BeeManager()
 	mBees.clear();
 }
 
-void BeeManager::spawnBee(const Bee& bee)
+void BeeManager::spawnBee(const sf::Vector2f& position)
 {
-	mBees.push_back(bee);
+	mBees.push_back(Bee(position));
 }
 
 void BeeManager::update(sf::RenderWindow& window, const float& deltaTime)

@@ -14,8 +14,8 @@ public:
 	/// Copy/Move semantics
 	Bee(const Bee& rhs) = default;
 	Bee& operator=(const Bee& rhs) = default;
-	Bee(Bee&& rhs) = delete;
-	Bee& operator=(Bee&& rhs) = delete;
+	Bee(Bee&& rhs) = default;
+	Bee& operator=(Bee&& rhs) = default;
 
 	/// Public API
 	void update(sf::RenderWindow& window, const float& deltaTime);
