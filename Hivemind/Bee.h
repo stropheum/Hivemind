@@ -1,11 +1,14 @@
 #pragma once
-class Bee
+#include "Entity.h"
+
+class Bee : public Entity
 {
 public:
 	const static float STANDARD_BEE_SPEED;
 	const static float BODY_RADIUS;
 	const static sf::Color NORMAL_COLOR;
 	const static sf::Color ALERT_COLOR;
+	const static sf::Color Bee::STANDARD_BODY_COLOR;
 
 	/// Constructors/destructor
 	explicit Bee(const sf::Vector2f& position);
@@ -20,13 +23,10 @@ public:
 	/// Public API
 	void update(sf::RenderWindow& window, const float& deltaTime);
 	void render(sf::RenderWindow& window) const;
-	void setPosition(const sf::Vector2f& position);
-	const sf::Vector2f& getPosition() const;
 	bool collidingWithFoodSource(const class FoodSource& foodSource) const;
 	void setColor(const sf::Color& color);
 	void setTarget(const sf::Vector2f& position);
 	const sf::Vector2f& getTarget() const;
-	float distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2) const;
 	bool hasTarget() const;
 
 private:
@@ -36,7 +36,6 @@ private:
 	/// Private fields
 	sf::CircleShape mBody;
 	sf::RectangleShape mFace;
-	sf::Vector2f mPosition;
 	sf::Vector2f mTarget;
 	float mSpeed;
 	bool mTargeting;

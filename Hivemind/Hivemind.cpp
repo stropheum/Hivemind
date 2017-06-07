@@ -24,10 +24,17 @@ int main(int argc, char* argv[])
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
 #endif
 
+	sf::ContextSettings contextSettings;
+	contextSettings.antialiasingLevel = 8;
+
+	sf::View view(sf::FloatRect(0, 0, 1600, 900));
+
 	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Default);
+	window.setView(view);
 	window.setSize(sf::Vector2u(1600, 900));
 	window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - window.getSize().x / 2,
 		sf::VideoMode::getDesktopMode().height / 2 - window.getSize().y / 2));
+
 	sf::Text fpsMeter;
 	sf::Font font;
 	font.loadFromFile("Hack-Regular.ttf");
@@ -39,8 +46,8 @@ int main(int argc, char* argv[])
 	bool running = false;
 	float deltaTime = 0.0f;
 	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
-	const int beeRows = 5;
-	const int beeCols = 5;
+	const int beeRows = 50;
+	const int beeCols = 50;
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
@@ -84,6 +91,16 @@ int main(int argc, char* argv[])
 				{
 					running = !running;
 				}
+			}
+
+			if (event.type == sf::Event::MouseWheelScrolled)
+			{
+				auto scaleFactor =  1.0f - (2 * event.mouseWheelScroll.delta / 100.0f);
+				view.zoom(scaleFactor);
+				window.setView(view);
+				fpsMeter.scale(scaleFactor, scaleFactor);
+				fpsMeter.setPosition(
+					sf::Vector2f(view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2));
 			}
 		}
 

@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="Bee.h" />
     <ClInclude Include="BeeManager.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="FoodSource.h" />
     <ClInclude Include="FoodSourceManager.h" />
     <ClInclude Include="pch.h" />
@@ -171,6 +172,7 @@
   <ItemGroup>
     <ClCompile Include="Bee.cpp" />
     <ClCompile Include="BeeManager.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FoodSource.cpp" />
     <ClCompile Include="FoodSourceManager.cpp" />
     <ClCompile Include="Hivemind.cpp" />

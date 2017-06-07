@@ -4,12 +4,12 @@
 
 
 FoodSource::FoodSource(const sf::Vector2f& position): 
-	mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), mFoodAmount(100.0f)
+	Entity(position, sf::Color::White, sf::Color(32, 128, 32)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), mFoodAmount(100.0f)
 {
-	mBody.setPosition(position);
+	mBody.setPosition(mPosition);
 	mBody.setOutlineThickness(5);
-	mBody.setOutlineColor(sf::Color::White);
-	mBody.setFillColor(sf::Color(32, 128, 32));
+	mBody.setOutlineColor(mOutlineColor);
+	mBody.setFillColor(mFillColor);
 }
 
 void FoodSource::update(sf::RenderWindow& window, const float& deltaTime)
@@ -33,14 +33,9 @@ void FoodSource::setFoodAmount(const float& foodAmount)
 	mFoodAmount = foodAmount;
 }
 
-const sf::Vector2f& FoodSource::getPosition() const
-{
-	return mBody.getPosition();
-}
-
 sf::Vector2f FoodSource::getCenterTarget() const
 {
-	return sf::Vector2f(mBody.getPosition().x + mDimensions.x / 2, mBody.getPosition().y + mDimensions.y / 2);
+	return sf::Vector2f(mPosition.x + mDimensions.x / 2, mPosition.y + mDimensions.y / 2);
 }
 
 const sf::Vector2f& FoodSource::getDimensions() const

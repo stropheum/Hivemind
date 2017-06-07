@@ -1,5 +1,7 @@
 #pragma once
-class FoodSource
+#include "Entity.h"
+
+class FoodSource : public Entity
 {
 public:
 	/// Constructors/Destructor
@@ -17,7 +19,6 @@ public:
 	void render(sf::RenderWindow& window) const;
 	float getFoodAmount() const;
 	void setFoodAmount(const float& foodAmount);
-	const sf::Vector2f& getPosition() const;
 	sf::Vector2f getCenterTarget() const;
 	const sf::Vector2f& getDimensions() const;
 

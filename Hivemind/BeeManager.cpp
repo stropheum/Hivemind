@@ -2,6 +2,7 @@
 #include "BeeManager.h"
 #include "FoodSourceManager.h"
 #include <random>
+#include "Entity.h"
 
 
 BeeManager* BeeManager::sInstance = nullptr;
@@ -53,7 +54,7 @@ void BeeManager::update(sf::RenderWindow& window, const float& deltaTime)
 			if (iter->collidingWithFoodSource(*foodIter))
 			{
 				collidingWithFoodSource = true;
-				if (iter->distanceBetween(iter->getPosition(), iter->getTarget()) <= Bee::BODY_RADIUS)
+				if (Entity::distanceBetween(iter->getPosition(), iter->getTarget()) <= Bee::BODY_RADIUS)
 				{
 					sf::Vector2f newTarget;
 					do

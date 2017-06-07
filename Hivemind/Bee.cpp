@@ -7,16 +7,18 @@
 
 
 const float Bee::STANDARD_BEE_SPEED = 200.0f;
-const float Bee::BODY_RADIUS = 7.5f;
-const sf::Color Bee::NORMAL_COLOR = sf::Color(200, 200, 200);
+const float Bee::BODY_RADIUS = 12.0f;
+const sf::Color Bee::NORMAL_COLOR = sf::Color(192, 192, 192);
 const sf::Color Bee::ALERT_COLOR = sf::Color::Red;
+const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
 
 Bee::Bee(const sf::Vector2f& position):
-	mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), mPosition(position), mTarget(position), mSpeed(STANDARD_BEE_SPEED), mTargeting(false)
+	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), 
+	mTarget(position), mSpeed(STANDARD_BEE_SPEED), mTargeting(false)
 {
-	mBody.setFillColor(sf::Color(0, 128, 128));
-	mBody.setOutlineColor(NORMAL_COLOR);
-	mBody.setOutlineThickness(2);
+	mBody.setFillColor(mFillColor);
+	mBody.setOutlineColor(mOutlineColor);
+	mBody.setOutlineThickness(3);
 	mFace.setFillColor(sf::Color::White);
 	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
 	mFace.setPosition(mBody.getPosition().x, mBody.getPosition().y + BODY_RADIUS);
@@ -45,23 +47,6 @@ void Bee::render(sf::RenderWindow& window) const
 {
 	window.draw(mBody);
 	window.draw(mFace);
-}
-
-void Bee::setPosition(const sf::Vector2f& position)
-{
-	mPosition = position;
-}
-
-const sf::Vector2f& Bee::getPosition() const
-{
-	return mPosition;
-}
-
-float Bee::distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2) const
-{
-	auto xDif = abs(position_1.x - position_2.x);
-	auto yDif = abs(position_1.y - position_2.y);
-	return sqrt((xDif * xDif) + (yDif * yDif));
 }
 
 bool Bee::hasTarget() const
