@@ -46,8 +46,8 @@ int main(int argc, char* argv[])
 	bool running = false;
 	float deltaTime = 0.0f;
 	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
-	const int beeRows = 25;
-	const int beeCols = 25;
+	const int beeRows = 15;
+	const int beeCols = 15;
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
