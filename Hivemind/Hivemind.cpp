@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
 
 			if (event.type == sf::Event::Resized)
 			{
-				window.setView(sf::View(sf::FloatRect(0, 0, float(event.size.width), float(event.size.height))));
+				// Handle resize-specific logic
 			}
 
 			if (event.type == sf::Event::KeyPressed)
