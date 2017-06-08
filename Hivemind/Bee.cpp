@@ -3,19 +3,26 @@
 #include <math.h>
 #include "BeeManager.h"
 #include "FoodSource.h"
-#include <winnt.h>
+#include "FoodSourceManager.h"
+
+using namespace std;
+using namespace std::chrono;
 
 
 const float Bee::STANDARD_BEE_SPEED = 200.0f;
 const float Bee::BODY_RADIUS = 12.0f;
+const float Bee::TARGET_RADIUS = 5.0f;
+const float Bee::STANDARD_HARVESTING_DURATION = 10.0f;
 const sf::Color Bee::NORMAL_COLOR = sf::Color(192, 192, 192);
 const sf::Color Bee::ALERT_COLOR = sf::Color::Red;
 const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
 
 Bee::Bee(const sf::Vector2f& position):
-	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), 
-	mTarget(position), mSpeed(STANDARD_BEE_SPEED), mTargeting(false)
+	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mGenerator(), mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), 
+	mTarget(position), mSpeed(STANDARD_BEE_SPEED), mTargeting(false), mState(State::SeekingTarget), mHarvestingStartTime(), 
+	mHarvestingDuration(STANDARD_HARVESTING_DURATION)
 {
+	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
 	mBody.setFillColor(mFillColor);
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setOutlineThickness(3);
@@ -33,9 +40,25 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 	float rotationAngle = rotationRadians * (180 / PI);
 
-	sf::Vector2f newPosition(
-		mPosition.x + cos(rotationRadians) * mSpeed * deltaTime, 
-		mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
+	sf::Vector2f newPosition;
+	switch(mState)
+	{
+	case State::SeekingTarget:
+		newPosition = sf::Vector2f(
+			mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
+			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
+		handleFoodSourceCollisions();
+		break;
+	case State::HarvestingFood: // Currently do nothing until wandering algorithm
+		newPosition = mPosition;
+		float harvestingSeconds = duration_cast<milliseconds>(high_resolution_clock::now() - mHarvestingStartTime).count() / 1000.0f;
+		if (harvestingSeconds >= mHarvestingDuration)
+		{	// Now we go back to finding a target
+			mTargeting = false;
+			mState = State::SeekingTarget;
+		}
+		break;
+	}
 
 	mPosition = newPosition;
 	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
@@ -67,7 +90,6 @@ bool Bee::collidingWithFoodSource(const FoodSource& foodSource) const
 		(mPosition.x - BODY_RADIUS < rightWall) &&
 		(mPosition.y + BODY_RADIUS > topWall) &&
 		(mPosition.y - BODY_RADIUS < bottomWall);
-
 }
 
 void Bee::setColor(const sf::Color& color)
@@ -84,4 +106,47 @@ void Bee::setTarget(const sf::Vector2f& position)
 const sf::Vector2f& Bee::getTarget() const
 {
 	return mTarget;
+}
+
+void Bee::handleFoodSourceCollisions()
+{
+	auto foodSourceManager = FoodSourceManager::getInstance();
+	bool colliding = false;
+	bool reachedCenterOfSource = false;
+	for (auto foodIter = foodSourceManager->begin(); foodIter != foodSourceManager->end(); ++foodIter)
+	{
+		if (!hasTarget())
+		{	// Set initial target
+			std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
+			int targetIndex = distribution(mGenerator);
+			sf::Vector2f newTarget = foodSourceManager->getFoodSource(targetIndex).getCenterTarget();
+
+			setTarget(newTarget);
+		}
+
+		if (collidingWithFoodSource(*foodIter))
+		{
+			colliding = true;
+			if (Entity::distanceBetween(getPosition(), getTarget()) <= Bee::TARGET_RADIUS)
+			{
+				reachedCenterOfSource = true;
+				sf::Vector2f newTarget;
+				do
+				{
+					std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
+					int targetIndex = distribution(mGenerator);
+					newTarget = foodSourceManager->getFoodSource(targetIndex).getCenterTarget();
+				} while (newTarget == getTarget());
+
+				setTarget(newTarget);
+			}
+		}
+	}
+
+	setColor(colliding ? Bee::ALERT_COLOR : Bee::NORMAL_COLOR);
+	if (reachedCenterOfSource)
+	{
+		mState = State::HarvestingFood;
+		mHarvestingStartTime = std::chrono::high_resolution_clock::now();
+	}
 }

@@ -24,8 +24,8 @@ public:
 
 private:
 	/// Constants
-	const float STANDARD_WIDTH = 100.0f;
-	const float STANDARD_HEIGHT = 100.0f;
+	const float STANDARD_WIDTH = 200.0f;
+	const float STANDARD_HEIGHT = 200.0f;
 
 	/// Private API
 

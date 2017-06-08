@@ -46,8 +46,8 @@ int main(int argc, char* argv[])
 	bool running = false;
 	float deltaTime = 0.0f;
 	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
-	const int beeRows = 50;
-	const int beeCols = 50;
+	const int beeRows = 25;
+	const int beeCols = 25;
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
@@ -63,11 +63,11 @@ int main(int argc, char* argv[])
 	}
 
 	auto windowSize = window.getSize();
-	foodSourceManager->spawnFoodSource(sf::Vector2f(float(windowSize.x / 2) - 50, float(windowSize.y / 2) - 50));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(float(windowSize.x / 4) - 50, float(windowSize.y / 4) - 50));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - float(windowSize.x / 4) - 50, float(windowSize.y / 4) - 50));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(float(windowSize.x / 4) - 50, windowSize.y -  float(windowSize.y / 4) - 50));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - float(windowSize.x / 4) - 50, windowSize.y - float(windowSize.y / 4) - 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(float(windowSize.x / 2) - 100, float(windowSize.y / 2) - 100));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, 100));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, 100.0f));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, windowSize.y - 300.0f));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, windowSize.y - 300.0f));
 
 	while (window.isOpen())
 	{

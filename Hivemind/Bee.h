@@ -1,11 +1,23 @@
 #pragma once
 #include "Entity.h"
+#include <random>
+#include <chrono>
+
 
 class Bee : public Entity
 {
 public:
+
+	enum State
+	{
+		SeekingTarget,
+		HarvestingFood
+	};
+
 	const static float STANDARD_BEE_SPEED;
 	const static float BODY_RADIUS;
+	const static float TARGET_RADIUS;
+	const static float STANDARD_HARVESTING_DURATION;
 	const static sf::Color NORMAL_COLOR;
 	const static sf::Color ALERT_COLOR;
 	const static sf::Color Bee::STANDARD_BODY_COLOR;
@@ -33,10 +45,17 @@ private:
 	/// Constants
 	const float PI = 3.14159265359f;
 
+	/// Private API
+	void handleFoodSourceCollisions();
+
 	/// Private fields
+	std::default_random_engine mGenerator;
 	sf::CircleShape mBody;
 	sf::RectangleShape mFace;
 	sf::Vector2f mTarget;
 	float mSpeed;
 	bool mTargeting;
+	State mState;
+	std::chrono::high_resolution_clock::time_point mHarvestingStartTime;
+	float mHarvestingDuration;
 };
