@@ -59,7 +59,7 @@ std::vector<FoodSource>::iterator FoodSourceManager::end()
 	return mFoodSources.end();
 }
 
-const FoodSource& FoodSourceManager::getFoodSource(const std::uint32_t& index)
+FoodSource& FoodSourceManager::getFoodSource(const std::uint32_t& index)
 {
 	if (index >= mFoodSources.size())
 	{

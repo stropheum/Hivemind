@@ -56,6 +56,7 @@ private:
 	float mSpeed;
 	bool mTargeting;
 	State mState;
-	std::chrono::high_resolution_clock::time_point mHarvestingStartTime;
 	float mHarvestingDuration;
+	sf::Clock mHarvestingClock;
+	class FoodSource* mTargetFoodSource;
 };

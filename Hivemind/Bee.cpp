@@ -19,8 +19,8 @@ const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
 
 Bee::Bee(const sf::Vector2f& position):
 	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mGenerator(), mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), 
-	mTarget(position), mSpeed(STANDARD_BEE_SPEED), mTargeting(false), mState(State::SeekingTarget), mHarvestingStartTime(), 
-	mHarvestingDuration(STANDARD_HARVESTING_DURATION)
+	mTarget(position), mSpeed(STANDARD_BEE_SPEED), mTargeting(false), mState(State::SeekingTarget),
+	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mHarvestingClock(), mTargetFoodSource(nullptr)
 {
 	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
 	mBody.setFillColor(mFillColor);
@@ -50,12 +50,40 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 		handleFoodSourceCollisions();
 		break;
 	case State::HarvestingFood: // Currently do nothing until wandering algorithm
-		newPosition = mPosition;
-		float harvestingSeconds = duration_cast<milliseconds>(high_resolution_clock::now() - mHarvestingStartTime).count() / 1000.0f;
-		if (harvestingSeconds >= mHarvestingDuration)
+		newPosition = mPosition; // Stand still if for whatever reason you can't find your food source
+
+		if (mTargetFoodSource != nullptr)
+		{
+			if (distanceBetween(mTarget, mPosition) <= TARGET_RADIUS)
+			{
+				auto dimensions = mTargetFoodSource->getDimensions();
+				uniform_int_distribution<int> distributionX(static_cast<int>(-dimensions.x / 2), static_cast<int>(dimensions.x / 2));
+				uniform_int_distribution<int> distributionY(static_cast<int>(-dimensions.y / 2), static_cast<int>(dimensions.y / 2));
+				sf::Vector2f offset(static_cast<float>(distributionX(mGenerator)), static_cast<float>(distributionY(mGenerator)));
+				setTarget(mTargetFoodSource->getCenterTarget() + offset);
+			}
+
+			newPosition = sf::Vector2f(
+				mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
+				mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
+		}
+
+		mPosition = newPosition;
+
+		if (mHarvestingClock.getElapsedTime().asSeconds() >= mHarvestingDuration)
 		{	// Now we go back to finding a target
 			mTargeting = false;
 			mState = State::SeekingTarget;
+		}
+
+		setColor(Bee::NORMAL_COLOR);
+		for (auto iter = FoodSourceManager::getInstance()->begin(); iter != FoodSourceManager::getInstance()->end(); ++iter)
+		{
+			if (collidingWithFoodSource(*iter))
+			{
+				setColor(Bee::ALERT_COLOR);
+				break;
+			}
 		}
 		break;
 	}
@@ -113,17 +141,18 @@ void Bee::handleFoodSourceCollisions()
 	auto foodSourceManager = FoodSourceManager::getInstance();
 	bool colliding = false;
 	bool reachedCenterOfSource = false;
+	
+	if (!hasTarget())
+	{	// Set initial target
+		std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
+		int targetIndex = distribution(mGenerator);
+		sf::Vector2f newTarget = foodSourceManager->getFoodSource(targetIndex).getCenterTarget();
+
+		setTarget(newTarget);
+	}
+
 	for (auto foodIter = foodSourceManager->begin(); foodIter != foodSourceManager->end(); ++foodIter)
 	{
-		if (!hasTarget())
-		{	// Set initial target
-			std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
-			int targetIndex = distribution(mGenerator);
-			sf::Vector2f newTarget = foodSourceManager->getFoodSource(targetIndex).getCenterTarget();
-
-			setTarget(newTarget);
-		}
-
 		if (collidingWithFoodSource(*foodIter))
 		{
 			colliding = true;
@@ -135,6 +164,7 @@ void Bee::handleFoodSourceCollisions()
 				{
 					std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
 					int targetIndex = distribution(mGenerator);
+					mTargetFoodSource = &foodSourceManager->getFoodSource(targetIndex);
 					newTarget = foodSourceManager->getFoodSource(targetIndex).getCenterTarget();
 				} while (newTarget == getTarget());
 
@@ -147,6 +177,6 @@ void Bee::handleFoodSourceCollisions()
 	if (reachedCenterOfSource)
 	{
 		mState = State::HarvestingFood;
-		mHarvestingStartTime = std::chrono::high_resolution_clock::now();
+		mHarvestingClock.restart();
 	}
 }

@@ -10,6 +10,7 @@ using namespace std;
 using namespace std::chrono;
 
 const float FRAME_INTERVAL = 1.0f / 120.0f;
+sf::Clock deltaClock;
 
 string computeFrameRate();
 
@@ -44,8 +45,6 @@ int main(int argc, char* argv[])
 	fpsMeter.setFillColor(sf::Color(200, 200, 200));
 
 	bool running = false;
-	float deltaTime = 0.0f;
-	high_resolution_clock::time_point lastFrame = high_resolution_clock::now();
 	const int beeRows = 15;
 	const int beeCols = 15;
 	const int horizontalSpacing = window.getSize().x / beeCols;
@@ -109,18 +108,14 @@ int main(int argc, char* argv[])
 			window.close();
 		}
 
-		deltaTime = (duration_cast<milliseconds>(high_resolution_clock::now() - lastFrame).count() / 1000.0f);
-
-		if (deltaTime > FRAME_INTERVAL)
+		if (deltaClock.getElapsedTime().asSeconds() > FRAME_INTERVAL)
 		{
-			// Reset last frame so time isn't dilated between updates
-			lastFrame = high_resolution_clock::now();
-
 			// Handle business logic updates
 			if (running)
 			{
-				beeManager->update(window, deltaTime);
+				beeManager->update(window, deltaClock.getElapsedTime().asSeconds());
 			}
+			deltaClock.restart();
 
 			// Handle rendering
 			window.clear(sf::Color(32, 32, 32));
@@ -134,9 +129,6 @@ int main(int argc, char* argv[])
 			beeManager->render(window);
 
 			window.display();
-
-			// Reset delta time
-			deltaTime = 0.0f;
 		}
 		
 	}
