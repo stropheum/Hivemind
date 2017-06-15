@@ -40,10 +40,12 @@ public:
 	void setTarget(const sf::Vector2f& position);
 	const sf::Vector2f& getTarget() const;
 	bool hasTarget() const;
+	void setFont(sf::Font* const font);
 
 private:
 	/// Constants
 	const float PI = 3.14159265359f;
+	const float EXTRACTION_YIELD = 10.0f;
 
 	/// Private API
 	void handleFoodSourceCollisions();
@@ -59,4 +61,7 @@ private:
 	float mHarvestingDuration;
 	sf::Clock mHarvestingClock;
 	class FoodSource* mTargetFoodSource;
+	float mFoodAmount;
+	sf::Text mText;
+	sf::Font* mFont;
 };

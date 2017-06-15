@@ -10,6 +10,7 @@ using namespace std;
 using namespace std::chrono;
 
 const float FRAME_INTERVAL = 1.0f / 120.0f;
+const float CAMERA_SPEED = 5.0f;
 sf::Clock deltaClock;
 
 string computeFrameRate();
@@ -29,13 +30,14 @@ int main(int argc, char* argv[])
 	contextSettings.antialiasingLevel = 8;
 
 	sf::View view(sf::FloatRect(0, 0, 1600, 900));
+	sf::Vector2f cameraMovement(0, 0);
 
 	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Default);
 	window.setView(view);
 	window.setSize(sf::Vector2u(1600, 900));
 	window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - window.getSize().x / 2,
 		sf::VideoMode::getDesktopMode().height / 2 - window.getSize().y / 2));
-
+	
 	sf::Text fpsMeter;
 	sf::Font font;
 	font.loadFromFile("Hack-Regular.ttf");
@@ -60,13 +62,23 @@ int main(int argc, char* argv[])
 			beeManager->spawnBee(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i));
 		}
 	}
+	for (auto iter = beeManager->begin(); iter != beeManager->end(); ++iter)
+	{
+		iter->setFont(&font);
+	}
 
 	auto windowSize = window.getSize();
+
 	foodSourceManager->spawnFoodSource(sf::Vector2f(float(windowSize.x / 2) - 100, float(windowSize.y / 2) - 100));
 	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, 100));
 	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, 100.0f));
 	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, windowSize.y - 300.0f));
 	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, windowSize.y - 300.0f));
+
+	for (auto iter = foodSourceManager->begin(); iter != foodSourceManager->end(); ++iter)
+	{
+		iter->setFont(&font);
+	}
 
 	while (window.isOpen())
 	{
@@ -89,6 +101,53 @@ int main(int argc, char* argv[])
 				if (event.key.code == sf::Keyboard::Space)
 				{
 					running = !running;
+				}
+
+				if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
+				{
+					cameraMovement.x = -CAMERA_SPEED;
+				}
+				else if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
+				{
+					cameraMovement.x = CAMERA_SPEED;
+				}
+				else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)
+				{
+					cameraMovement.y = -CAMERA_SPEED;
+				}
+				else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
+				{
+					cameraMovement.y = CAMERA_SPEED;
+				}
+				else
+				{
+					cameraMovement = sf::Vector2f(0, 0);
+				}
+
+				view.move(cameraMovement);
+
+				fpsMeter.setPosition(
+					sf::Vector2f(view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2));
+				window.setView(view);
+			}
+
+			if (event.type == sf::Event::KeyReleased)
+			{
+				if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
+				{
+					cameraMovement.x = 0;
+				}
+				else if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
+				{
+					cameraMovement.x = 0;
+				}
+				else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)
+				{
+					cameraMovement.y = 0;
+				}
+				else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
+				{
+					cameraMovement.y = 0;
 				}
 			}
 
@@ -114,6 +173,11 @@ int main(int argc, char* argv[])
 			if (running)
 			{
 				beeManager->update(window, deltaClock.getElapsedTime().asSeconds());
+				foodSourceManager->update(window, deltaClock.getElapsedTime().asSeconds());
+				for(auto iter = foodSourceManager->begin(); iter != foodSourceManager->end(); ++iter)
+				{
+					iter->setFont(&font);
+				}
 			}
 			deltaClock.restart();
 
@@ -123,9 +187,7 @@ int main(int argc, char* argv[])
 			fpsMeter.setString(computeFrameRate());
 			window.draw(fpsMeter);
 
-			// Rendering temporary food source
 			foodSourceManager->render(window);
-
 			beeManager->render(window);
 
 			window.display();

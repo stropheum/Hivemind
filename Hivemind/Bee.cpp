@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "Bee.h"
-#include <math.h>
 #include "BeeManager.h"
 #include "FoodSource.h"
 #include "FoodSourceManager.h"
+#include <sstream>
 
 using namespace std;
 using namespace std::chrono;
@@ -20,7 +20,7 @@ const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
 Bee::Bee(const sf::Vector2f& position):
 	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mGenerator(), mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), 
 	mTarget(position), mSpeed(STANDARD_BEE_SPEED), mTargeting(false), mState(State::SeekingTarget),
-	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mHarvestingClock(), mTargetFoodSource(nullptr)
+	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mHarvestingClock(), mTargetFoodSource(nullptr), mFoodAmount(0.0f), mText(), mFont(nullptr)
 {
 	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
 	mBody.setFillColor(mFillColor);
@@ -29,6 +29,14 @@ Bee::Bee(const sf::Vector2f& position):
 	mFace.setFillColor(sf::Color::White);
 	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
 	mFace.setPosition(mBody.getPosition().x, mBody.getPosition().y + BODY_RADIUS);
+
+	mText.setCharacterSize(16);
+	mText.setOutlineColor(sf::Color::White);
+	mText.setFillColor(sf::Color::White);
+	stringstream ss;
+	ss << "Food: " << mFoodAmount;
+	mText.setString(ss.str());
+	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width/2.0f, 35));
 }
 
 void Bee::update(sf::RenderWindow& window, const float& deltaTime)
@@ -49,8 +57,8 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
 		handleFoodSourceCollisions();
 		break;
-	case State::HarvestingFood: // Currently do nothing until wandering algorithm
-		newPosition = mPosition; // Stand still if for whatever reason you can't find your food source
+	case State::HarvestingFood:
+		newPosition = mPosition;
 
 		if (mTargetFoodSource != nullptr)
 		{
@@ -72,6 +80,7 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 
 		if (mHarvestingClock.getElapsedTime().asSeconds() >= mHarvestingDuration)
 		{	// Now we go back to finding a target
+			mFoodAmount += mTargetFoodSource->takeFood(EXTRACTION_YIELD);
 			mTargeting = false;
 			mState = State::SeekingTarget;
 		}
@@ -92,17 +101,32 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
 	mFace.setPosition(mPosition.x, mPosition.y);
 	mFace.setRotation(rotationAngle);
+
+	stringstream ss;
+	ss << "Food: " << mFoodAmount;
+	mText.setString(ss.str());
+	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
 }
 
 void Bee::render(sf::RenderWindow& window) const
 {
 	window.draw(mBody);
 	window.draw(mFace);
+	if (mFont != nullptr)
+	{
+		window.draw(mText);
+	}
 }
 
 bool Bee::hasTarget() const
 {
 	return mTargeting;
+}
+
+void Bee::setFont(sf::Font* const font)
+{
+	mFont = font;
+	mText.setFont(*font);
 }
 
 bool Bee::collidingWithFoodSource(const FoodSource& foodSource) const
@@ -146,7 +170,8 @@ void Bee::handleFoodSourceCollisions()
 	{	// Set initial target
 		std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
 		int targetIndex = distribution(mGenerator);
-		sf::Vector2f newTarget = foodSourceManager->getFoodSource(targetIndex).getCenterTarget();
+		mTargetFoodSource = &foodSourceManager->getFoodSource(targetIndex);
+		sf::Vector2f newTarget = mTargetFoodSource->getCenterTarget();
 
 		setTarget(newTarget);
 	}
@@ -165,7 +190,7 @@ void Bee::handleFoodSourceCollisions()
 					std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
 					int targetIndex = distribution(mGenerator);
 					mTargetFoodSource = &foodSourceManager->getFoodSource(targetIndex);
-					newTarget = foodSourceManager->getFoodSource(targetIndex).getCenterTarget();
+					newTarget = mTargetFoodSource->getCenterTarget();
 				} while (newTarget == getTarget());
 
 				setTarget(newTarget);
