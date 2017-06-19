@@ -14,7 +14,7 @@ public:
 		const sf::Color& fillColor = sf::Color::White);
 
 	/// Default Destructor
-	~Entity() = default;
+	virtual ~Entity() = default;
 
 	/// Default Copy Constructor
 	/// @Param rhs: Entity being copied
@@ -37,6 +37,9 @@ public:
 #pragma endregion
 
 #pragma region Public API
+
+	virtual void update(sf::RenderWindow& window, const float& deltaTime) = 0;
+	virtual void render(sf::RenderWindow& window) const = 0;
 
 	/// Computes the distance between the position of two entities
 	/// @Param position_1: The position of the first entity

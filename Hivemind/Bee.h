@@ -33,14 +33,14 @@ public:
 	Bee& operator=(Bee&& rhs) = default;
 
 	/// Public API
-	void update(sf::RenderWindow& window, const float& deltaTime);
-	void render(sf::RenderWindow& window) const;
+	void update(sf::RenderWindow& window, const float& deltaTime) override;
+	void render(sf::RenderWindow& window) const override ;
 	bool collidingWithFoodSource(const class FoodSource& foodSource) const;
 	void setColor(const sf::Color& color);
 	void setTarget(const sf::Vector2f& position);
 	const sf::Vector2f& getTarget() const;
 	bool hasTarget() const;
-	void setFont(sf::Font* const font);
+//	void setFont(sf::Font* const font);
 
 private:
 	/// Constants
@@ -63,5 +63,5 @@ private:
 	class FoodSource* mTargetFoodSource;
 	float mFoodAmount;
 	sf::Text mText;
-	sf::Font* mFont;
+	sf::Font mFont;
 };

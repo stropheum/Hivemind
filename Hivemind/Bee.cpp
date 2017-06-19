@@ -20,7 +20,7 @@ const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
 Bee::Bee(const sf::Vector2f& position):
 	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mGenerator(), mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), 
 	mTarget(position), mSpeed(STANDARD_BEE_SPEED), mTargeting(false), mState(State::SeekingTarget),
-	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mHarvestingClock(), mTargetFoodSource(nullptr), mFoodAmount(0.0f), mText(), mFont(nullptr)
+	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mHarvestingClock(), mTargetFoodSource(nullptr), mFoodAmount(0.0f), mText(), mFont()
 {
 	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
 	mBody.setFillColor(mFillColor);
@@ -30,6 +30,12 @@ Bee::Bee(const sf::Vector2f& position):
 	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
 	mFace.setPosition(mBody.getPosition().x, mBody.getPosition().y + BODY_RADIUS);
 
+	if (!mFont.loadFromFile("Hack-Regular.ttf"))
+	{
+		throw std::exception("Error loading font from file");
+	}
+
+	mText.setFont(mFont);
 	mText.setCharacterSize(16);
 	mText.setOutlineColor(sf::Color::White);
 	mText.setFillColor(sf::Color::White);
@@ -112,10 +118,10 @@ void Bee::render(sf::RenderWindow& window) const
 {
 	window.draw(mBody);
 	window.draw(mFace);
-	if (mFont != nullptr)
-	{
-		window.draw(mText);
-	}
+//	if (mFont != nullptr)
+//	{
+//		window.draw(mText);
+//	}
 }
 
 bool Bee::hasTarget() const
@@ -123,11 +129,11 @@ bool Bee::hasTarget() const
 	return mTargeting;
 }
 
-void Bee::setFont(sf::Font* const font)
-{
-	mFont = font;
-	mText.setFont(*font);
-}
+//void Bee::setFont(sf::Font* const font)
+//{
+//	mFont = font;
+//	mText.setFont(*font);
+//}
 
 bool Bee::collidingWithFoodSource(const FoodSource& foodSource) const
 {

@@ -4,6 +4,7 @@
 #include <sstream>
 #include "BeeManager.h"
 #include "FoodSourceManager.h"
+#include "Hive.h"
 
 
 using namespace std;
@@ -55,30 +56,27 @@ int main(int argc, char* argv[])
 	BeeManager* beeManager = BeeManager::getInstance();
 	FoodSourceManager* foodSourceManager = FoodSourceManager::getInstance();
 
-	for (int i = 0; i < beeRows; i++)
+	for (uint32_t i = 0; i < beeRows; i++)
 	{
-		for (int j = 0; j < beeCols; j++)
+		for (uint32_t j = 0; j < beeCols; j++)
 		{	// Distribute bees evenly across the screen
 			beeManager->spawnBee(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i));
 		}
 	}
-	for (auto iter = beeManager->begin(); iter != beeManager->end(); ++iter)
-	{
-		iter->setFont(&font);
-	}
+//	for (auto iter = beeManager->begin(); iter != beeManager->end(); ++iter)
+//	{
+//		iter->setFont(&font);
+//	}
 
 	auto windowSize = window.getSize();
 
-	foodSourceManager->spawnFoodSource(sf::Vector2f(float(windowSize.x / 2) - 100, float(windowSize.y / 2) - 100));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, 100));
+	Hive hive(sf::Vector2f(float(windowSize.x / 2) - 100, float(windowSize.y / 2) - 100));
+
+//	FoodSource food(sf::Vector2f(100, 100));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(100, 100));
 	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, 100.0f));
 	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, windowSize.y - 300.0f));
 	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, windowSize.y - 300.0f));
-
-	for (auto iter = foodSourceManager->begin(); iter != foodSourceManager->end(); ++iter)
-	{
-		iter->setFont(&font);
-	}
 
 	while (window.isOpen())
 	{
@@ -173,11 +171,9 @@ int main(int argc, char* argv[])
 			if (running)
 			{
 				beeManager->update(window, deltaClock.getElapsedTime().asSeconds());
-				foodSourceManager->update(window, deltaClock.getElapsedTime().asSeconds());
-				for(auto iter = foodSourceManager->begin(); iter != foodSourceManager->end(); ++iter)
-				{
-					iter->setFont(&font);
-				}
+//				foodSourceManager->update(window, deltaClock.getElapsedTime().asSeconds());
+//				food.update(window, deltaClock.getElapsedTime().asSeconds());
+				hive.update(window, deltaClock.getElapsedTime().asSeconds());
 			}
 			deltaClock.restart();
 
@@ -187,8 +183,10 @@ int main(int argc, char* argv[])
 			fpsMeter.setString(computeFrameRate());
 			window.draw(fpsMeter);
 
-			foodSourceManager->render(window);
+			hive.render(window);
+//			foodSourceManager->render(window);
 			beeManager->render(window);
+//			food.render(window);
 
 			window.display();
 		}
