@@ -167,7 +167,6 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FoodSource.h" />
     <ClInclude Include="FoodSourceManager.h" />
-    <ClInclude Include="Hive.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -176,7 +175,6 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FoodSource.cpp" />
     <ClCompile Include="FoodSourceManager.cpp" />
-    <ClCompile Include="Hive.cpp" />
     <ClCompile Include="Hivemind.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

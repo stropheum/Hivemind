@@ -34,12 +34,15 @@ public:
 
 	float takeFood(const float amount);
 
+	void setFont(sf::Font* const font);
+
 #pragma endregion 
 
 #pragma region Public API
 
-	void update(sf::RenderWindow& window, const float& deltaTime) override;
-	void render(sf::RenderWindow& window) const override;
+	//TODO: Move update and render to Entity
+	void update(sf::RenderWindow& window, const float& deltaTime);
+	void render(sf::RenderWindow& window) const;
 
 	/// Accessor for the amount of food that is currently stored
 	/// @Return: The amount of food stored in the source
@@ -68,7 +71,7 @@ private:
 	sf::Vector2f mDimensions;
 	sf::RectangleShape mBody;
 	float mFoodAmount;
-	sf::Font mFont;
+	sf::Font* mFont;
 	sf::Text mText;
 };
 
