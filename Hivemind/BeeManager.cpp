@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "BeeManager.h"
-#include "FoodSourceManager.h"
 #include <random>
-#include "Entity.h"
 
 
 BeeManager* BeeManager::sInstance = nullptr;
@@ -30,9 +28,9 @@ BeeManager::~BeeManager()
 	mBees.clear();
 }
 
-void BeeManager::spawnBee(const sf::Vector2f& position)
+void BeeManager::spawnBee(const sf::Vector2f& position, const Hive& hive)
 {
-	mBees.push_back(new Bee(position));
+	mBees.push_back(new Bee(position, hive));
 }
 
 void BeeManager::update(sf::RenderWindow& window, const float& deltaTime)

@@ -14,7 +14,7 @@ public:
 		const sf::Color& fillColor = sf::Color::White);
 
 	/// Default Destructor
-	~Entity() = default;
+	virtual ~Entity() = default;
 
 	/// Default Copy Constructor
 	/// @Param rhs: Entity being copied
@@ -37,6 +37,15 @@ public:
 #pragma endregion
 
 #pragma region Public API
+
+	/// Update method called by the main game loop
+	/// @Param window: The window that the simulation is being rendered to
+	/// @Param deltaTime: The time since the last update call
+	virtual void update(sf::RenderWindow& window, const float& deltaTime) = 0;
+
+	/// Render method called by the main game loop
+	/// @Param window: The window that the simulation is being rendered to
+	virtual void render(sf::RenderWindow& window) const = 0;
 
 	/// Computes the distance between the position of two entities
 	/// @Param position_1: The position of the first entity

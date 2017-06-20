@@ -4,6 +4,7 @@
 #include <sstream>
 #include "BeeManager.h"
 #include "FoodSourceManager.h"
+#include "HiveManager.h"
 
 
 using namespace std;
@@ -52,24 +53,25 @@ int main(int argc, char* argv[])
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
+	HiveManager* hiveManager = HiveManager::getInstance();
 	BeeManager* beeManager = BeeManager::getInstance();
 	FoodSourceManager* foodSourceManager = FoodSourceManager::getInstance();
+
+	auto windowSize = window.getSize();
+	hiveManager->spawnHive(sf::Vector2f(float(windowSize.x / 2) - 100, float(windowSize.y / 2) - 100));
+
+	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, 100));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, 100.0f));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, windowSize.y - 300.0f));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, windowSize.y - 300.0f));
 
 	for (int i = 0; i < beeRows; i++)
 	{
 		for (int j = 0; j < beeCols; j++)
 		{	// Distribute bees evenly across the screen
-			beeManager->spawnBee(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i));
+			beeManager->spawnBee(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i), *hiveManager->getHive(0));
 		}
 	}
-
-	auto windowSize = window.getSize();
-
-	foodSourceManager->spawnFoodSource(sf::Vector2f(float(windowSize.x / 2) - 100, float(windowSize.y / 2) - 100));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, 100));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, 100.0f));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, windowSize.y - 300.0f));
-	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, windowSize.y - 300.0f));
 
 	deltaClock.restart();
 
@@ -165,6 +167,7 @@ int main(int argc, char* argv[])
 		if (running)
 		{
 			auto deltaTime = deltaClock.restart().asSeconds();
+			hiveManager->update(window, deltaTime);
 			beeManager->update(window, deltaTime);
 			foodSourceManager->update(window, deltaTime);
 		}
@@ -175,6 +178,7 @@ int main(int argc, char* argv[])
 		fpsMeter.setString(computeFrameRate());
 		window.draw(fpsMeter);
 
+		hiveManager->render(window);
 		foodSourceManager->render(window);
 		beeManager->render(window);
 

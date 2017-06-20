@@ -12,25 +12,25 @@ public:
 	explicit FoodSource(const sf::Vector2f& position);
 
 	/// Default Destructor
-	~FoodSource() = default;
+	virtual ~FoodSource() = default;
 
 	/// Default Copy Constructor
 	/// @Param rhs: The food source being copied
-	FoodSource(const FoodSource& rhs) = default;
+	FoodSource(const FoodSource& rhs) = delete;
 
 	/// Default Assignment Operator
 	/// @Param rhs: The food source being assigned to
 	/// @Return: A copy of the specified food source
-	FoodSource& operator=(const FoodSource& rhs) = default;
+	FoodSource& operator=(const FoodSource& rhs) = delete;
 
 	/// Default Move Copy Constructor
 	/// @Param rhs: The food source being moved
-	FoodSource(FoodSource&& rhs) = default;
+	FoodSource(FoodSource&& rhs) = delete;
 
 	/// Default Move Assignment Operator
 	/// @Param rhs: The food source being moved
 	/// @Return: A reference to the moved food source
-	FoodSource& operator=(FoodSource&& rhs) = default;
+	FoodSource& operator=(FoodSource&& rhs) = delete;
 
 	float takeFood(const float amount);
 
@@ -38,9 +38,8 @@ public:
 
 #pragma region Public API
 
-	//TODO: Move update and render to Entity
-	void update(sf::RenderWindow& window, const float& deltaTime);
-	void render(sf::RenderWindow& window) const;
+	void update(sf::RenderWindow& window, const float& deltaTime) override;
+	void render(sf::RenderWindow& window) const override;
 
 	/// Accessor for the amount of food that is currently stored
 	/// @Return: The amount of food stored in the source

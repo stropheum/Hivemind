@@ -3,7 +3,7 @@
 #include "BeeManager.h"
 #include "FoodSource.h"
 #include "FoodSourceManager.h"
-#include <sstream>
+#include "Hive.h"
 
 using namespace std;
 
@@ -15,8 +15,8 @@ const sf::Color Bee::NORMAL_COLOR = sf::Color(192, 192, 192);
 const sf::Color Bee::ALERT_COLOR = sf::Color::Red;
 const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
 
-Bee::Bee(const sf::Vector2f& position):
-	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mGenerator(), mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), 
+Bee::Bee(const sf::Vector2f& position, const Hive& hive):
+	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mParentHive(hive), mGenerator(), mBody(BODY_RADIUS), mFace(sf::Vector2f(BODY_RADIUS, 2)), 
 	mTarget(position), mSpeed(STANDARD_BEE_SPEED), mTargeting(false), mState(State::SeekingTarget),
 	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mHarvestingClock(), mTargetFoodSource(nullptr), mFoodAmount(0.0f), mText(), mFont()
 {
@@ -68,6 +68,7 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
 		handleFoodSourceCollisions();
 		break;
+
 	case State::HarvestingFood:
 		newPosition = mPosition;
 
@@ -93,7 +94,56 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 		{	// Now we go back to finding a target
 			mFoodAmount += mTargetFoodSource->takeFood(EXTRACTION_YIELD);
 			mTargeting = false;
-			mState = State::SeekingTarget;
+			mState = State::DeliveringFood;
+		}
+
+		setColor(Bee::NORMAL_COLOR);
+		for (auto iter = FoodSourceManager::getInstance()->begin(); iter != FoodSourceManager::getInstance()->end(); ++iter)
+		{
+			if (collidingWithFoodSource(*(*iter)))
+			{
+				setColor(Bee::ALERT_COLOR);
+				break;
+			}
+		}
+		break;
+
+	case State::DeliveringFood:
+		mTarget = mParentHive.getCenterTarget();
+		newPosition = sf::Vector2f(
+			mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
+			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
+//		handleFoodSourceCollisions();
+		if (distanceBetween(newPosition, mParentHive.getCenterTarget()) <= TARGET_RADIUS)
+		{
+			mState = State::DepositingFood;
+		}
+		break;
+
+	case State::DepositingFood:
+		newPosition = mPosition;
+
+		if (distanceBetween(mTarget, mPosition) <= TARGET_RADIUS)
+		{
+			auto dimensions = mParentHive.getDimensions();
+			uniform_int_distribution<int> distributionX(static_cast<int>(-dimensions.x / 2), static_cast<int>(dimensions.x / 2));
+			uniform_int_distribution<int> distributionY(static_cast<int>(-dimensions.y / 2), static_cast<int>(dimensions.y / 2));
+			sf::Vector2f offset(static_cast<float>(distributionX(mGenerator)), static_cast<float>(distributionY(mGenerator)));
+			setTarget(mParentHive.getCenterTarget() + offset);
+		}
+
+		newPosition = sf::Vector2f(
+			mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
+			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
+
+		mPosition = newPosition;
+
+		if (mHarvestingClock.getElapsedTime().asSeconds() >= mHarvestingDuration)
+		{	// Now we go back to finding a target
+//			mFoodAmount += mTargetFoodSource->takeFood(EXTRACTION_YIELD);
+			//TODO: Swap out with deposit food
+			mTargeting = false;
+			mState = State::DepositingFood;
 		}
 
 		setColor(Bee::NORMAL_COLOR);

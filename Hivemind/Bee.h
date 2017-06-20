@@ -4,6 +4,8 @@
 #include <chrono>
 
 
+class Hive;
+
 class Bee : public Entity
 {
 public:
@@ -11,7 +13,9 @@ public:
 	enum State
 	{
 		SeekingTarget,
-		HarvestingFood
+		HarvestingFood,
+		DeliveringFood,
+		DepositingFood,
 	};
 
 	const static float STANDARD_BEE_SPEED;
@@ -23,18 +27,18 @@ public:
 	const static sf::Color Bee::STANDARD_BODY_COLOR;
 
 	/// Constructors/destructor
-	explicit Bee(const sf::Vector2f& position);
-	~Bee() = default;
+	explicit Bee(const sf::Vector2f& position, const Hive& hive);
+	virtual ~Bee() = default;
 
 	/// Copy/Move semantics
-	Bee(const Bee& rhs) = default;
-	Bee& operator=(const Bee& rhs) = default;
-	Bee(Bee&& rhs) = default;
-	Bee& operator=(Bee&& rhs) = default;
+	Bee(const Bee& rhs) = delete;
+	Bee& operator=(const Bee& rhs) = delete;
+	Bee(Bee&& rhs) = delete;
+	Bee& operator=(Bee&& rhs) = delete;
 
 	/// Public API
-	void update(sf::RenderWindow& window, const float& deltaTime);
-	void render(sf::RenderWindow& window) const;
+	void update(sf::RenderWindow& window, const float& deltaTime) override;
+	void render(sf::RenderWindow& window) const override;
 	bool collidingWithFoodSource(const class FoodSource& foodSource) const;
 	void setColor(const sf::Color& color);
 	void setTarget(const sf::Vector2f& position);
@@ -51,6 +55,7 @@ private:
 	void handleFoodSourceCollisions();
 
 	/// Private fields
+	const Hive& mParentHive;
 	std::default_random_engine mGenerator;
 	sf::CircleShape mBody;
 	sf::RectangleShape mFace;

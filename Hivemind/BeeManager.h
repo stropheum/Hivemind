@@ -7,7 +7,7 @@ class BeeManager
 public:
 	static BeeManager* getInstance();
 	~BeeManager();
-	void spawnBee(const sf::Vector2f& position);
+	void spawnBee(const sf::Vector2f& position, const Hive& hive);
 	void update(sf::RenderWindow& window, const float& deltaTime);
 	void render(sf::RenderWindow& window);
 	std::vector<Bee*>::iterator begin();

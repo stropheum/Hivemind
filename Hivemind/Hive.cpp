@@ -1,11 +1,11 @@
 #include "pch.h"
-#include "FoodSource.h"
+#include "Hive.h"
 
 
 using namespace std;
 
-FoodSource::FoodSource(const sf::Vector2f& position) :
-	Entity(position, sf::Color::White, sf::Color(32, 128, 32)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), mFoodAmount(100.0f), mFont(), mText()
+Hive::Hive(const sf::Vector2f& position):
+	Entity(position, sf::Color::White, sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), mFoodAmount(0.0f), mFont(), mText()
 {
 	mBody.setPosition(mPosition);
 	mBody.setOutlineThickness(5);
@@ -27,25 +27,11 @@ FoodSource::FoodSource(const sf::Vector2f& position) :
 	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
 }
 
-float FoodSource::takeFood(const float amount)
+Hive::~Hive()
 {
-	float result = 0.0f;
-
-	if (amount <= mFoodAmount)
-	{
-		mFoodAmount -= amount;
-		result = amount;
-	}
-	else
-	{
-		result = mFoodAmount;
-		mFoodAmount = 0.0f;
-	}
-
-	return result;
 }
 
-void FoodSource::update(sf::RenderWindow& window, const float& deltaTime)
+void Hive::update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);
@@ -56,28 +42,18 @@ void FoodSource::update(sf::RenderWindow& window, const float& deltaTime)
 	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
 }
 
-void FoodSource::render(sf::RenderWindow& window) const
+void Hive::render(sf::RenderWindow& window) const
 {
 	window.draw(mBody);
 	window.draw(mText);
 }
 
-float FoodSource::getFoodAmount() const
-{
-	return mFoodAmount;
-}
-
-void FoodSource::setFoodAmount(const float& foodAmount)
-{
-	mFoodAmount = foodAmount;
-}
-
-sf::Vector2f FoodSource::getCenterTarget() const
+sf::Vector2f Hive::getCenterTarget() const
 {
 	return sf::Vector2f(mPosition.x + mDimensions.x / 2, mPosition.y + mDimensions.y / 2);
 }
 
-const sf::Vector2f& FoodSource::getDimensions() const
+const sf::Vector2f& Hive::getDimensions() const
 {
 	return mDimensions;
 }
