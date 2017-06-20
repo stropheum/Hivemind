@@ -47,8 +47,8 @@ int main(int argc, char* argv[])
 	fpsMeter.setFillColor(sf::Color(200, 200, 200));
 
 	bool running = false;
-	const int beeRows = 15;
-	const int beeCols = 15;
+	const int beeRows = 5;
+	const int beeCols = 5;
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
@@ -71,10 +71,7 @@ int main(int argc, char* argv[])
 	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, windowSize.y - 300.0f));
 	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, windowSize.y - 300.0f));
 
-	for (auto iter = foodSourceManager->begin(); iter != foodSourceManager->end(); ++iter)
-	{
-		iter->setFont(&font);
-	}
+	deltaClock.restart();
 
 	while (window.isOpen())
 	{
@@ -97,6 +94,7 @@ int main(int argc, char* argv[])
 				if (event.key.code == sf::Keyboard::Space)
 				{
 					running = !running;
+					deltaClock.restart();
 				}
 
 				if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
@@ -163,31 +161,24 @@ int main(int argc, char* argv[])
 			window.close();
 		}
 
-		if (deltaClock.getElapsedTime().asSeconds() > FRAME_INTERVAL)
+		// Handle business logic updates
+		if (running)
 		{
-			// Handle business logic updates
-			if (running)
-			{
-				beeManager->update(window, deltaClock.getElapsedTime().asSeconds());
-				foodSourceManager->update(window, deltaClock.getElapsedTime().asSeconds());
-				for(auto iter = foodSourceManager->begin(); iter != foodSourceManager->end(); ++iter)
-				{
-					iter->setFont(&font);
-				}
-			}
-			deltaClock.restart();
-
-			// Handle rendering
-			window.clear(sf::Color(32, 32, 32));
-
-			fpsMeter.setString(computeFrameRate());
-			window.draw(fpsMeter);
-
-			foodSourceManager->render(window);
-			beeManager->render(window);
-
-			window.display();
+			auto deltaTime = deltaClock.restart().asSeconds();
+			beeManager->update(window, deltaTime);
+			foodSourceManager->update(window, deltaTime);
 		}
+
+		// Handle rendering
+		window.clear(sf::Color(32, 32, 32));
+
+		fpsMeter.setString(computeFrameRate());
+		window.draw(fpsMeter);
+
+		foodSourceManager->render(window);
+		beeManager->render(window);
+
+		window.display();
 		
 	}
 

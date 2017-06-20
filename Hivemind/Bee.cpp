@@ -6,8 +6,6 @@
 #include <sstream>
 
 using namespace std;
-using namespace std::chrono;
-
 
 const float Bee::STANDARD_BEE_SPEED = 200.0f;
 const float Bee::BODY_RADIUS = 12.0f;
@@ -54,6 +52,13 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 	float rotationAngle = rotationRadians * (180 / PI);
 
+	if (mTargetFoodSource != nullptr && mTargetFoodSource->getFoodAmount() == 0)
+	{
+		mTargeting = false;
+		mState = State::SeekingTarget;
+		handleFoodSourceCollisions();
+	}
+
 	sf::Vector2f newPosition;
 	switch(mState)
 	{
@@ -94,7 +99,7 @@ void Bee::update(sf::RenderWindow& window, const float& deltaTime)
 		setColor(Bee::NORMAL_COLOR);
 		for (auto iter = FoodSourceManager::getInstance()->begin(); iter != FoodSourceManager::getInstance()->end(); ++iter)
 		{
-			if (collidingWithFoodSource(*iter))
+			if (collidingWithFoodSource(*(*iter)))
 			{
 				setColor(Bee::ALERT_COLOR);
 				break;
@@ -172,28 +177,26 @@ void Bee::handleFoodSourceCollisions()
 
 		setTarget(newTarget);
 	}
-
-	for (auto foodIter = foodSourceManager->begin(); foodIter != foodSourceManager->end(); ++foodIter)
+	switch (mState)
 	{
-		if (collidingWithFoodSource(*foodIter))
+	case State::SeekingTarget:
+		for (auto foodIter = foodSourceManager->begin(); foodIter != foodSourceManager->end(); ++foodIter)
 		{
-			colliding = true;
-			if (Entity::distanceBetween(getPosition(), getTarget()) <= Bee::TARGET_RADIUS)
+			if (collidingWithFoodSource(*(*foodIter)))
 			{
-				reachedCenterOfSource = true;
-				sf::Vector2f newTarget;
-				do
+				colliding = true;
+				if (Entity::distanceBetween(getPosition(), getTarget()) <= Bee::TARGET_RADIUS)
 				{
-					std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
-					int targetIndex = distribution(mGenerator);
-					mTargetFoodSource = &foodSourceManager->getFoodSource(targetIndex);
-					newTarget = mTargetFoodSource->getCenterTarget();
-				} while (newTarget == getTarget());
-
-				setTarget(newTarget);
+					reachedCenterOfSource = true;
+					mState = State::HarvestingFood;
+				}
 			}
 		}
+		break;
+	case HarvestingFood: break;
+	default: ;
 	}
+
 
 	setColor(colliding ? Bee::ALERT_COLOR : Bee::NORMAL_COLOR);
 	if (reachedCenterOfSource)

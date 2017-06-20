@@ -34,8 +34,6 @@ public:
 
 	float takeFood(const float amount);
 
-	void setFont(sf::Font* const font);
-
 #pragma endregion 
 
 #pragma region Public API
@@ -71,7 +69,7 @@ private:
 	sf::Vector2f mDimensions;
 	sf::RectangleShape mBody;
 	float mFoodAmount;
-	sf::Font* mFont;
+	sf::Font mFont;
 	sf::Text mText;
 };
 
