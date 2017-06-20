@@ -23,19 +23,23 @@ BeeManager* BeeManager::getInstance()
 
 BeeManager::~BeeManager()
 {
+	for (auto iter = mBees.begin(); iter != mBees.end(); ++iter)
+	{
+		delete (*iter);
+	}
 	mBees.clear();
 }
 
 void BeeManager::spawnBee(const sf::Vector2f& position)
 {
-	mBees.push_back(Bee(position));
+	mBees.push_back(new Bee(position));
 }
 
 void BeeManager::update(sf::RenderWindow& window, const float& deltaTime)
 {
 	for (auto iter = mBees.begin(); iter != mBees.end(); ++iter)
 	{
-		iter->update(window, deltaTime);
+		(*iter)->update(window, deltaTime);
 	}
 }
 
@@ -43,16 +47,16 @@ void BeeManager::render(sf::RenderWindow& window)
 {
 	for (auto iter = mBees.begin(); iter != mBees.end(); ++iter)
 	{
-		iter->render(window);
+		(*iter)->render(window);
 	}
 }
 
-std::vector<Bee>::iterator BeeManager::begin()
+std::vector<Bee*>::iterator BeeManager::begin()
 {
 	return mBees.begin();
 }
 
-std::vector<Bee>::iterator BeeManager::end()
+std::vector<Bee*>::iterator BeeManager::end()
 {
 	return mBees.end();
 }

@@ -63,5 +63,5 @@ private:
 	class FoodSource* mTargetFoodSource;
 	float mFoodAmount;
 	sf::Text mText;
-	sf::Font* mFont;
+	sf::Font mFont;
 };

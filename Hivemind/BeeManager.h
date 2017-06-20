@@ -10,13 +10,13 @@ public:
 	void spawnBee(const sf::Vector2f& position);
 	void update(sf::RenderWindow& window, const float& deltaTime);
 	void render(sf::RenderWindow& window);
-	std::vector<Bee>::iterator begin();
-	std::vector<Bee>::iterator end();
+	std::vector<Bee*>::iterator begin();
+	std::vector<Bee*>::iterator end();
 
 private:
 	BeeManager();
 	static BeeManager* sInstance;
-	std::vector<Bee> mBees;
+	std::vector<Bee*> mBees;
 	const float FOOD_RETARGET_INTERVAL = 20.0f;
 	float mTimeSinceRetarget;
 	std::default_random_engine generator;

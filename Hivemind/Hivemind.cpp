@@ -62,10 +62,6 @@ int main(int argc, char* argv[])
 			beeManager->spawnBee(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i));
 		}
 	}
-	for (auto iter = beeManager->begin(); iter != beeManager->end(); ++iter)
-	{
-		iter->setFont(&font);
-	}
 
 	auto windowSize = window.getSize();
 
