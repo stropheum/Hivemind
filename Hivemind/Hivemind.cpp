@@ -48,8 +48,8 @@ int main(int argc, char* argv[])
 	fpsMeter.setFillColor(sf::Color(200, 200, 200));
 
 	bool running = false;
-	const int beeRows = 5;
-	const int beeCols = 5;
+	const int beeRows = 10;
+	const int beeCols = 10;
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
 	{
 		for (int j = 0; j < beeCols; j++)
 		{	// Distribute bees evenly across the screen
-			beeManager->spawnBee(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i), *hiveManager->getHive(0));
+			beeManager->spawnOnlooker(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i), *hiveManager->getHive(0));
 		}
 	}
 

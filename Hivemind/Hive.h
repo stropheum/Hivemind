@@ -20,6 +20,8 @@ public:
 	/// @Return: A vector representing the width and height of the food source
 	const sf::Vector2f& getDimensions() const;
 
+	void depositFood(const float& foodAmount);
+
 private:
 	/// Constants
 	const float STANDARD_WIDTH = 200.0f;

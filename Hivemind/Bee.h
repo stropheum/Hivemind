@@ -27,7 +27,7 @@ public:
 	const static sf::Color Bee::STANDARD_BODY_COLOR;
 
 	/// Constructors/destructor
-	explicit Bee(const sf::Vector2f& position, const Hive& hive);
+	explicit Bee(const sf::Vector2f& position, Hive& hive);
 	virtual ~Bee() = default;
 
 	/// Copy/Move semantics
@@ -37,36 +37,36 @@ public:
 	Bee& operator=(Bee&& rhs) = delete;
 
 	/// Public API
-	void update(sf::RenderWindow& window, const float& deltaTime) override;
+	void update(sf::RenderWindow& window, const float& deltaTime) override = 0;
 	void render(sf::RenderWindow& window) const override;
 	bool collidingWithFoodSource(const class FoodSource& foodSource) const;
+	bool collidingWithHive(const class Hive& hive) const;
 	void setColor(const sf::Color& color);
 	void setTarget(const sf::Vector2f& position);
 	const sf::Vector2f& getTarget() const;
 	bool hasTarget() const;
-	void setFont(sf::Font* const font);
 
-private:
+protected:
 	/// Constants
 	const float PI = 3.14159265359f;
-	const float EXTRACTION_YIELD = 10.0f;
 
 	/// Private API
 	void handleFoodSourceCollisions();
+	void detectStructureCollisions();
 
 	/// Private fields
-	const Hive& mParentHive;
+	Hive& mParentHive;
 	std::default_random_engine mGenerator;
 	sf::CircleShape mBody;
 	sf::RectangleShape mFace;
 	sf::Vector2f mTarget;
-	float mSpeed;
-	bool mTargeting;
-	State mState;
-	float mHarvestingDuration;
-	sf::Clock mHarvestingClock;
-	class FoodSource* mTargetFoodSource;
-	float mFoodAmount;
 	sf::Text mText;
 	sf::Font mFont;
+	sf::Clock mHarvestingClock;
+	float mSpeed;
+	float mFoodAmount;
+	float mHarvestingDuration;
+	bool mTargeting;
+	State mState;
+	class FoodSource* mTargetFoodSource;
 };

@@ -169,6 +169,7 @@
     <ClInclude Include="FoodSourceManager.h" />
     <ClInclude Include="Hive.h" />
     <ClInclude Include="HiveManager.h" />
+    <ClInclude Include="OnlookerBee.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +181,7 @@
     <ClCompile Include="Hive.cpp" />
     <ClCompile Include="HiveManager.cpp" />
     <ClCompile Include="Hivemind.cpp" />
+    <ClCompile Include="OnlookerBee.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -57,3 +57,8 @@ const sf::Vector2f& Hive::getDimensions() const
 {
 	return mDimensions;
 }
+
+void Hive::depositFood(const float& foodAmount)
+{
+	mFoodAmount += foodAmount;
+}

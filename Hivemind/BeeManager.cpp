@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BeeManager.h"
 #include <random>
+#include "OnlookerBee.h"
 
 
 BeeManager* BeeManager::sInstance = nullptr;
@@ -28,9 +29,16 @@ BeeManager::~BeeManager()
 	mBees.clear();
 }
 
-void BeeManager::spawnBee(const sf::Vector2f& position, const Hive& hive)
+void BeeManager::spawnEmployee(const sf::Vector2f& position, Hive& hive)
 {
-	mBees.push_back(new Bee(position, hive));
+	UNREFERENCED_PARAMETER(position);
+	UNREFERENCED_PARAMETER(hive);
+	//TODO: Implement spawning employed bees
+}
+
+void BeeManager::spawnOnlooker(const sf::Vector2f& position, Hive& hive)
+{
+	mBees.push_back(new OnlookerBee(position, hive));
 }
 
 void BeeManager::update(sf::RenderWindow& window, const float& deltaTime)

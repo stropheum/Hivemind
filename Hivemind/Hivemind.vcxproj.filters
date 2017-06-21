@@ -42,6 +42,9 @@
     <ClInclude Include="HiveManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OnlookerBee.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Hivemind.cpp">
@@ -69,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HiveManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlookerBee.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
