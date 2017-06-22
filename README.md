@@ -192,11 +192,13 @@ private:
 In addition, you can see that I've also added a "validateIdleBees()" method, which at the moment was a simple solution to remove active bees from the vector without invalidating the external iterators during iteration.
 
 In terms of the bee behavior itself, I now required the existence of an "idle" state, which allowed the bees to stay dormant and wait for external commands to stimulate them to pursue a fresh food source. This was the basic imlpementation once I got the bees to Idle in-hive
+
 [![Hivemind Idle 6-21](https://img.youtube.com/vi/IAiB2aqflI8/0.jpg)](https://www.youtube.com/watch?v=IAiB2aqflI8)
 
 You can see from the video that instead of "seeking target" as their initial state, bees now default to "deliver food" which causes them to pursue the center of the hive, where they cascade into "deliver food" which will dump their reserves into the hive (if any) and then enter their idle state, where they will wander and wait instructions.
 
 The next task from here was naturally to develop the scouting/employed bee, which would seek out a food source, gather a bit of food, return to the hive with that information, and attempt to persuade the idle bees to pursue that as their active food source. You can view a demo of the basic implementation of that behavior here:
+
 [![Hivemind Employed Bee Demo](https://img.youtube.com/vi/w_m1j3X1hvY/0.jpg)](https://www.youtube.com/watch?v=w_m1j3X1hvY)
 
 And that's about it. There were a lot of minor optimizations that I had to do this week regarding how to store references, minimizing iterations over collections, managing data lifetimes, and the like, which ate significantly into my time specifically regarding the hive implementation. I intended to get started with working on the structural aspects of the hive such as the worker bees, implementing brood/honey/structural comb, etc, but I simply did not get to it in time, so that will carry over into week 5, where I focus mostly on the structural aspects of the hive, and breeding, as well as refining the decision making process of the bees, and how the food source selection happens, rather than by simple random chance. More to come!
