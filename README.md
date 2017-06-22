@@ -116,3 +116,87 @@ Next for me was upping the degree of control I have. The more freedom to move ar
 
 ### Bugs. Ugh.
 So I screwed something up, for sure. The foraging algorithm thusfar seems to be working as well as it has been before, but the data overlay revealed a problem to me that I hadn't noticed before; The bees aren't always foraging once they hit their target food source. I noticed that it seems somewhat arbitrary, but sometimes a bee will reach its food source, decide for whatever reason that he doesn't like it, and then move on to another one without entering its harvesting phase. This was quite strange and I couldn't manage to track it down in time to fix it for this update, and it ate into my time to split the bees into their respective roles, so that stinks. I do plan on keeping up to schedule, but that means I will have to commit a little extra time in the coming week, which means less sanity, or more alcohol. Stay tuned for picture and video updates!
+
+## Week 4 - The Key to any Hive: Communication
+This is where things start to get exciting! My goals for this week are to get the beginnings of communication working in my hive; I want hives, food sources, and bees to all be able to store and know about food, and to have certain bees able to communicate to others to start the makings of the actual bee-communication behavior.
+
+Starting off, I decided to tackle a lot of the hive components. This involved making things a lot more complex, so I figured getting it out of the way was the wisest move. Not only did the hive have to track the bees the were idling in it, but it also needed to be capable of disseminating information to them. My solution to this was to create a private vector of OnlookerBee pointers and public accessors for its iterators, allowing external sources to send messages to the bees en masse without mucking with the vector itself; since the BeeManager, not the hive, owns the pointers to these bees, keeping them under the hood seemed the most practical approach
+
+```
+class Hive :
+	public Entity
+{
+public:
+	/// Constructor
+	/// @Param position: The starting position of the food source
+	explicit Hive(const sf::Vector2f& position);
+	
+	/// Destructor
+	virtual ~Hive();
+
+	/// Updates the current game state of the hive
+	/// @Param window: The screen that the game is being rendered to
+	/// @Param deltaTime: The time elapsed since last update
+	void update(sf::RenderWindow& window, const float& deltaTime) override;
+	
+	/// Renders the hive to the screen
+	/// @Param window: The screen which the hive is being rendered to
+	void render(sf::RenderWindow& window) const override;
+
+	/// Accessor method for the center point of the food source
+	/// @Return: A vector representing the center point of the source
+	sf::Vector2f getCenterTarget() const;
+
+	/// Accessor method for the dimensions of the food source
+	/// @Return: A vector representing the width and height of the food source
+	const sf::Vector2f& getDimensions() const;
+	
+	/// Adds food to the hive
+	/// @Param foodAmount: Amount of food being added to the hive
+	void depositFood(const float& foodAmount);
+
+	/// Adds an onlooker to the hive for easy tracking during waggle dance phase
+	/// @Param bee: Bee being added as idle to the hive
+	void addIdleBee(OnlookerBee* const bee);
+
+	/// Removes an onlooker from the hives collection of idle bees
+	/// @Param bee: Bee being removed from the collection of idle bees
+	void removeIdleBee(OnlookerBee* const bee);
+
+	/// Accessor for the begin iterator of the idle bees
+	/// @Return: An iterator pointing to the beginning of the idle bees vector
+	std::vector<OnlookerBee*>::iterator idleBeesBegin();
+
+	/// Accessor for the end iterator of the idle bees
+	/// @Return: An iterator pointing to the end of the idle bees vector
+	std::vector<OnlookerBee*>::iterator idleBeesEnd();
+	
+	/// Iterates over the idle bees vector and removes all bees which are no longer idle
+	void validateIdleBees();
+
+private:
+	/// Constants
+	const float STANDARD_WIDTH = 200.0f;
+	const float STANDARD_HEIGHT = 200.0f;
+
+	/// Fields
+	sf::Vector2f mDimensions;
+	sf::RectangleShape mBody;
+	float mFoodAmount;
+	sf::Font mFont;
+	sf::Text mText;
+	std::vector<OnlookerBee*> mIdleBees;
+};
+```
+
+In addition, you can see that I've also added a "validateIdleBees()" method, which at the moment was a simple solution to remove active bees from the vector without invalidating the external iterators during iteration.
+
+In terms of the bee behavior itself, I now required the existence of an "idle" state, which allowed the bees to stay dormant and wait for external commands to stimulate them to pursue a fresh food source. This was the basic imlpementation once I got the bees to Idle in-hive
+[![Hivemind Idle 6-21](https://www.youtube.com/watch?v=IAiB2aqflI8)
+
+You can see from the video that instead of "seeking target" as their initial state, bees now default to "deliver food" which causes them to pursue the center of the hive, where they cascade into "deliver food" which will dump their reserves into the hive (if any) and then enter their idle state, where they will wander and wait instructions.
+
+The next task from here was naturally to develop the scouting/employed bee, which would seek out a food source, gather a bit of food, return to the hive with that information, and attempt to persuade the idle bees to pursue that as their active food source. You can view a demo of the basic implementation of that behavior here:
+[![Hivemind Employed Bee Demo](https://youtu.be/w_m1j3X1hvY)
+
+And that's about it. There were a lot of minor optimizations that I had to do this week regarding how to store references, minimizing iterations over collections, managing data lifetimes, and the like, which ate significantly into my time specifically regarding the hive implementation. I intended to get started with working on the structural aspects of the hive such as the worker bees, implementing brood/honey/structural comb, etc, but I simply did not get to it in time, so that will carry over into week 5, where I focus mostly on the structural aspects of the hive, and breeding, as well as refining the decision making process of the bees, and how the food source selection happens, rather than by simple random chance. More to come!
