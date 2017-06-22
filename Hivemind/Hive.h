@@ -42,6 +42,7 @@ public:
 	/// @Return: An iterator pointing to the end of the idle bees vector
 	std::vector<OnlookerBee*>::iterator idleBeesEnd();
 
+	/// Iterates over the idle bees vector and removes all bees which are no longer idle
 	void validateIdleBees();
 
 private:
