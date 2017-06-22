@@ -12,6 +12,7 @@ public:
 
 	enum State
 	{
+		Idle,
 		Scouting,
 		SeekingTarget,
 		HarvestingFood,
@@ -43,10 +44,13 @@ public:
 	bool collidingWithFoodSource(const class FoodSource& foodSource) const;
 	bool collidingWithHive(const class Hive& hive) const;
 	void setColor(const sf::Color& color);
+	void setTarget(class FoodSource* const foodSource);
 	void setTarget(const sf::Vector2f& position);
 	const sf::Vector2f& getTarget() const;
 	bool hasTarget() const;
 	void depositFood(float foodAmount);
+	void setState(const State& state);
+	State getState() const;
 
 protected:
 	/// Constants

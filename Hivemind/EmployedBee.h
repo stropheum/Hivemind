@@ -15,5 +15,11 @@ public:
 	virtual ~EmployedBee() = default;
 
 	void update(sf::RenderWindow& window, const float& deltaTime) override;
+
+private:
+
+	void waggleDance();
+
+	class FoodSource* mPairedFoodSource;
 };
 

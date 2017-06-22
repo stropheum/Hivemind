@@ -91,6 +91,12 @@ void Bee::setColor(const sf::Color& color)
 	mBody.setOutlineColor(color);
 }
 
+void Bee::setTarget(FoodSource* const foodSource)
+{
+	mTargetFoodSource = foodSource;
+	setTarget(foodSource->getCenterTarget());
+}
+
 void Bee::setTarget(const sf::Vector2f& position)
 {
 	mTarget = position;
@@ -180,4 +186,14 @@ void Bee::depositFood(float foodAmount)
 	}
 	mParentHive.depositFood(foodAmount);
 	mFoodAmount = 0;
+}
+
+void Bee::setState(const State& state)
+{
+	mState = state;
+}
+
+Bee::State Bee::getState() const
+{
+	return mState;
 }

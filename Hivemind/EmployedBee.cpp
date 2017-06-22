@@ -3,12 +3,13 @@
 #include "Hive.h"
 #include "FoodSource.h"
 #include "FoodSourceManager.h"
+#include <cassert>
 
 
 using namespace std;
 
 EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive): 
-	Bee(position, hive)
+	Bee(position, hive), mPairedFoodSource(nullptr)
 {
 	mState = State::SeekingTarget;
 
@@ -27,6 +28,7 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 
 	if (mTargetFoodSource != nullptr && mTargetFoodSource->getFoodAmount() == 0)
 	{
+		mPairedFoodSource = mTargetFoodSource; // TODO: Remove once paired food source is randomly scouted instead of assigned
 		mTargeting = false;
 		mState = State::SeekingTarget;
 		handleFoodSourceCollisions();
@@ -120,6 +122,7 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 			mTargeting = false;
 			mState = State::SeekingTarget;
 			setColor(Bee::NORMAL_COLOR);
+			waggleDance();
 		}
 
 		setColor(Bee::NORMAL_COLOR);
@@ -147,4 +150,28 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 	ss << "Food: " << mFoodAmount;
 	mText.setString(ss.str());
 	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
+}
+
+void EmployedBee::waggleDance()
+{
+	// TODO: Deposit information into hive
+
+	// TODO: Iterate over idle bees and dance for them
+	if (mTargetFoodSource != nullptr)
+	{
+		for (auto iter = mParentHive.idleBeesBegin(); iter != mParentHive.idleBeesEnd(); ++iter)
+		{
+			assert(*iter != nullptr);
+
+			uniform_int_distribution<int> distribution(0, 100);
+			int roll = distribution(mGenerator);
+			if (roll < 30)
+			{	// For now, just a flat 30% roll to simulate waggle selection
+				(*iter)->setTarget(mTargetFoodSource);
+				(*iter)->setState(State::SeekingTarget);
+			}
+		}
+
+		mParentHive.validateIdleBees();
+	}
 }

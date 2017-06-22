@@ -29,6 +29,7 @@ Hive::Hive(const sf::Vector2f& position):
 
 Hive::~Hive()
 {
+	mIdleBees.clear();
 }
 
 void Hive::update(sf::RenderWindow& window, const float& deltaTime)
@@ -61,4 +62,63 @@ const sf::Vector2f& Hive::getDimensions() const
 void Hive::depositFood(const float& foodAmount)
 {
 	mFoodAmount += foodAmount;
+}
+
+void Hive::addIdleBee(OnlookerBee* const bee)
+{
+	bool containsBee = false;
+
+	for (auto iter = mIdleBees.begin(); iter != mIdleBees.end(); ++iter)
+	{
+		if (*iter == bee)
+		{
+			containsBee = true;
+			break;
+		}
+	}
+
+	if (!containsBee)
+	{	// Only add the bee if it does not exist in the collection already
+		mIdleBees.push_back(bee);
+	}
+}
+
+void Hive::removeIdleBee(OnlookerBee* const bee)
+{
+	for (auto iter = mIdleBees.begin(); iter != mIdleBees.end(); ++iter)
+	{
+		if (*iter == bee)
+		{	// If we encounter the bee, remove it. If not, no behavior
+			mIdleBees.erase(iter);
+			break;
+		}
+	}
+}
+
+std::vector<OnlookerBee*>::iterator Hive::idleBeesBegin()
+{
+	return mIdleBees.begin();
+}
+
+std::vector<OnlookerBee*>::iterator Hive::idleBeesEnd()
+{
+	return mIdleBees.end();
+}
+
+void Hive::validateIdleBees()
+{
+	bool beeRemoved = true;
+	while (beeRemoved)
+	{	// Repeat until we look through all bees and all are idle
+		beeRemoved = false;
+		for (auto iter = mIdleBees.begin(); iter != mIdleBees.end(); ++iter)
+		{
+			if ((*iter)->getState() != Bee::State::Idle)
+			{	// We know it isn't idle, so remove it
+				beeRemoved = true;
+				mIdleBees.erase(iter);
+				break;
+			}
+		}
+	}
 }

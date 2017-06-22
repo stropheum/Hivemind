@@ -31,6 +31,25 @@ void OnlookerBee::update(sf::RenderWindow& window, const float& deltaTime)
 	sf::Vector2f newPosition;
 	switch (mState)
 	{
+	case Idle:
+		// Wander indefinitely until state is changed
+		newPosition = mPosition;
+
+		if (distanceBetween(mTarget, mPosition) <= TARGET_RADIUS)
+		{
+			auto dimensions = mParentHive.getDimensions();
+			uniform_int_distribution<int> distributionX(static_cast<int>(-dimensions.x / 2), static_cast<int>(dimensions.x / 2));
+			uniform_int_distribution<int> distributionY(static_cast<int>(-dimensions.y / 2), static_cast<int>(dimensions.y / 2));
+			sf::Vector2f offset(static_cast<float>(distributionX(mGenerator)), static_cast<float>(distributionY(mGenerator)));
+			setTarget(mParentHive.getCenterTarget() + offset);
+		}
+
+		newPosition = sf::Vector2f(
+			mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
+			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
+
+		mPosition = newPosition;
+		break;
 	case Scouting: 
 		// Onlookers do not scout. Should never meet this condition
 		break;
@@ -114,7 +133,8 @@ void OnlookerBee::update(sf::RenderWindow& window, const float& deltaTime)
 		{	// Now we go back to finding a target
 			depositFood(mFoodAmount);
 			mTargeting = false;
-			mState = State::DepositingFood;
+			mState = State::Idle;
+			mParentHive.addIdleBee(this);
 			setColor(Bee::NORMAL_COLOR);
 		}
 
