@@ -63,6 +63,11 @@ std::vector<FoodSource*>::iterator FoodSourceManager::end()
 	return mFoodSources.end();
 }
 
+std::uint32_t FoodSourceManager::foodSourceCount() const
+{
+	return static_cast<std::uint32_t>(mFoodSources.size());
+}
+
 FoodSource& FoodSourceManager::getFoodSource(const std::uint32_t& index)
 {
 	if (index >= mFoodSources.size())

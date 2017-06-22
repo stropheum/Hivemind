@@ -5,6 +5,7 @@
 #include "BeeManager.h"
 #include "FoodSourceManager.h"
 #include "HiveManager.h"
+#include "Hive.h"
 
 
 using namespace std;
@@ -48,8 +49,8 @@ int main(int argc, char* argv[])
 	fpsMeter.setFillColor(sf::Color(200, 200, 200));
 
 	bool running = false;
-	const int beeRows = 10;
-	const int beeCols = 10;
+	const int beeRows = 5;
+	const int beeCols = 5;
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
@@ -71,6 +72,14 @@ int main(int argc, char* argv[])
 		{	// Distribute bees evenly across the screen
 			beeManager->spawnOnlooker(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i), *hiveManager->getHive(0));
 		}
+	}
+
+	int employeeCount = static_cast<int>(foodSourceManager->foodSourceCount() / 2);
+	auto spawnLocation = hiveManager->getHive(0)->getCenterTarget();
+	auto& parentHive = *hiveManager->getHive(0);
+	for (int i = 0; i < employeeCount; i++)
+	{	// Spawn exactly half as many employeed bees as existing food sources
+		beeManager->spawnEmployee(spawnLocation, parentHive);
 	}
 
 	deltaClock.restart();

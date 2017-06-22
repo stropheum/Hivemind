@@ -81,3 +81,13 @@ const sf::Vector2f& FoodSource::getDimensions() const
 {
 	return mDimensions;
 }
+
+bool FoodSource::getPairedWithEmployee() const
+{
+	return mPairedWithEmployee;
+}
+
+void FoodSource::setPairedWithEmployee(const bool& pairedWithEmployee)
+{
+	mPairedWithEmployee = pairedWithEmployee;
+}

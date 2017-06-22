@@ -10,10 +10,5 @@ public:
 	virtual ~OnlookerBee() = default;
 
 	void update(sf::RenderWindow& window, const float& deltaTime) override;
-
-	void depositFood(float foodAmount);
-
-private:
-	const float EXTRACTION_YIELD = 10.0f;
 };
 

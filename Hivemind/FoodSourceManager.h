@@ -12,6 +12,7 @@ public:
 	std::uint32_t getFoodsourceCount() const;
 	std::vector<FoodSource*>::iterator begin();
 	std::vector<FoodSource*>::iterator end();
+	std::uint32_t foodSourceCount() const;
 	FoodSource& getFoodSource(const std::uint32_t& index);
 
 private:

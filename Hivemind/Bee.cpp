@@ -171,3 +171,13 @@ void Bee::detectStructureCollisions()
 
 	setColor(colliding ? Bee::ALERT_COLOR : Bee::NORMAL_COLOR);
 }
+
+void Bee::depositFood(float foodAmount)
+{
+	if (foodAmount > mFoodAmount)
+	{	// Cap the food deposit to whatever the maximum is that the bee currently holds
+		foodAmount = mFoodAmount;
+	}
+	mParentHive.depositFood(foodAmount);
+	mFoodAmount = 0;
+}

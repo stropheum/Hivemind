@@ -12,6 +12,7 @@ public:
 
 	enum State
 	{
+		Scouting,
 		SeekingTarget,
 		HarvestingFood,
 		DeliveringFood,
@@ -45,10 +46,12 @@ public:
 	void setTarget(const sf::Vector2f& position);
 	const sf::Vector2f& getTarget() const;
 	bool hasTarget() const;
+	void depositFood(float foodAmount);
 
 protected:
 	/// Constants
 	const float PI = 3.14159265359f;
+	const float EXTRACTION_YIELD = 10.0f;
 
 	/// Private API
 	void handleFoodSourceCollisions();

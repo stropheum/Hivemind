@@ -39,6 +39,7 @@ public:
 #pragma region Public API
 
 	void update(sf::RenderWindow& window, const float& deltaTime) override;
+
 	void render(sf::RenderWindow& window) const override;
 
 	/// Accessor for the amount of food that is currently stored
@@ -57,6 +58,14 @@ public:
 	/// @Return: A vector representing the width and height of the food source
 	const sf::Vector2f& getDimensions() const;
 
+	/// Accessor method to determine if the food source is being actively scouted by an employee
+	/// @Return: True if the food source is actively being scouted
+	bool getPairedWithEmployee() const;
+
+	/// Mutator method for whether the food source is actively being scouted
+	/// @Param pairedWithEmployee: Value determining if the food source is paired or not
+	void setPairedWithEmployee(const bool& pairedWithEmployee);
+
 #pragma endregion
 
 private:
@@ -70,5 +79,6 @@ private:
 	float mFoodAmount;
 	sf::Font mFont;
 	sf::Text mText;
+	bool mPairedWithEmployee;
 };
 

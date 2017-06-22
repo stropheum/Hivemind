@@ -1,18 +1,22 @@
 #include "pch.h"
-#include "OnlookerBee.h"
-#include "FoodSourceManager.h"
+#include "EmployedBee.h"
 #include "Hive.h"
+#include "FoodSource.h"
+#include "FoodSourceManager.h"
 
 
 using namespace std;
 
-OnlookerBee::OnlookerBee(const sf::Vector2f& position, Hive& hive): 
+EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive): 
 	Bee(position, hive)
 {
-	mState = State::DeliveringFood;
+	mState = State::SeekingTarget;
+
+	mFillColor = sf::Color::Cyan;
+	mBody.setFillColor(mFillColor);
 }
 
-void OnlookerBee::update(sf::RenderWindow& window, const float& deltaTime)
+void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 
@@ -31,7 +35,7 @@ void OnlookerBee::update(sf::RenderWindow& window, const float& deltaTime)
 	sf::Vector2f newPosition;
 	switch (mState)
 	{
-	case Scouting: 
+	case Scouting:
 		// Onlookers do not scout. Should never meet this condition
 		break;
 
@@ -111,10 +115,10 @@ void OnlookerBee::update(sf::RenderWindow& window, const float& deltaTime)
 		mPosition = newPosition;
 
 		if (mHarvestingClock.getElapsedTime().asSeconds() >= mHarvestingDuration)
-		{	// Now we go back to finding a target
+		{	// Now we go back to looking for another food source
 			depositFood(mFoodAmount);
 			mTargeting = false;
-			mState = State::DepositingFood;
+			mState = State::SeekingTarget;
 			setColor(Bee::NORMAL_COLOR);
 		}
 
@@ -128,8 +132,8 @@ void OnlookerBee::update(sf::RenderWindow& window, const float& deltaTime)
 			}
 		}
 		break;
-	
-	default: 
+
+	default:
 		break;
 	}
 
@@ -144,4 +148,3 @@ void OnlookerBee::update(sf::RenderWindow& window, const float& deltaTime)
 	mText.setString(ss.str());
 	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
 }
-
