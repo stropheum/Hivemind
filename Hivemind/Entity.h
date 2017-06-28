@@ -55,7 +55,7 @@ public:
 
 	/// Mutator method for the entity's position
 	/// @Param position: The position that the entity is being moved to
-	void setPosition(const sf::Vector2f& position);
+	virtual void setPosition(const sf::Vector2f& position);
 
 	/// Accessor method for the entity's position
 	/// @Return: The entity's position

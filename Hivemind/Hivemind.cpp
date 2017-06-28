@@ -6,6 +6,7 @@
 #include "FoodSourceManager.h"
 #include "HiveManager.h"
 #include "Hive.h"
+#include "FlowField.h"
 
 
 using namespace std;

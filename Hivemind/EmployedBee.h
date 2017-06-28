@@ -1,5 +1,6 @@
 #pragma once
 #include "Bee.h"
+#include "Flowfield.h"
 
 namespace sf {
 	class RenderWindow;
@@ -15,11 +16,14 @@ public:
 	virtual ~EmployedBee() = default;
 
 	void update(sf::RenderWindow& window, const float& deltaTime) override;
+	
+	void render(sf::RenderWindow& window) const override;
 
 private:
 
 	void waggleDance();
 
 	class FoodSource* mPairedFoodSource;
+	FlowField mFlowField;
 };
 

@@ -166,6 +166,7 @@
     <ClInclude Include="BeeManager.h" />
     <ClInclude Include="EmployedBee.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FlowField.h" />
     <ClInclude Include="FoodSource.h" />
     <ClInclude Include="FoodSourceManager.h" />
     <ClInclude Include="Hive.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="BeeManager.cpp" />
     <ClCompile Include="EmployedBee.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FlowField.cpp" />
     <ClCompile Include="FoodSource.cpp" />
     <ClCompile Include="FoodSourceManager.cpp" />
     <ClCompile Include="Hive.cpp" />

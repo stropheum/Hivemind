@@ -9,7 +9,7 @@
 using namespace std;
 
 EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive): 
-	Bee(position, hive), mPairedFoodSource(nullptr)
+	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position)
 {
 	mState = State::SeekingTarget;
 
@@ -20,6 +20,12 @@ EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive):
 void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
+	auto fieldDimensions = mFlowField.getDimensions();
+	if (!mFlowField.collidingWith(mPosition))
+	{	// If we're not colliding with the flow field anymore, reset it on top of us
+		mFlowField.setPosition(sf::Vector2f(mPosition.x - fieldDimensions.x / 2.0f, mPosition.y - fieldDimensions.y / 2.0f));
+	}
+	mFlowField.update(window, deltaTime);
 
 	auto facePosition = mFace.getPosition();
 
@@ -150,6 +156,12 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 	ss << "Food: " << mFoodAmount;
 	mText.setString(ss.str());
 	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
+}
+
+void EmployedBee::render(sf::RenderWindow& window) const
+{
+	Bee::render(window);
+	mFlowField.render(window);
 }
 
 void EmployedBee::waggleDance()
