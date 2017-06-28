@@ -19,11 +19,14 @@ public:
 	
 	void render(sf::RenderWindow& window) const override;
 
+	void toggleFlowField();
+
 private:
 
 	void waggleDance();
 
 	class FoodSource* mPairedFoodSource;
 	FlowField mFlowField;
+	bool mDisplayFlowField;
 };
 

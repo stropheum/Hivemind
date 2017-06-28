@@ -17,6 +17,7 @@ public:
 	std::vector<class EmployedBee*>::iterator employeeEnd();
 	std::uint32_t onlookerCount() const;
 	std::uint32_t employeeCount() const;
+	void toggleEmployeeFlowFields();
 
 private:
 	BeeManager();

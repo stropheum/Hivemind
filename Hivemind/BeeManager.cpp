@@ -98,3 +98,11 @@ std::uint32_t BeeManager::employeeCount() const
 {
 	return static_cast<std::uint32_t>(mEmployees.size());
 }
+
+void BeeManager::toggleEmployeeFlowFields()
+{
+	for (auto iter = mEmployees.begin(); iter != mEmployees.end(); ++iter)
+	{
+		(*iter)->toggleFlowField();
+	}
+}

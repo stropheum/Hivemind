@@ -9,7 +9,7 @@
 using namespace std;
 
 EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive): 
-	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position)
+	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position), mDisplayFlowField(false)
 {
 	mState = State::SeekingTarget;
 
@@ -161,7 +161,15 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 void EmployedBee::render(sf::RenderWindow& window) const
 {
 	Bee::render(window);
-	mFlowField.render(window);
+	if (mDisplayFlowField)
+	{
+		mFlowField.render(window);
+	}
+}
+
+void EmployedBee::toggleFlowField()
+{
+	mDisplayFlowField = !mDisplayFlowField;
 }
 
 void EmployedBee::waggleDance()

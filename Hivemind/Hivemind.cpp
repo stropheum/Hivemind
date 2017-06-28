@@ -109,6 +109,11 @@ int main(int argc, char* argv[])
 					deltaClock.restart();
 				}
 
+				if (event.key.code == sf::Keyboard::LControl)
+				{
+					beeManager->toggleEmployeeFlowFields();
+				}
+
 				if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
 				{
 					cameraMovement.x = -CAMERA_SPEED;
