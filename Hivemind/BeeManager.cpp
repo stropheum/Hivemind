@@ -106,3 +106,11 @@ void BeeManager::toggleEmployeeFlowFields()
 		(*iter)->toggleFlowField();
 	}
 }
+
+void BeeManager::setEmployeeFlowFieldOctaveCount(const std::uint32_t& octaveCount)
+{
+	for (auto iter = mEmployees.begin(); iter != mEmployees.end(); ++iter)
+	{
+		(*iter)->setFlowFieldOctaveCount(octaveCount);
+	}
+}

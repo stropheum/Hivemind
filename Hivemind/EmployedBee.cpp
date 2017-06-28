@@ -9,9 +9,9 @@
 using namespace std;
 
 EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive): 
-	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position), mDisplayFlowField(false)
+	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position), mDisplayFlowField(true)
 {
-	mState = State::SeekingTarget;
+	mState = State::Scouting;
 
 	mFillColor = sf::Color::Cyan;
 	mBody.setFillColor(mFillColor);
@@ -20,10 +20,13 @@ EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive):
 void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
+	auto foodSourceManager = FoodSourceManager::getInstance();
+
 	auto fieldDimensions = mFlowField.getDimensions();
 	if (!mFlowField.collidingWith(mPosition))
 	{	// If we're not colliding with the flow field anymore, reset it on top of us
-		mFlowField.setPosition(sf::Vector2f(mPosition.x - fieldDimensions.x / 2.0f, mPosition.y - fieldDimensions.y / 2.0f));
+		mFlowField.setPosition(sf::Vector2f(mPosition.x - (fieldDimensions.x / 2.0f), mPosition.y - (fieldDimensions.y / 2.0f)));
+		mFlowField.generateNewField();
 	}
 	mFlowField.update(window, deltaTime);
 
@@ -45,12 +48,30 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 	{
 	case Scouting:
 		// Onlookers do not scout. Should never meet this condition
+		rotationRadians = mFlowField.radianValueAtPosition(mPosition);
+		newPosition = sf::Vector2f(
+			mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
+			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime
+		);
+		rotationAngle = rotationRadians * (180.0f / PI);
+
+		for (auto iter = foodSourceManager->begin(); iter != foodSourceManager->end(); ++iter)
+		{
+			if (collidingWithFoodSource(*(*iter)))
+			{
+				mTargetFoodSource = (*iter);
+				mHarvestingClock.restart();
+				mState = State::HarvestingFood;
+				break;
+			}
+		}
 		break;
 
 	case State::SeekingTarget:
 		newPosition = sf::Vector2f(
 			mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
 			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
+
 		handleFoodSourceCollisions();
 		break;
 
@@ -101,6 +122,7 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 		if (distanceBetween(newPosition, mParentHive.getCenterTarget()) <= TARGET_RADIUS)
 		{
 			mState = State::DepositingFood;
+			mHarvestingClock.restart();
 		}
 		break;
 
@@ -126,7 +148,7 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 		{	// Now we go back to looking for another food source
 			depositFood(mFoodAmount);
 			mTargeting = false;
-			mState = State::SeekingTarget;
+			mState = State::Scouting;
 			setColor(Bee::NORMAL_COLOR);
 			waggleDance();
 		}
@@ -161,7 +183,7 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 void EmployedBee::render(sf::RenderWindow& window) const
 {
 	Bee::render(window);
-	if (mDisplayFlowField)
+	if (mState == State::Scouting && mDisplayFlowField)
 	{
 		mFlowField.render(window);
 	}
@@ -170,6 +192,12 @@ void EmployedBee::render(sf::RenderWindow& window) const
 void EmployedBee::toggleFlowField()
 {
 	mDisplayFlowField = !mDisplayFlowField;
+}
+
+void EmployedBee::setFlowFieldOctaveCount(const std::uint32_t& octaveCount)
+{
+	mFlowField.setOctaveCount(octaveCount);
+	mFlowField.generateNewField();
 }
 
 void EmployedBee::waggleDance()

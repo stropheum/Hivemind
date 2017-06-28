@@ -25,18 +25,26 @@ public:
 
 	/// Accessor method for field dimensions
 	/// @Return: A copy of the integer vector containing the size of the flow field
-	sf::Vector2i getDimensions();
+	sf::Vector2i getDimensions() const;
 
 	/// Determines if a position is within the bounds of the flow field
 	/// @Param position: The position in question
 	/// @Return: True if the position is within the bounds of the flow field
 	bool collidingWith(const sf::Vector2f& position) const;
 
+	/// Regenerates a new random flow field
+	void generateNewField();
+
+	void setOctaveCount(const std::uint32_t& octaveCount);
+
+	float radianValueAtPosition(const sf::Vector2f& position) const;
+
 private:
-	const sf::Vector2i mFieldDimensions = sf::Vector2i(500, 500);
+	const sf::Vector2i mFieldDimensions = sf::Vector2i(300, 300);
 	sf::Image mImage;
 	sf::Sprite mSprite;
 	sf::Texture mTexture;
-	sf::Vector2f** mValues;
+	sf::Uint8** mValues;
+	std::uint32_t mOctaveCount;
 };
 

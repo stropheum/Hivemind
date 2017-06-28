@@ -114,6 +114,43 @@ int main(int argc, char* argv[])
 					beeManager->toggleEmployeeFlowFields();
 				}
 
+				if (event.key.code == sf::Keyboard::Num1)
+				{
+					beeManager->setEmployeeFlowFieldOctaveCount(1);
+				}
+				else if (event.key.code == sf::Keyboard::Num2)
+				{
+					beeManager->setEmployeeFlowFieldOctaveCount(2);
+				}
+				else if (event.key.code == sf::Keyboard::Num3)
+				{
+					beeManager->setEmployeeFlowFieldOctaveCount(3);
+				}
+				else if (event.key.code == sf::Keyboard::Num4)
+				{
+					beeManager->setEmployeeFlowFieldOctaveCount(4);
+				}
+				else if (event.key.code == sf::Keyboard::Num5)
+				{
+					beeManager->setEmployeeFlowFieldOctaveCount(5);
+				}
+				else if (event.key.code == sf::Keyboard::Num6)
+				{
+					beeManager->setEmployeeFlowFieldOctaveCount(6);
+				}
+				else if (event.key.code == sf::Keyboard::Num7)
+				{
+					beeManager->setEmployeeFlowFieldOctaveCount(7);
+				}
+				else if (event.key.code == sf::Keyboard::Num8)
+				{
+					beeManager->setEmployeeFlowFieldOctaveCount(8);
+				}
+				else if (event.key.code == sf::Keyboard::Num9)
+				{
+					beeManager->setEmployeeFlowFieldOctaveCount(9);
+				}
+
 				if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
 				{
 					cameraMovement.x = -CAMERA_SPEED;

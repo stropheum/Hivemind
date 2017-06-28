@@ -18,6 +18,7 @@ public:
 	std::uint32_t onlookerCount() const;
 	std::uint32_t employeeCount() const;
 	void toggleEmployeeFlowFields();
+	void setEmployeeFlowFieldOctaveCount(const std::uint32_t& octaveCount);
 
 private:
 	BeeManager();

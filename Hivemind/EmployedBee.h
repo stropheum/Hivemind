@@ -21,6 +21,8 @@ public:
 
 	void toggleFlowField();
 
+	void setFlowFieldOctaveCount(const std::uint32_t& octaveCount);
+
 private:
 
 	void waggleDance();
