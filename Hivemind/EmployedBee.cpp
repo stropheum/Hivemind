@@ -9,7 +9,8 @@
 using namespace std;
 
 EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive): 
-	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position), mDisplayFlowField(true)
+	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position), mDisplayFlowField(false), 
+	mLineToFoodSource(sf::LineStrip, 2), mFoodSourceData(0.0f, 0.0f)
 {
 	mState = State::Scouting;
 
@@ -37,10 +38,10 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 
 	if (mTargetFoodSource != nullptr && mTargetFoodSource->getFoodAmount() == 0)
 	{
-		mPairedFoodSource = mTargetFoodSource; // TODO: Remove once paired food source is randomly scouted instead of assigned
+//		mPairedFoodSource = mTargetFoodSource; // TODO: Remove once paired food source is randomly scouted instead of assigned
 		mTargeting = false;
 		mState = State::SeekingTarget;
-		handleFoodSourceCollisions();
+//		handleFoodSourceCollisions();
 	}
 
 	sf::Vector2f newPosition;
@@ -53,13 +54,15 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 			mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
 			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime
 		);
-		rotationAngle = rotationRadians * (180.0f / PI);
-
+		
 		for (auto iter = foodSourceManager->begin(); iter != foodSourceManager->end(); ++iter)
 		{
 			if (collidingWithFoodSource(*(*iter)))
 			{
+				mPairedFoodSource = (*iter);
 				mTargetFoodSource = (*iter);
+				mTargetFoodSource->setPairedWithEmployee(true);
+				setTarget(mTargetFoodSource->getCenterTarget());
 				mHarvestingClock.restart();
 				mState = State::HarvestingFood;
 				break;
@@ -72,7 +75,7 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 			mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
 			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
 
-		handleFoodSourceCollisions();
+//		handleFoodSourceCollisions();
 		break;
 
 	case State::HarvestingFood:
@@ -99,6 +102,7 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 		if (mHarvestingClock.getElapsedTime().asSeconds() >= mHarvestingDuration)
 		{	// Now we go back to finding a target
 			mFoodAmount += mTargetFoodSource->takeFood(EXTRACTION_YIELD);
+			mFoodSourceData.first = mTargetFoodSource->getFoodAmount();
 			mTargeting = false;
 			mState = State::DeliveringFood;
 		}
@@ -174,6 +178,14 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 	mFace.setPosition(mPosition.x, mPosition.y);
 	mFace.setRotation(rotationAngle);
 
+	if (mPairedFoodSource != nullptr)
+	{
+		mLineToFoodSource[0].position = mPosition;
+		mLineToFoodSource[0].color = sf::Color::Red;
+		mLineToFoodSource[1].position = mPairedFoodSource->getCenterTarget();
+		mLineToFoodSource[1].color = sf::Color::Red;
+	}
+
 	stringstream ss;
 	ss << "Food: " << mFoodAmount;
 	mText.setString(ss.str());
@@ -186,6 +198,11 @@ void EmployedBee::render(sf::RenderWindow& window) const
 	if (mState == State::Scouting && mDisplayFlowField)
 	{
 		mFlowField.render(window);
+	}
+
+	if (mPairedFoodSource != nullptr)
+	{
+		window.draw(mLineToFoodSource);
 	}
 }
 
@@ -203,23 +220,25 @@ void EmployedBee::setFlowFieldOctaveCount(const std::uint32_t& octaveCount)
 void EmployedBee::waggleDance()
 {
 	// TODO: Deposit information into hive
+	mParentHive.updateKnownFoodSource(mPairedFoodSource, mFoodSourceData);
+	mParentHive.handleWaggleDance();
 
-	// TODO: Iterate over idle bees and dance for them
-	if (mTargetFoodSource != nullptr)
-	{
-		for (auto iter = mParentHive.idleBeesBegin(); iter != mParentHive.idleBeesEnd(); ++iter)
-		{
-			assert(*iter != nullptr);
-
-			uniform_int_distribution<int> distribution(0, 100);
-			int roll = distribution(mGenerator);
-			if (roll < 30)
-			{	// For now, just a flat 30% roll to simulate waggle selection
-				(*iter)->setTarget(mTargetFoodSource);
-				(*iter)->setState(State::SeekingTarget);
-			}
-		}
-
-		mParentHive.validateIdleBees();
-	}
+//	// TODO: Iterate over idle bees and dance for them
+//	if (mTargetFoodSource != nullptr)
+//	{
+//		for (auto iter = mParentHive.idleBeesBegin(); iter != mParentHive.idleBeesEnd(); ++iter)
+//		{
+//			assert(*iter != nullptr);
+//
+//			uniform_int_distribution<int> distribution(0, 100);
+//			int roll = distribution(mGenerator);
+//			if (roll < 30)
+//			{	// For now, just a flat 30% roll to simulate waggle selection
+//				(*iter)->setTarget(mTargetFoodSource);
+//				(*iter)->setState(State::SeekingTarget);
+//			}
+//		}
+//
+//		mParentHive.validateIdleBees();
+//	}
 }

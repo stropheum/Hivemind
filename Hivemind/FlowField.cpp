@@ -82,7 +82,7 @@ void FlowField::generateNewField()
 	{
 		for (int j = 0; j < mFieldDimensions.y; j++)
 		{
-			mImage.setPixel(j, i, sf::Color(0, mValues[i][j], mValues[i][j], 128));
+			mImage.setPixel(j, i, sf::Color(mValues[i][j], mValues[i][j], mValues[i][j], 128));
 		}
 	}
 

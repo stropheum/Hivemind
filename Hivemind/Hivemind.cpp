@@ -50,8 +50,8 @@ int main(int argc, char* argv[])
 	fpsMeter.setFillColor(sf::Color(200, 200, 200));
 
 	bool running = false;
-	const int beeRows = 5;
-	const int beeCols = 5;
+	const int beeRows = 10;
+	const int beeCols = 10;
 	const int horizontalSpacing = window.getSize().x / beeCols;
 	const int verticalSpacing = window.getSize().y / beeRows;
 
@@ -66,6 +66,14 @@ int main(int argc, char* argv[])
 	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, 100.0f));
 	foodSourceManager->spawnFoodSource(sf::Vector2f(100.0f, windowSize.y - 300.0f));
 	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, windowSize.y - 300.0f));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 100, windowSize.y / 4.0f - 250));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 100, windowSize.y / 2.0f + windowSize.y / 4.0f +50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 400, windowSize.y / 4.0f - 250));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 400, windowSize.y / 2.0f + windowSize.y / 4.0f + 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 2.0f + 200, windowSize.y / 4.0f - 250));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 2.0f + 200, windowSize.y / 2.0f + windowSize.y / 4.0f + 50));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 4.0f - 400, windowSize.y / 2.0f - 100));
+	foodSourceManager->spawnFoodSource(sf::Vector2f(windowSize.x / 2 + windowSize.x / 4.0f + 200, windowSize.y / 2.0f - 100));
 
 	for (int i = 0; i < beeRows; i++)
 	{
@@ -112,43 +120,6 @@ int main(int argc, char* argv[])
 				if (event.key.code == sf::Keyboard::LControl)
 				{
 					beeManager->toggleEmployeeFlowFields();
-				}
-
-				if (event.key.code == sf::Keyboard::Num1)
-				{
-					beeManager->setEmployeeFlowFieldOctaveCount(1);
-				}
-				else if (event.key.code == sf::Keyboard::Num2)
-				{
-					beeManager->setEmployeeFlowFieldOctaveCount(2);
-				}
-				else if (event.key.code == sf::Keyboard::Num3)
-				{
-					beeManager->setEmployeeFlowFieldOctaveCount(3);
-				}
-				else if (event.key.code == sf::Keyboard::Num4)
-				{
-					beeManager->setEmployeeFlowFieldOctaveCount(4);
-				}
-				else if (event.key.code == sf::Keyboard::Num5)
-				{
-					beeManager->setEmployeeFlowFieldOctaveCount(5);
-				}
-				else if (event.key.code == sf::Keyboard::Num6)
-				{
-					beeManager->setEmployeeFlowFieldOctaveCount(6);
-				}
-				else if (event.key.code == sf::Keyboard::Num7)
-				{
-					beeManager->setEmployeeFlowFieldOctaveCount(7);
-				}
-				else if (event.key.code == sf::Keyboard::Num8)
-				{
-					beeManager->setEmployeeFlowFieldOctaveCount(8);
-				}
-				else if (event.key.code == sf::Keyboard::Num9)
-				{
-					beeManager->setEmployeeFlowFieldOctaveCount(9);
 				}
 
 				if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)

@@ -53,10 +53,18 @@ public:
 	/// Iterates over the idle bees vector and removes all bees which are no longer idle
 	void validateIdleBees();
 
+	/// Deposits food source information into the hive
+	void updateKnownFoodSource(class FoodSource* const foodSource, const std::pair<float, float>& foodSourceData);
+
+	/// Causes all bees within the hive to watch the waggle dance and decide on updated food source data
+	void handleWaggleDance();
+
 private:
 	/// Constants
 	const float STANDARD_WIDTH = 200.0f;
 	const float STANDARD_HEIGHT = 200.0f;
+
+	static float computeFitness(const std::pair<float, float>&, const float& minYield, const float& maxYield, const float& minDistance, const float& maxDistance);
 
 	/// Fields
 	sf::Vector2f mDimensions;
@@ -65,5 +73,7 @@ private:
 	sf::Font mFont;
 	sf::Text mText;
 	std::vector<OnlookerBee*> mIdleBees;
+	std::map<class FoodSource* const, std::pair<float, float>> mFoodSourceData;
+	std::default_random_engine mGenerator;
 };
 

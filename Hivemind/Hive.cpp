@@ -1,12 +1,17 @@
 #include "pch.h"
 #include "Hive.h"
+#include <cassert>
 
 
 using namespace std;
 
 Hive::Hive(const sf::Vector2f& position):
-	Entity(position, sf::Color::White, sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), mFoodAmount(0.0f), mFont(), mText()
+	Entity(position, sf::Color::White, sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), 
+	mFoodAmount(0.0f), mFont(), mText(), mGenerator()
 {
+	std::random_device device;
+	mGenerator = std::default_random_engine(device());
+	mFoodSourceData.clear();
 	mBody.setPosition(mPosition);
 	mBody.setOutlineThickness(5);
 	mBody.setOutlineColor(mOutlineColor);
@@ -30,6 +35,7 @@ Hive::Hive(const sf::Vector2f& position):
 Hive::~Hive()
 {
 	mIdleBees.clear();
+	mFoodSourceData.clear();
 }
 
 void Hive::update(sf::RenderWindow& window, const float& deltaTime)
@@ -121,4 +127,87 @@ void Hive::validateIdleBees()
 			}
 		}
 	}
+}
+
+void Hive::updateKnownFoodSource(FoodSource* const foodSource, const std::pair<float, float>& foodSourceData)
+{
+	mFoodSourceData[foodSource] = foodSourceData;
+}
+
+void Hive::handleWaggleDance()
+{
+	std::vector<std::pair<FoodSource*, float>> fitnessThresholds;
+	float fitnessSum = 0.0f;
+
+	float minYield = mFoodSourceData.begin()->second.first;
+	float maxYield = mFoodSourceData.begin()->second.first;
+	for (auto iter = mFoodSourceData.begin(); iter != mFoodSourceData.end(); ++iter)
+	{	// Determine the range of values to help determine fitness
+		auto pair = iter->second;
+		if (pair.first < minYield)
+		{
+			minYield = pair.first;
+		}
+		if (pair.first > maxYield)
+		{
+			maxYield = pair.first;
+		}
+	}
+
+	for (auto iter = mFoodSourceData.begin(); iter != mFoodSourceData.end(); ++iter)
+	{
+		float fitnessValue = fitnessSum + computeFitness(iter->second, minYield, maxYield, 0.0f, 0.0f);
+		std::pair<FoodSource* const, float> pair(iter->first, fitnessValue);
+		fitnessThresholds.push_back(pair);
+		fitnessSum += fitnessValue;
+	}
+
+	for (auto iter = idleBeesBegin(); iter != idleBeesEnd(); ++iter)
+	{
+		assert(*iter != nullptr);
+
+		std::uniform_real_distribution<float> distribution(0, fitnessSum);
+		float roll = distribution(mGenerator);
+
+		float weight = 0.0f;
+		for (auto fitnessIter = fitnessThresholds.begin(); fitnessIter != fitnessThresholds.end(); ++fitnessIter)
+		{
+			weight += fitnessIter->second;
+			if (weight >= roll)
+			{	// We've reached our weighted value. send the bee
+				(*iter)->setTarget(fitnessIter->first);
+				(*iter)->setState(Bee::State::SeekingTarget);
+				break;
+			}
+		}
+
+//		for (auto foodIter = mFoodSourceData.begin(); foodIter != mFoodSourceData.end(); ++foodIter)
+//		{
+//			if (computeFitness(foodIter->second, minYield, maxYield, 0.0f, 0.0f) < roll)
+//			{
+//				(*iter)->setTarget(foodIter->first);
+//				(*iter)->setState(Bee::State::SeekingTarget);
+//			}
+//		}
+	}
+
+	validateIdleBees();
+}
+
+float Hive::computeFitness(const std::pair<float, float>& foodData, 
+	const float& minYield, const float& maxYield, 
+	const float& minDistance, const float& maxDistance)
+{
+	UNREFERENCED_PARAMETER(minDistance);
+	UNREFERENCED_PARAMETER(maxDistance);
+
+	float distanceFromMinYield = foodData.first - minYield;
+	float yieldRange = maxYield - minYield;
+
+	float result = 1.0f;
+	if (yieldRange != 0.0f)
+	{
+		result = distanceFromMinYield / yieldRange;
+	}
+	return result;
 }

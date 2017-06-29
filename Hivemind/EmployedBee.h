@@ -30,5 +30,7 @@ private:
 	class FoodSource* mPairedFoodSource;
 	FlowField mFlowField;
 	bool mDisplayFlowField;
+	sf::VertexArray mLineToFoodSource;
+	std::pair<float, float> mFoodSourceData;
 };
 
