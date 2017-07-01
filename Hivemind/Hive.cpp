@@ -7,7 +7,7 @@ using namespace std;
 
 Hive::Hive(const sf::Vector2f& position):
 	Entity(position, sf::Color::White, sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), 
-	mFoodAmount(0.0f), mFont(), mText(), mGenerator()
+	mFoodAmount(0.0f), mFont(), mText(), mGenerator(), mWaggleDanceClock(), mWaggleDanceWaitPeriod(2.0f), mWaggleDanceInProgress(false)
 {
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
@@ -42,6 +42,11 @@ void Hive::update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);
+
+	if (mWaggleDanceInProgress && mWaggleDanceClock.getElapsedTime().asSeconds() > mWaggleDanceWaitPeriod)
+	{
+		completeWaggleDance();
+	}
 
 	std::stringstream ss;
 	ss << "Food: " << mFoodAmount;
@@ -134,7 +139,13 @@ void Hive::updateKnownFoodSource(FoodSource* const foodSource, const std::pair<f
 	mFoodSourceData[foodSource] = foodSourceData;
 }
 
-void Hive::handleWaggleDance()
+void Hive::triggerWaggleDance()
+{
+	mWaggleDanceClock.restart();
+	mWaggleDanceInProgress = true;
+}
+
+void Hive::completeWaggleDance()
 {
 	std::vector<std::pair<FoodSource*, float>> fitnessThresholds;
 	float fitnessSum = 0.0f;
@@ -180,18 +191,10 @@ void Hive::handleWaggleDance()
 				break;
 			}
 		}
-
-//		for (auto foodIter = mFoodSourceData.begin(); foodIter != mFoodSourceData.end(); ++foodIter)
-//		{
-//			if (computeFitness(foodIter->second, minYield, maxYield, 0.0f, 0.0f) < roll)
-//			{
-//				(*iter)->setTarget(foodIter->first);
-//				(*iter)->setState(Bee::State::SeekingTarget);
-//			}
-//		}
 	}
 
 	validateIdleBees();
+	mWaggleDanceInProgress = false;
 }
 
 float Hive::computeFitness(const std::pair<float, float>& foodData, 

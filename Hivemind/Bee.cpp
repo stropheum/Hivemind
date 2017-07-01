@@ -21,7 +21,14 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive):
 	mFace(sf::Vector2f(BODY_RADIUS, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED), mFoodAmount(0.0f), 
 	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mTargeting(false), mState(State::SeekingTarget), mTargetFoodSource(nullptr)
 {
-	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
+//	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
+	std::random_device device;
+	mGenerator = std::default_random_engine(device());
+
+	// Randomly offset the bee's speed by a random value
+	uniform_real_distribution<float> distribution(-50.0f, 50.0f);
+	mSpeed += distribution(mGenerator);
+
 	mBody.setFillColor(mFillColor);
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setOutlineThickness(3);

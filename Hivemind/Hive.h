@@ -57,7 +57,10 @@ public:
 	void updateKnownFoodSource(class FoodSource* const foodSource, const std::pair<float, float>& foodSourceData);
 
 	/// Causes all bees within the hive to watch the waggle dance and decide on updated food source data
-	void handleWaggleDance();
+	void triggerWaggleDance();
+
+	/// After wait period has ended and no new scouts have delivered food, allow bees to choose their food source
+	void completeWaggleDance();
 
 private:
 	/// Constants
@@ -75,5 +78,8 @@ private:
 	std::vector<OnlookerBee*> mIdleBees;
 	std::map<class FoodSource* const, std::pair<float, float>> mFoodSourceData;
 	std::default_random_engine mGenerator;
+	sf::Clock mWaggleDanceClock;
+	float mWaggleDanceWaitPeriod;
+	bool mWaggleDanceInProgress;
 };
 

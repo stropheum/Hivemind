@@ -219,26 +219,6 @@ void EmployedBee::setFlowFieldOctaveCount(const std::uint32_t& octaveCount)
 
 void EmployedBee::waggleDance()
 {
-	// TODO: Deposit information into hive
 	mParentHive.updateKnownFoodSource(mPairedFoodSource, mFoodSourceData);
-	mParentHive.handleWaggleDance();
-
-//	// TODO: Iterate over idle bees and dance for them
-//	if (mTargetFoodSource != nullptr)
-//	{
-//		for (auto iter = mParentHive.idleBeesBegin(); iter != mParentHive.idleBeesEnd(); ++iter)
-//		{
-//			assert(*iter != nullptr);
-//
-//			uniform_int_distribution<int> distribution(0, 100);
-//			int roll = distribution(mGenerator);
-//			if (roll < 30)
-//			{	// For now, just a flat 30% roll to simulate waggle selection
-//				(*iter)->setTarget(mTargetFoodSource);
-//				(*iter)->setState(State::SeekingTarget);
-//			}
-//		}
-//
-//		mParentHive.validateIdleBees();
-//	}
+	mParentHive.triggerWaggleDance();
 }
