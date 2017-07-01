@@ -199,6 +199,9 @@ int main(int argc, char* argv[])
 		// Handle rendering
 		window.clear(sf::Color(32, 32, 32));
 
+		fpsMeter.setPosition(
+			sf::Vector2f(view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2));
+		window.setView(view);
 		fpsMeter.setString(computeFrameRate());
 		window.draw(fpsMeter);
 

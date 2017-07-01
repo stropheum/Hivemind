@@ -11,7 +11,7 @@ using namespace std;
 const float Bee::STANDARD_BEE_SPEED = 200.0f;
 const float Bee::BODY_RADIUS = 12.0f;
 const float Bee::TARGET_RADIUS = 5.0f;
-const float Bee::STANDARD_HARVESTING_DURATION = 8.0f;
+const float Bee::STANDARD_HARVESTING_DURATION = 5.0f;
 const sf::Color Bee::NORMAL_COLOR = sf::Color(192, 192, 192);
 const sf::Color Bee::ALERT_COLOR = sf::Color::Red;
 const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
