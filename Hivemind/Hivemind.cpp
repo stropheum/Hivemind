@@ -33,6 +33,7 @@ int main(int argc, char* argv[])
 	contextSettings.antialiasingLevel = 8;
 
 	sf::View view(sf::FloatRect(0, 0, 1600, 900));
+	view.zoom(1.25f);
 	sf::Vector2f cameraMovement(0, 0);
 
 	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Default);

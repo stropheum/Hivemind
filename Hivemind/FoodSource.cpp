@@ -5,7 +5,7 @@
 using namespace std;
 
 FoodSource::FoodSource(const sf::Vector2f& position) :
-	Entity(position, sf::Color::White, sf::Color(32, 128, 32)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), mFoodAmount(999999.0f), mFont(), mText()
+	Entity(position, sf::Color::White, sf::Color(32, 128, 32)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), mFoodAmount(1000.0f), mFont(), mText()
 {
 	mBody.setPosition(mPosition);
 	mBody.setOutlineThickness(5);

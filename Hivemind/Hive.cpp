@@ -147,7 +147,7 @@ void Hive::triggerWaggleDance()
 
 void Hive::completeWaggleDance()
 {
-	std::vector<std::pair<FoodSource*, float>> fitnessThresholds;
+	std::vector<std::pair<FoodSource*, float>> fitnessWeights;
 	float fitnessSum = 0.0f;
 
 	float minYield = mFoodSourceData.begin()->second.first;
@@ -167,10 +167,10 @@ void Hive::completeWaggleDance()
 
 	for (auto iter = mFoodSourceData.begin(); iter != mFoodSourceData.end(); ++iter)
 	{
-		float fitnessValue = fitnessSum + computeFitness(iter->second, minYield, maxYield, 0.0f, 0.0f);
-		std::pair<FoodSource* const, float> pair(iter->first, fitnessValue);
-		fitnessThresholds.push_back(pair);
-		fitnessSum += fitnessValue;
+		float weight = computeFitness(iter->second, minYield, maxYield, 0.0f, 0.0f);
+		std::pair<FoodSource* const, float> pair(iter->first, weight);
+		fitnessWeights.push_back(pair);
+		fitnessSum += weight;
 	}
 
 	for (auto iter = idleBeesBegin(); iter != idleBeesEnd(); ++iter)
@@ -180,16 +180,23 @@ void Hive::completeWaggleDance()
 		std::uniform_real_distribution<float> distribution(0, fitnessSum);
 		float roll = distribution(mGenerator);
 
-		float weight = 0.0f;
-		for (auto fitnessIter = fitnessThresholds.begin(); fitnessIter != fitnessThresholds.end(); ++fitnessIter)
+//		float weight = 0.0f;
+		for (auto fitnessIter = fitnessWeights.begin(); fitnessIter != fitnessWeights.end(); ++fitnessIter)
 		{
-			weight += fitnessIter->second;
-			if (weight >= roll)
-			{	// We've reached our weighted value. send the bee
+			roll -= fitnessIter->second;
+			if (roll < fitnessIter->second)
+			{
 				(*iter)->setTarget(fitnessIter->first);
 				(*iter)->setState(Bee::State::SeekingTarget);
 				break;
 			}
+//			weight += fitnessIter->second;
+//			if (weight >= roll)
+//			{	// We've reached our weighted value. send the bee
+//				(*iter)->setTarget(fitnessIter->first);
+//				(*iter)->setState(Bee::State::SeekingTarget);
+//				break;
+//			}
 		}
 	}
 

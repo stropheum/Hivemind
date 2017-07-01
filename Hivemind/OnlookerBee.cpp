@@ -21,12 +21,12 @@ void OnlookerBee::update(sf::RenderWindow& window, const float& deltaTime)
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 	float rotationAngle = rotationRadians * (180 / PI);
 
-	if (mTargetFoodSource != nullptr && mTargetFoodSource->getFoodAmount() == 0)
-	{
-		mTargeting = false;
-		mState = State::SeekingTarget;
-		handleFoodSourceCollisions();
-	}
+//	if (mTargetFoodSource != nullptr && mTargetFoodSource->getFoodAmount() == 0)
+//	{
+//		mTargeting = false;
+//		mState = State::SeekingTarget;
+//		handleFoodSourceCollisions();
+//	}
 
 	sf::Vector2f newPosition;
 	switch (mState)
@@ -101,7 +101,7 @@ void OnlookerBee::update(sf::RenderWindow& window, const float& deltaTime)
 		break;
 
 	case State::DeliveringFood:
-		mTarget = mParentHive.getCenterTarget();
+		setTarget(mParentHive.getCenterTarget());
 		newPosition = sf::Vector2f(
 			mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
 			mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);

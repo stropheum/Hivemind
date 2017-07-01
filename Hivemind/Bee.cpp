@@ -58,7 +58,7 @@ void Bee::render(sf::RenderWindow& window) const
 	{	
 		window.draw(mFace);
 	}
-	window.draw(mText);
+//	window.draw(mText);
 }
 
 bool Bee::hasTarget() const
@@ -125,13 +125,16 @@ void Bee::handleFoodSourceCollisions()
 	
 	if (!hasTarget() && mState == State::SeekingTarget)
 	{	// Set initial target
+		mTargeting = true;
 		std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
 		int targetIndex = distribution(mGenerator);
 		mTargetFoodSource = &foodSourceManager->getFoodSource(targetIndex);
 		sf::Vector2f newTarget = mTargetFoodSource->getCenterTarget();
 
 		setTarget(newTarget);
+		mState = State::DeliveringFood;
 	}
+	
 	switch (mState)
 	{
 	case State::SeekingTarget:

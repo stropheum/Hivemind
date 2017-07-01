@@ -36,13 +36,13 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 	float rotationAngle = rotationRadians * (180 / PI);
 
-	if (mTargetFoodSource != nullptr && mTargetFoodSource->getFoodAmount() == 0)
-	{
-//		mPairedFoodSource = mTargetFoodSource; // TODO: Remove once paired food source is randomly scouted instead of assigned
-		mTargeting = false;
-		mState = State::SeekingTarget;
-//		handleFoodSourceCollisions();
-	}
+	// Re-enable to have scout ignore food source
+	// TODO: have scouts pair with food source, and ignore empty food sources unless already paired
+//	if (mTargetFoodSource != nullptr && mTargetFoodSource->getFoodAmount() == 0)
+//	{
+//		mTargetFoodSource = nullptr;
+//		mTargeting = false;
+//	}
 
 	sf::Vector2f newPosition;
 	switch (mState)
