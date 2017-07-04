@@ -32,14 +32,26 @@ public:
 	/// @Return: A reference to the moved food source
 	FoodSource& operator=(FoodSource&& rhs) = delete;
 
+	/// Takes food from the food source
+	/// @Param amount: The amount of food being removed from the source
+	/// @Return: The amount of food taken from teh source
 	float takeFood(const float amount);
+
+	/// Determines if the food source is viable for harvesting
+	/// @Return: True if the food source is viable (current food > 0.0f)
+	bool isViable() const;
 
 #pragma endregion 
 
 #pragma region Public API
 
+	/// Update method called by the main game loop
+	/// @Param window: The window that the simulation is being rendered to
+	/// @Param deltaTime: The time since the last update call
 	void update(sf::RenderWindow& window, const float& deltaTime) override;
 
+	/// Render method called by the main game loop
+	/// @Param window: The window that the simulation is being rendered to
 	void render(sf::RenderWindow& window) const override;
 
 	/// Accessor for the amount of food that is currently stored

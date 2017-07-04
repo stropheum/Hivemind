@@ -11,7 +11,12 @@ namespace sf {
 class FlowField : public Entity
 {
 public:
+
+	/// Constructor
+	/// @param position: The positio of the flow field
 	explicit FlowField(const sf::Vector2f& position);
+
+	/// Destructor
 	~FlowField();
 
 	/// Update method called by the main game loop
@@ -35,8 +40,13 @@ public:
 	/// Regenerates a new random flow field
 	void generateNewField();
 
+	/// Mutator method for the number of octaves being calculated for the flow field
+	/// @Param octaveCount: The number of octaves in the flow field
 	void setOctaveCount(const std::uint32_t& octaveCount);
 
+	/// Converts the percentace value of the flow field to a radian value (0-1 >> 0-2 mapping)
+	/// @Param position: World position vector. Will be converted to relative flow field position
+	/// @Return: A float value from 0-2 which will correspond to a radian rotation value
 	float radianValueAtPosition(const sf::Vector2f& position) const;
 
 private:
