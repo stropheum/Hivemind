@@ -67,7 +67,14 @@ private:
 	const float STANDARD_WIDTH = 200.0f;
 	const float STANDARD_HEIGHT = 200.0f;
 
-	static float ComputeFitness(const std::pair<float, float>&, const float& minYield, const float& maxYield, const float& minDistance, const float& maxDistance);
+	/// Determines the fitness of the food source based on the minimum and maximum parameters and its relation to them
+	/// @Param fooddata: A pair of two floats containing the yield and distance of an individual food source
+	/// @Param minYield: The minimum yield of all known food sources
+	/// @Param maxYield: The maximum yield of all known food sources
+	/// @Param minDistance: The closest distance of all known food sources
+	/// @Param maxDistance: The farthest distance of all known food sources
+	/// @Return: A float value between 0-1, where 0 is the worst possible fitness and 1 is best possible fitness
+	static float ComputeFitness(const std::pair<float, float>& foodData, const float& minYield, const float& maxYield, const float& minDistance, const float& maxDistance);
 
 	/// Fields
 	sf::Vector2f mDimensions;

@@ -3,18 +3,10 @@
 #include <chrono>
 
 
-//std::default_random_engine PerlinNoise::mGenerator(std::random_device());
-
 PerlinNoise::PerlinNoise()
 {
-//	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
-}
-
-
-PerlinNoise::~PerlinNoise()
-{
 }
 
 float** PerlinNoise::GenerateWhiteNoise(const sf::Vector2i& dimensions)

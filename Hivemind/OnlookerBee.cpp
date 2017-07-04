@@ -21,13 +21,6 @@ void OnlookerBee::Update(sf::RenderWindow& window, const float& deltaTime)
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 	float rotationAngle = rotationRadians * (180 / PI);
 
-//	if (mTargetFoodSource != nullptr && mTargetFoodSource->GetFoodAmount() == 0)
-//	{
-//		mTargeting = false;
-//		mState = State::SeekingTarget;
-//		HandleFoodSourceCollisions();
-//	}
-
 	sf::Vector2f newPosition;
 	switch (mState)
 	{

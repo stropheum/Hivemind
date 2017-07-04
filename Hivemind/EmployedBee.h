@@ -40,12 +40,34 @@ private:
 	/// Performs the waggle dance and disseminates information into the hive
 	void WaggleDance();
 
-	/// Methods for handling Update for specific states
+	/// Updates the bee during its scouting state
+	/// @Param window: The window that the simulation is being rendered to
+	/// @Param deltaTime: The time since the last Update call
 	void UpdateScouting(sf::RenderWindow& window, const float& deltaTime);
+
+	/// Updates the bee during its seeking target state
+	/// @Param window: The window that the simulation is being rendered to
+	/// @Param deltaTime: The time since the last Update call
 	void UpdateSeekingTarget(sf::RenderWindow& window, const float& deltaTime);
+
+	/// Updates the bee during its harvesting food state
+	/// @Param window: The window that the simulation is being rendered to
+	/// @Param deltaTime: The time since the last Update call
 	void UpdateHarvestingFood(sf::RenderWindow& window, const float& deltaTime);
+
+	/// Updates the bee during its delivering food state
+	/// @Param window: The window that the simulation is being rendered to
+	/// @Param deltaTime: The time since the last Update call
 	void UpdateDeliveringFood(sf::RenderWindow& window, const float& deltaTime);
+
+	/// Updates the bee during its depositing food state
+	/// @Param window: The window that the simulation is being rendered to
+	/// @Param deltaTime: The time since the last Update call
 	void UpdateDepositingFood(sf::RenderWindow& window, const float& deltaTime);
+
+	/// Updates the bees position
+	/// @Param window: The window that the simulation is being rendered to
+	/// @Param deltaTime: The time since the last Update call
 	void UpdatePosition(const sf::Vector2f& position, const float& rotation);
 
 	/// Updates the flow field based on the wandering state

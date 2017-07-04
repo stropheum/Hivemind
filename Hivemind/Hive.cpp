@@ -180,8 +180,6 @@ void Hive::CompleteWaggleDance()
 
 		std::uniform_real_distribution<float> distribution(0, fitnessSum);
 		float roll = distribution(mGenerator);
-
-//		float weight = 0.0f;
 		for (auto fitnessIter = fitnessWeights.begin(); fitnessIter != fitnessWeights.end(); ++fitnessIter)
 		{
 			roll -= fitnessIter->second;
@@ -191,13 +189,6 @@ void Hive::CompleteWaggleDance()
 				(*iter)->SetState(Bee::State::SeekingTarget);
 				break;
 			}
-//			weight += fitnessIter->second;
-//			if (weight >= roll)
-//			{	// We've reached our weighted value. send the bee
-//				(*iter)->SetTarget(fitnessIter->first);
-//				(*iter)->SetState(Bee::State::SeekingTarget);
-//				break;
-//			}
 		}
 	}
 
