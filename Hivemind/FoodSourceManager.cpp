@@ -9,7 +9,7 @@ FoodSourceManager::FoodSourceManager()
 {
 }
 
-FoodSourceManager* FoodSourceManager::getInstance()
+FoodSourceManager* FoodSourceManager::GetInstance()
 {
 	if (sInstance == nullptr)
 	{
@@ -27,48 +27,48 @@ FoodSourceManager::~FoodSourceManager()
 	mFoodSources.clear();
 }
 
-void FoodSourceManager::spawnFoodSource(const sf::Vector2f& position)
+void FoodSourceManager::SpawnFoodSource(const sf::Vector2f& position)
 {
 	mFoodSources.push_back(new FoodSource(position));
 }
 
-void FoodSourceManager::update(sf::RenderWindow& window, const float& deltaTime)
+void FoodSourceManager::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	for (auto iter = mFoodSources.begin(); iter != mFoodSources.end(); ++iter)
 	{
-		(*iter)->update(window, deltaTime);
+		(*iter)->Update(window, deltaTime);
 	}
 }
 
-void FoodSourceManager::render(sf::RenderWindow& window)
+void FoodSourceManager::Render(sf::RenderWindow& window)
 {
 	for (auto iter = mFoodSources.begin(); iter != mFoodSources.end(); ++iter)
 	{
-		(*iter)->render(window);
+		(*iter)->Render(window);
 	}
 }
 
-std::uint32_t FoodSourceManager::getFoodsourceCount() const
+std::uint32_t FoodSourceManager::GetFoodsourceCount() const
 {
 	return static_cast<std::uint32_t>(mFoodSources.size());
 }
 
-std::vector<FoodSource*>::iterator FoodSourceManager::begin()
+std::vector<FoodSource*>::iterator FoodSourceManager::Begin()
 {
 	return mFoodSources.begin();
 }
 
-std::vector<FoodSource*>::iterator FoodSourceManager::end()
+std::vector<FoodSource*>::iterator FoodSourceManager::End()
 {
 	return mFoodSources.end();
 }
 
-std::uint32_t FoodSourceManager::foodSourceCount() const
+std::uint32_t FoodSourceManager::FoodSourceCount() const
 {
 	return static_cast<std::uint32_t>(mFoodSources.size());
 }
 
-FoodSource& FoodSourceManager::getFoodSource(const std::uint32_t& index)
+FoodSource& FoodSourceManager::GetFoodSource(const std::uint32_t& index)
 {
 	if (index >= mFoodSources.size())
 	{

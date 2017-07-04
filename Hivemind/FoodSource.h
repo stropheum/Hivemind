@@ -35,11 +35,11 @@ public:
 	/// Takes food from the food source
 	/// @Param amount: The amount of food being removed from the source
 	/// @Return: The amount of food taken from teh source
-	float takeFood(const float amount);
+	float TakeFood(const float amount);
 
 	/// Determines if the food source is viable for harvesting
 	/// @Return: True if the food source is viable (current food > 0.0f)
-	bool isViable() const;
+	bool IsViable() const;
 
 #pragma endregion 
 
@@ -47,36 +47,36 @@ public:
 
 	/// Update method called by the main game loop
 	/// @Param window: The window that the simulation is being rendered to
-	/// @Param deltaTime: The time since the last update call
-	void update(sf::RenderWindow& window, const float& deltaTime) override;
+	/// @Param deltaTime: The time since the last Update call
+	void Update(sf::RenderWindow& window, const float& deltaTime) override;
 
 	/// Render method called by the main game loop
 	/// @Param window: The window that the simulation is being rendered to
-	void render(sf::RenderWindow& window) const override;
+	void Render(sf::RenderWindow& window) const override;
 
 	/// Accessor for the amount of food that is currently stored
 	/// @Return: The amount of food stored in the source
-	float getFoodAmount() const;
+	float GetFoodAmount() const;
 
 	/// Mutator method for the food amount in the source
 	/// @Param foodAmount: The new amount of food in the source
-	void setFoodAmount(const float& foodAmount);
+	void SetFoodAmount(const float& foodAmount);
 
 	/// Accessor method for the center point of the food source
 	/// @Return: A vector representing the center point of the source
-	sf::Vector2f getCenterTarget() const;
+	sf::Vector2f GetCenterTarget() const;
 
 	/// Accessor method for the dimensions of the food source
 	/// @Return: A vector representing the width and height of the food source
-	const sf::Vector2f& getDimensions() const;
+	const sf::Vector2f& GetDimensions() const;
 
 	/// Accessor method to determine if the food source is being actively scouted by an employee
 	/// @Return: True if the food source is actively being scouted
-	bool getPairedWithEmployee() const;
+	bool GetPairedWithEmployee() const;
 
 	/// Mutator method for whether the food source is actively being scouted
 	/// @Param pairedWithEmployee: Value determining if the food source is paired or not
-	void setPairedWithEmployee(const bool& pairedWithEmployee);
+	void SetPairedWithEmployee(const bool& pairedWithEmployee);
 
 #pragma endregion
 

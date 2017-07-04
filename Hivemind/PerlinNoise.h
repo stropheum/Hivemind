@@ -22,17 +22,17 @@ public:
 	/// @Param dimensions: The size of the noise map
 	/// @Param octave: The degree to which smoothing will occur
 	/// @Return: A smoothed noise map of values ranging from 0-1
-	float** generateSmoothNoise(float** values, const sf::Vector2i& dimensions, const int& octave);
+	float** GenerateSmoothNoise(float** values, const sf::Vector2i& dimensions, const int& octave);
 	
 	/// Method for generating a perlin noise map
 	/// @Param value: The noise map being converted into perlin noise
 	/// @Param dimensions: The size of the noise map
 	/// @Param octaveCount: The number of different consecutive octaves being smoothed together
 	/// @Return: A perlin noise map of values ranging from 0-1
-	float** generatePerlinNoise(float** values, const sf::Vector2i& dimensions, const int& octaveCount);
+	float** GeneratePerlinNoise(float** values, const sf::Vector2i& dimensions, const int& octaveCount);
 
 private:
-	static float interpolate(float x0, float x1, float alpha);
+	static float Interpolate(float x0, float x1, float alpha);
 
 	std::default_random_engine mGenerator;
 };

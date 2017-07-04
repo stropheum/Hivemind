@@ -66,54 +66,54 @@ public:
 
 	/// Update method called by the main game loop
 	/// @Param window: The window that the simulation is being rendered to
-	/// @Param deltaTime: The time since the last update call
-	void update(sf::RenderWindow& window, const float& deltaTime) override = 0;
+	/// @Param deltaTime: The time since the last Update call
+	void Update(sf::RenderWindow& window, const float& deltaTime) override = 0;
 
 	/// Render method called by the main game loop
 	/// @Param window: The window that the simulation is being rendered to
-	void render(sf::RenderWindow& window) const override;
+	void Render(sf::RenderWindow& window) const override;
 
 	/// Determines if the bee is colliding with the specified food source
 	/// @Param foodSource: The food source being checked
 	/// @Return: True if the bee is within the bounds of the food source. False otherwise
-	bool collidingWithFoodSource(const class FoodSource& foodSource) const;
+	bool CollidingWithFoodSource(const class FoodSource& foodSource) const;
 
 	/// Determines if the bee is colliding with the specified hive
 	/// @Param hive: The hive being checked
 	/// @Return: True if the bee is within the bounds of the hive. False otherwise
-	bool collidingWithHive(const class Hive& hive) const;
+	bool CollidingWithHive(const class Hive& hive) const;
 
 	/// Sets the bee's body color to the specified value
 	/// @Param color: The new color of the bee's body
-	void setColor(const sf::Color& color);
+	void SetColor(const sf::Color& color);
 
 	/// Sets the bee's target to the specified food source
 	/// @Param foodSource: The bee's new food source target
-	void setTarget(class FoodSource* const foodSource);
+	void SetTarget(class FoodSource* const foodSource);
 
 	/// Sets the bee's target tot he specified position
 	/// @Param position: The bee's new target position
-	void setTarget(const sf::Vector2f& position);
+	void SetTarget(const sf::Vector2f& position);
 
 	/// Accessor method for the bee's current target location
 	/// @Return: A Vector2f position value of the bee's target
-	const sf::Vector2f& getTarget() const;
+	const sf::Vector2f& GetTarget() const;
 
 	/// Determines if the bee currently has an active target
 	/// @Return: True if the bee has a target. False otherwise
-	bool hasTarget() const;
+	bool HasTarget() const;
 
 	/// Deposits food from the bee's body to its parent hive
 	/// @Param foodAmount; The amount of food being deposited into the hive
-	void depositFood(float foodAmount);
+	void DepositFood(float foodAmount);
 
 	/// Mutator method for the bee's current state
 	/// @Param state: The bee's new state
-	void setState(const State& state);
+	void SetState(const State& state);
 
 	/// Accessor method for the bee's current state
 	/// @Return: The state of the bee
-	State getState() const;
+	State GetState() const;
 
 #pragma endregion
 
@@ -123,8 +123,8 @@ protected:
 	const float EXTRACTION_YIELD = 10.0f;
 
 	/// Private API
-	void handleFoodSourceCollisions();
-	void detectStructureCollisions();
+	void HandleFoodSourceCollisions();
+	void DetectStructureCollisions();
 
 	/// Private fields
 	Hive& mParentHive;

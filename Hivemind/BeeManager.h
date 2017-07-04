@@ -5,20 +5,20 @@
 class BeeManager
 {
 public:
-	static BeeManager* getInstance();
+	static BeeManager* GetInstance();
 	~BeeManager();
-	void spawnOnlooker(const sf::Vector2f& position, Hive& hive);
-	void spawnEmployee(const sf::Vector2f& position, Hive& hive);
-	void update(sf::RenderWindow& window, const float& deltaTime);
-	void render(sf::RenderWindow& window);
-	std::vector<class OnlookerBee*>::iterator onlookerBegin();
-	std::vector<class OnlookerBee*>::iterator onlookerEnd();
-	std::vector<class EmployedBee*>::iterator employeeBegin();
-	std::vector<class EmployedBee*>::iterator employeeEnd();
-	std::uint32_t onlookerCount() const;
-	std::uint32_t employeeCount() const;
-	void toggleEmployeeFlowFields();
-	void setEmployeeFlowFieldOctaveCount(const std::uint32_t& octaveCount);
+	void SpawnOnlooker(const sf::Vector2f& position, Hive& hive);
+	void SpawnEmployee(const sf::Vector2f& position, Hive& hive);
+	void Update(sf::RenderWindow& window, const float& deltaTime);
+	void Render(sf::RenderWindow& window);
+	std::vector<class OnlookerBee*>::iterator OnlookerBegin();
+	std::vector<class OnlookerBee*>::iterator OnlookerEnd();
+	std::vector<class EmployedBee*>::iterator EmployeeBegin();
+	std::vector<class EmployedBee*>::iterator EmployeeEnd();
+	std::uint32_t OnlookerCount() const;
+	std::uint32_t EmployeeCount() const;
+	void ToggleEmployeeFlowFields();
+	void SetEmployeeFlowFieldOctaveCount(const std::uint32_t& octaveCount);
 
 private:
 	BeeManager();

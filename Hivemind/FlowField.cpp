@@ -24,7 +24,7 @@ FlowField::FlowField(const sf::Vector2f& position) :
 
 	mImage.create(mFieldDimensions.x, mFieldDimensions.y);
 
-	generateNewField();
+	GenerateNewField();
 }
 
 FlowField::~FlowField()
@@ -36,7 +36,7 @@ FlowField::~FlowField()
 	delete mValues;
 }
 
-void FlowField::update(sf::RenderWindow& window, const float& deltaTime)
+void FlowField::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);
@@ -46,28 +46,28 @@ void FlowField::update(sf::RenderWindow& window, const float& deltaTime)
 	mSprite.setTexture(mTexture);
 }
 
-void FlowField::render(sf::RenderWindow& window) const
+void FlowField::Render(sf::RenderWindow& window) const
 {
 	window.draw(mSprite);
 }
 
-sf::Vector2i FlowField::getDimensions() const
+sf::Vector2i FlowField::GetDimensions() const
 {
 	return mFieldDimensions;
 }
 
-bool FlowField::collidingWith(const sf::Vector2f& position) const
+bool FlowField::CollidingWith(const sf::Vector2f& position) const
 {
 	return
 		position.x >= mPosition.x && position.x <= mPosition.x + mFieldDimensions.x &&
 		position.y >= mPosition.y && position.y <= mPosition.y + mFieldDimensions.y;
 }
 
-void FlowField::generateNewField()
+void FlowField::GenerateNewField()
 {
 	PerlinNoise noise;
 	auto initialNoiseMap = noise.GenerateWhiteNoise(mFieldDimensions);
-	auto perlinNoise = noise.generateSmoothNoise(initialNoiseMap, mFieldDimensions, mOctaveCount);
+	auto perlinNoise = noise.GenerateSmoothNoise(initialNoiseMap, mFieldDimensions, mOctaveCount);
 
 	for (int i = 0; i < mFieldDimensions.x; i++)
 	{
@@ -90,12 +90,12 @@ void FlowField::generateNewField()
 	delete[] perlinNoise;
 }
 
-void FlowField::setOctaveCount(const std::uint32_t& octaveCount)
+void FlowField::SetOctaveCount(const std::uint32_t& octaveCount)
 {
 	mOctaveCount = octaveCount;
 }
 
-float FlowField::radianValueAtPosition(const sf::Vector2f& position) const
+float FlowField::RadianValueAtPosition(const sf::Vector2f& position) const
 {
 	auto fieldPosition = position - mPosition; // Player's relative position to the flow field
 	auto fieldValue = mValues[static_cast<int>(fieldPosition.x)][static_cast<int>(fieldPosition.y)];

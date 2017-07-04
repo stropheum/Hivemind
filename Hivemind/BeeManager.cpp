@@ -12,7 +12,7 @@ BeeManager::BeeManager():
 {
 }
 
-BeeManager* BeeManager::getInstance()
+BeeManager* BeeManager::GetInstance()
 {
 	if (sInstance == nullptr)
 	{
@@ -35,82 +35,82 @@ BeeManager::~BeeManager()
 	mEmployees.clear();
 }
 
-void BeeManager::spawnOnlooker(const sf::Vector2f& position, Hive& hive)
+void BeeManager::SpawnOnlooker(const sf::Vector2f& position, Hive& hive)
 {
 	mOnlookers.push_back(new OnlookerBee(position, hive));
 }
 
-void BeeManager::spawnEmployee(const sf::Vector2f& position, Hive& hive)
+void BeeManager::SpawnEmployee(const sf::Vector2f& position, Hive& hive)
 {
 	mEmployees.push_back(new EmployedBee(position, hive));
 }
 
-void BeeManager::update(sf::RenderWindow& window, const float& deltaTime)
+void BeeManager::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	for (auto iter = mOnlookers.begin(); iter != mOnlookers.end(); ++iter)
 	{
-		(*iter)->update(window, deltaTime);
+		(*iter)->Update(window, deltaTime);
 	}
 	for (auto iter = mEmployees.begin(); iter != mEmployees.end(); ++iter)
 	{
-		(*iter)->update(window, deltaTime);
+		(*iter)->Update(window, deltaTime);
 	}
 }
 
-void BeeManager::render(sf::RenderWindow& window)
+void BeeManager::Render(sf::RenderWindow& window)
 {
 	for (auto iter = mOnlookers.begin(); iter != mOnlookers.end(); ++iter)
 	{
-		(*iter)->render(window);
+		(*iter)->Render(window);
 	}
 	for (auto iter = mEmployees.begin(); iter != mEmployees.end(); ++iter)
 	{
-		(*iter)->render(window);
+		(*iter)->Render(window);
 	}
 }
 
-std::vector<OnlookerBee*>::iterator BeeManager::onlookerBegin()
+std::vector<OnlookerBee*>::iterator BeeManager::OnlookerBegin()
 {
 	return mOnlookers.begin();
 }
 
-std::vector<OnlookerBee*>::iterator BeeManager::onlookerEnd()
+std::vector<OnlookerBee*>::iterator BeeManager::OnlookerEnd()
 {
 	return mOnlookers.end();
 }
 
-std::vector<EmployedBee*>::iterator BeeManager::employeeBegin()
+std::vector<EmployedBee*>::iterator BeeManager::EmployeeBegin()
 {
 	return mEmployees.begin();
 }
 
-std::vector<EmployedBee*>::iterator BeeManager::employeeEnd()
+std::vector<EmployedBee*>::iterator BeeManager::EmployeeEnd()
 {
 	return mEmployees.end();
 }
 
-std::uint32_t BeeManager::onlookerCount() const
+std::uint32_t BeeManager::OnlookerCount() const
 {
 	return static_cast<std::uint32_t>(mOnlookers.size());
 }
 
-std::uint32_t BeeManager::employeeCount() const
+std::uint32_t BeeManager::EmployeeCount() const
 {
 	return static_cast<std::uint32_t>(mEmployees.size());
 }
 
-void BeeManager::toggleEmployeeFlowFields()
+void BeeManager::ToggleEmployeeFlowFields()
 {
 	for (auto iter = mEmployees.begin(); iter != mEmployees.end(); ++iter)
 	{
-		(*iter)->toggleFlowField();
+		(*iter)->ToggleFlowField();
 	}
 }
 
-void BeeManager::setEmployeeFlowFieldOctaveCount(const std::uint32_t& octaveCount)
+void BeeManager::SetEmployeeFlowFieldOctaveCount(const std::uint32_t& octaveCount)
 {
 	for (auto iter = mEmployees.begin(); iter != mEmployees.end(); ++iter)
 	{
-		(*iter)->setFlowFieldOctaveCount(octaveCount);
+		(*iter)->SetFlowFieldOctaveCount(octaveCount);
 	}
 }

@@ -4,16 +4,16 @@
 class FoodSourceManager
 {
 public:
-	static FoodSourceManager* getInstance();
+	static FoodSourceManager* GetInstance();
 	~FoodSourceManager();
-	void spawnFoodSource(const sf::Vector2f& position);
-	void update(sf::RenderWindow& window, const float& deltaTime);
-	void render(sf::RenderWindow& window);
-	std::uint32_t getFoodsourceCount() const;
-	std::vector<FoodSource*>::iterator begin();
-	std::vector<FoodSource*>::iterator end();
-	std::uint32_t foodSourceCount() const;
-	FoodSource& getFoodSource(const std::uint32_t& index);
+	void SpawnFoodSource(const sf::Vector2f& position);
+	void Update(sf::RenderWindow& window, const float& deltaTime);
+	void Render(sf::RenderWindow& window);
+	std::uint32_t GetFoodsourceCount() const;
+	std::vector<FoodSource*>::iterator Begin();
+	std::vector<FoodSource*>::iterator End();
+	std::uint32_t FoodSourceCount() const;
+	FoodSource& GetFoodSource(const std::uint32_t& index);
 
 private:
 	FoodSourceManager();

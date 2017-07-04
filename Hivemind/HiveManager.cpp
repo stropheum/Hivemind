@@ -10,7 +10,7 @@ HiveManager::HiveManager()
 {
 }
 
-HiveManager* HiveManager::getInstance()
+HiveManager* HiveManager::GetInstance()
 {
 	if (sInstance == nullptr)
 	{
@@ -29,38 +29,38 @@ HiveManager::~HiveManager()
 	mHives.clear();
 }
 
-void HiveManager::spawnHive(const sf::Vector2f& position)
+void HiveManager::SpawnHive(const sf::Vector2f& position)
 {
 	mHives.push_back(new Hive(position));
 }
 
-void HiveManager::update(sf::RenderWindow& window, const float& deltaTime)
+void HiveManager::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	for (auto iter = mHives.begin(); iter != mHives.end(); ++iter)
 	{
-		(*iter)->update(window, deltaTime);
+		(*iter)->Update(window, deltaTime);
 	}
 }
 
-void HiveManager::render(sf::RenderWindow& window)
+void HiveManager::Render(sf::RenderWindow& window)
 {
 	for (auto iter = mHives.begin(); iter != mHives.end(); ++iter)
 	{
-		(*iter)->render(window);
+		(*iter)->Render(window);
 	}
 }
 
-std::vector<Hive*>::iterator HiveManager::begin()
+std::vector<Hive*>::iterator HiveManager::Begin()
 {
 	return mHives.begin();
 }
 
-std::vector<Hive*>::iterator HiveManager::end()
+std::vector<Hive*>::iterator HiveManager::End()
 {
 	return mHives.end();
 }
 
-Hive* HiveManager::getHive(std::uint32_t index)
+Hive* HiveManager::GetHive(std::uint32_t index)
 {
 	if (index >= mHives.size())
 	{

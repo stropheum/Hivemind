@@ -38,14 +38,14 @@ Hive::~Hive()
 	mFoodSourceData.clear();
 }
 
-void Hive::update(sf::RenderWindow& window, const float& deltaTime)
+void Hive::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);
 
 //	if (mWaggleDanceInProgress && mWaggleDanceClock.getElapsedTime().asSeconds() > mWaggleDanceWaitPeriod)
 //	{
-//		completeWaggleDance();
+//		CompleteWaggleDance();
 //	}
 
 	std::stringstream ss;
@@ -54,28 +54,28 @@ void Hive::update(sf::RenderWindow& window, const float& deltaTime)
 	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
 }
 
-void Hive::render(sf::RenderWindow& window) const
+void Hive::Render(sf::RenderWindow& window) const
 {
 	window.draw(mBody);
 	window.draw(mText);
 }
 
-sf::Vector2f Hive::getCenterTarget() const
+sf::Vector2f Hive::GetCenterTarget() const
 {
 	return sf::Vector2f(mPosition.x + mDimensions.x / 2, mPosition.y + mDimensions.y / 2);
 }
 
-const sf::Vector2f& Hive::getDimensions() const
+const sf::Vector2f& Hive::GetDimensions() const
 {
 	return mDimensions;
 }
 
-void Hive::depositFood(const float& foodAmount)
+void Hive::DepositFood(const float& foodAmount)
 {
 	mFoodAmount += foodAmount;
 }
 
-void Hive::addIdleBee(OnlookerBee* const bee)
+void Hive::AddIdleBee(OnlookerBee* const bee)
 {
 	bool containsBee = false;
 
@@ -94,7 +94,7 @@ void Hive::addIdleBee(OnlookerBee* const bee)
 	}
 }
 
-void Hive::removeIdleBee(OnlookerBee* const bee)
+void Hive::RemoveIdleBee(OnlookerBee* const bee)
 {
 	for (auto iter = mIdleBees.begin(); iter != mIdleBees.end(); ++iter)
 	{
@@ -106,17 +106,17 @@ void Hive::removeIdleBee(OnlookerBee* const bee)
 	}
 }
 
-std::vector<OnlookerBee*>::iterator Hive::idleBeesBegin()
+std::vector<OnlookerBee*>::iterator Hive::IdleBeesBegin()
 {
 	return mIdleBees.begin();
 }
 
-std::vector<OnlookerBee*>::iterator Hive::idleBeesEnd()
+std::vector<OnlookerBee*>::iterator Hive::IdleBeesEnd()
 {
 	return mIdleBees.end();
 }
 
-void Hive::validateIdleBees()
+void Hive::ValidateIdleBees()
 {
 	bool beeRemoved = true;
 	while (beeRemoved)
@@ -124,7 +124,7 @@ void Hive::validateIdleBees()
 		beeRemoved = false;
 		for (auto iter = mIdleBees.begin(); iter != mIdleBees.end(); ++iter)
 		{
-			if ((*iter)->getState() != Bee::State::Idle)
+			if ((*iter)->GetState() != Bee::State::Idle)
 			{	// We know it isn't idle, so remove it
 				beeRemoved = true;
 				mIdleBees.erase(iter);
@@ -134,19 +134,19 @@ void Hive::validateIdleBees()
 	}
 }
 
-void Hive::updateKnownFoodSource(FoodSource* const foodSource, const std::pair<float, float>& foodSourceData)
+void Hive::UpdateKnownFoodSource(FoodSource* const foodSource, const std::pair<float, float>& foodSourceData)
 {
 	mFoodSourceData[foodSource] = foodSourceData;
 }
 
-void Hive::triggerWaggleDance()
+void Hive::TriggerWaggleDance()
 {
 	mWaggleDanceClock.restart();
 	mWaggleDanceInProgress = true;
-	completeWaggleDance();
+	CompleteWaggleDance();
 }
 
-void Hive::completeWaggleDance()
+void Hive::CompleteWaggleDance()
 {
 	std::vector<std::pair<FoodSource*, float>> fitnessWeights;
 	float fitnessSum = 0.0f;
@@ -168,13 +168,13 @@ void Hive::completeWaggleDance()
 
 	for (auto iter = mFoodSourceData.begin(); iter != mFoodSourceData.end(); ++iter)
 	{
-		float weight = computeFitness(iter->second, minYield, maxYield, 0.0f, 0.0f);
+		float weight = ComputeFitness(iter->second, minYield, maxYield, 0.0f, 0.0f);
 		std::pair<FoodSource* const, float> pair(iter->first, weight);
 		fitnessWeights.push_back(pair);
 		fitnessSum += weight;
 	}
 
-	for (auto iter = idleBeesBegin(); iter != idleBeesEnd(); ++iter)
+	for (auto iter = IdleBeesBegin(); iter != IdleBeesEnd(); ++iter)
 	{
 		assert(*iter != nullptr);
 
@@ -187,25 +187,25 @@ void Hive::completeWaggleDance()
 			roll -= fitnessIter->second;
 			if (roll < fitnessIter->second)
 			{
-				(*iter)->setTarget(fitnessIter->first);
-				(*iter)->setState(Bee::State::SeekingTarget);
+				(*iter)->SetTarget(fitnessIter->first);
+				(*iter)->SetState(Bee::State::SeekingTarget);
 				break;
 			}
 //			weight += fitnessIter->second;
 //			if (weight >= roll)
 //			{	// We've reached our weighted value. send the bee
-//				(*iter)->setTarget(fitnessIter->first);
-//				(*iter)->setState(Bee::State::SeekingTarget);
+//				(*iter)->SetTarget(fitnessIter->first);
+//				(*iter)->SetState(Bee::State::SeekingTarget);
 //				break;
 //			}
 		}
 	}
 
-	validateIdleBees();
+	ValidateIdleBees();
 	mWaggleDanceInProgress = false;
 }
 
-float Hive::computeFitness(const std::pair<float, float>& foodData, 
+float Hive::ComputeFitness(const std::pair<float, float>& foodData, 
 	const float& minYield, const float& maxYield, 
 	const float& minDistance, const float& maxDistance)
 {

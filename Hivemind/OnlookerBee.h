@@ -9,6 +9,6 @@ public:
 	OnlookerBee(const sf::Vector2f& position, Hive& hive);
 	virtual ~OnlookerBee() = default;
 
-	void update(sf::RenderWindow& window, const float& deltaTime) override;
+	void Update(sf::RenderWindow& window, const float& deltaTime) override;
 };
 

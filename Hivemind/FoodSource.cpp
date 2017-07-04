@@ -28,7 +28,7 @@ FoodSource::FoodSource(const sf::Vector2f& position) :
 	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
 }
 
-float FoodSource::takeFood(const float amount)
+float FoodSource::TakeFood(const float amount)
 {
 	float result = 0.0f;
 
@@ -46,12 +46,12 @@ float FoodSource::takeFood(const float amount)
 	return result;
 }
 
-bool FoodSource::isViable() const
+bool FoodSource::IsViable() const
 {
 	return mFoodAmount > 0.0f;
 }
 
-void FoodSource::update(sf::RenderWindow& window, const float& deltaTime)
+void FoodSource::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);
@@ -62,38 +62,38 @@ void FoodSource::update(sf::RenderWindow& window, const float& deltaTime)
 	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
 }
 
-void FoodSource::render(sf::RenderWindow& window) const
+void FoodSource::Render(sf::RenderWindow& window) const
 {
 	window.draw(mBody);
 	window.draw(mText);
 }
 
-float FoodSource::getFoodAmount() const
+float FoodSource::GetFoodAmount() const
 {
 	return mFoodAmount;
 }
 
-void FoodSource::setFoodAmount(const float& foodAmount)
+void FoodSource::SetFoodAmount(const float& foodAmount)
 {
 	mFoodAmount = foodAmount;
 }
 
-sf::Vector2f FoodSource::getCenterTarget() const
+sf::Vector2f FoodSource::GetCenterTarget() const
 {
 	return sf::Vector2f(mPosition.x + mDimensions.x / 2, mPosition.y + mDimensions.y / 2);
 }
 
-const sf::Vector2f& FoodSource::getDimensions() const
+const sf::Vector2f& FoodSource::GetDimensions() const
 {
 	return mDimensions;
 }
 
-bool FoodSource::getPairedWithEmployee() const
+bool FoodSource::GetPairedWithEmployee() const
 {
 	return mPairedWithEmployee;
 }
 
-void FoodSource::setPairedWithEmployee(const bool& pairedWithEmployee)
+void FoodSource::SetPairedWithEmployee(const bool& pairedWithEmployee)
 {
 	mPairedWithEmployee = pairedWithEmployee;
 }

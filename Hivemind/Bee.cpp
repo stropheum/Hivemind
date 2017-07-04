@@ -51,7 +51,7 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive):
 	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width/2.0f, 35));
 }
 
-void Bee::render(sf::RenderWindow& window) const
+void Bee::Render(sf::RenderWindow& window) const
 {
 	window.draw(mBody);
 	if (mState != State::Scouting)
@@ -61,15 +61,15 @@ void Bee::render(sf::RenderWindow& window) const
 //	window.draw(mText);
 }
 
-bool Bee::hasTarget() const
+bool Bee::HasTarget() const
 {
 	return mTargeting;
 }
 
-bool Bee::collidingWithFoodSource(const FoodSource& foodSource) const
+bool Bee::CollidingWithFoodSource(const FoodSource& foodSource) const
 {
-	auto foodPosition = foodSource.getPosition();
-	auto foodDimensions = foodSource.getDimensions();
+	auto foodPosition = foodSource.GetPosition();
+	auto foodDimensions = foodSource.GetDimensions();
 	auto leftWall = foodPosition.x;
 	auto rightWall = foodPosition.x + foodDimensions.x;
 	auto topWall = foodPosition.y;
@@ -81,10 +81,10 @@ bool Bee::collidingWithFoodSource(const FoodSource& foodSource) const
 		(mPosition.y - BODY_RADIUS < bottomWall);
 }
 
-bool Bee::collidingWithHive(const Hive& hive) const
+bool Bee::CollidingWithHive(const Hive& hive) const
 {
-	auto foodPosition = hive.getPosition();
-	auto foodDimensions = hive.getDimensions();
+	auto foodPosition = hive.GetPosition();
+	auto foodDimensions = hive.GetDimensions();
 	auto leftWall = foodPosition.x;
 	auto rightWall = foodPosition.x + foodDimensions.x;
 	auto topWall = foodPosition.y;
@@ -96,53 +96,53 @@ bool Bee::collidingWithHive(const Hive& hive) const
 		(mPosition.y - BODY_RADIUS < bottomWall);
 }
 
-void Bee::setColor(const sf::Color& color)
+void Bee::SetColor(const sf::Color& color)
 {
 	mBody.setOutlineColor(color);
 }
 
-void Bee::setTarget(FoodSource* const foodSource)
+void Bee::SetTarget(FoodSource* const foodSource)
 {
 	mTargetFoodSource = foodSource;
-	setTarget(foodSource->getCenterTarget());
+	SetTarget(foodSource->GetCenterTarget());
 }
 
-void Bee::setTarget(const sf::Vector2f& position)
+void Bee::SetTarget(const sf::Vector2f& position)
 {
 	mTarget = position;
 	mTargeting = true;
 }
 
-const sf::Vector2f& Bee::getTarget() const
+const sf::Vector2f& Bee::GetTarget() const
 {
 	return mTarget;
 }
 
-void Bee::handleFoodSourceCollisions()
+void Bee::HandleFoodSourceCollisions()
 {
-	auto foodSourceManager = FoodSourceManager::getInstance();
+	auto foodSourceManager = FoodSourceManager::GetInstance();
 	bool reachedCenterOfSource = false;
 	
-	if (!hasTarget() && mState == State::SeekingTarget)
+	if (!HasTarget() && mState == State::SeekingTarget)
 	{	// Set initial target
 		mTargeting = true;
-		std::uniform_int_distribution<int> distribution(0, foodSourceManager->getFoodsourceCount() - 1);
+		std::uniform_int_distribution<int> distribution(0, foodSourceManager->GetFoodsourceCount() - 1);
 		int targetIndex = distribution(mGenerator);
-		mTargetFoodSource = &foodSourceManager->getFoodSource(targetIndex);
-		sf::Vector2f newTarget = mTargetFoodSource->getCenterTarget();
+		mTargetFoodSource = &foodSourceManager->GetFoodSource(targetIndex);
+		sf::Vector2f newTarget = mTargetFoodSource->GetCenterTarget();
 
-		setTarget(newTarget);
+		SetTarget(newTarget);
 		mState = State::DeliveringFood;
 	}
 	
 	switch (mState)
 	{
 	case State::SeekingTarget:
-		for (auto foodIter = foodSourceManager->begin(); foodIter != foodSourceManager->end(); ++foodIter)
+		for (auto foodIter = foodSourceManager->Begin(); foodIter != foodSourceManager->End(); ++foodIter)
 		{
-			if (collidingWithFoodSource(*(*foodIter)))
+			if (CollidingWithFoodSource(*(*foodIter)))
 			{
-				if (Entity::distanceBetween(getPosition(), getTarget()) <= Bee::TARGET_RADIUS)
+				if (Entity::DistanceBetween(GetPosition(), GetTarget()) <= Bee::TARGET_RADIUS)
 				{
 					reachedCenterOfSource = true;
 					mState = State::HarvestingFood;
@@ -164,49 +164,49 @@ void Bee::handleFoodSourceCollisions()
 	}
 }
 
-void Bee::detectStructureCollisions()
+void Bee::DetectStructureCollisions()
 {
-	auto hiveManager = HiveManager::getInstance();
-	auto foodManager = FoodSourceManager::getInstance();
+	auto hiveManager = HiveManager::GetInstance();
+	auto foodManager = FoodSourceManager::GetInstance();
 
 	bool colliding = false;
-	for (auto iter = hiveManager->begin(); iter != hiveManager->end(); ++iter)
+	for (auto iter = hiveManager->Begin(); iter != hiveManager->End(); ++iter)
 	{
-		if (collidingWithHive(*(*iter)))
+		if (CollidingWithHive(*(*iter)))
 		{
 			colliding = true;
 			break;
 		}
 	}
 
-	for (auto iter = foodManager->begin(); iter != foodManager->end(); ++iter)
+	for (auto iter = foodManager->Begin(); iter != foodManager->End(); ++iter)
 	{
-		if (collidingWithFoodSource(*(*iter)))
+		if (CollidingWithFoodSource(*(*iter)))
 		{
 			colliding = true;
 			break;
 		}
 	}
 
-	setColor(colliding ? Bee::ALERT_COLOR : Bee::NORMAL_COLOR);
+	SetColor(colliding ? Bee::ALERT_COLOR : Bee::NORMAL_COLOR);
 }
 
-void Bee::depositFood(float foodAmount)
+void Bee::DepositFood(float foodAmount)
 {
 	if (foodAmount > mFoodAmount)
 	{	// Cap the food deposit to whatever the maximum is that the bee currently holds
 		foodAmount = mFoodAmount;
 	}
-	mParentHive.depositFood(foodAmount);
+	mParentHive.DepositFood(foodAmount);
 	mFoodAmount = 0;
 }
 
-void Bee::setState(const State& state)
+void Bee::SetState(const State& state)
 {
 	mState = state;
 }
 
-Bee::State Bee::getState() const
+Bee::State Bee::GetState() const
 {
 	return mState;
 }

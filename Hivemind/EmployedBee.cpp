@@ -18,28 +18,28 @@ EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive):
 	mBody.setFillColor(mFillColor);
 }
 
-void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
+void EmployedBee::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 
-	updateFlowField(window, deltaTime);
+	UpdateFlowField(window, deltaTime);
 
 	switch (mState)
 	{
 		case Scouting:
-			updateScouting(window, deltaTime);
+			UpdateScouting(window, deltaTime);
 			break;
 		case State::SeekingTarget:
-			updateSeekingTarget(window, deltaTime);
+			UpdateSeekingTarget(window, deltaTime);
 			break;
 		case State::HarvestingFood:
-			updateHarvestingFood(window, deltaTime);
+			UpdateHarvestingFood(window, deltaTime);
 			break;
 		case State::DeliveringFood:
-			updateDeliveringFood(window, deltaTime);
+			UpdateDeliveringFood(window, deltaTime);
 			break;
 		case State::DepositingFood:
-			updateDepositingFood(window, deltaTime);
+			UpdateDepositingFood(window, deltaTime);
 			break;
 		default:
 			break;
@@ -49,7 +49,7 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 	{
 		mLineToFoodSource[0].position = mPosition;
 		mLineToFoodSource[0].color = sf::Color::Red;
-		mLineToFoodSource[1].position = mPairedFoodSource->getCenterTarget();
+		mLineToFoodSource[1].position = mPairedFoodSource->GetCenterTarget();
 		mLineToFoodSource[1].color = sf::Color::Red;
 	}
 
@@ -59,12 +59,12 @@ void EmployedBee::update(sf::RenderWindow& window, const float& deltaTime)
 	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
 }
 
-void EmployedBee::render(sf::RenderWindow& window) const
+void EmployedBee::Render(sf::RenderWindow& window) const
 {
-	Bee::render(window);
+	Bee::Render(window);
 	if (mState == State::Scouting && mDisplayFlowField)
 	{
-		mFlowField.render(window);
+		mFlowField.Render(window);
 	}
 
 	if (mPairedFoodSource != nullptr)
@@ -73,55 +73,55 @@ void EmployedBee::render(sf::RenderWindow& window) const
 	}
 }
 
-void EmployedBee::toggleFlowField()
+void EmployedBee::ToggleFlowField()
 {
 	mDisplayFlowField = !mDisplayFlowField;
 }
 
-void EmployedBee::setFlowFieldOctaveCount(const std::uint32_t& octaveCount)
+void EmployedBee::SetFlowFieldOctaveCount(const std::uint32_t& octaveCount)
 {
-	mFlowField.setOctaveCount(octaveCount);
-	mFlowField.generateNewField();
+	mFlowField.SetOctaveCount(octaveCount);
+	mFlowField.GenerateNewField();
 }
 
-void EmployedBee::waggleDance()
+void EmployedBee::WaggleDance()
 {
-	mParentHive.updateKnownFoodSource(mPairedFoodSource, mFoodSourceData);
-	mParentHive.triggerWaggleDance();
+	mParentHive.UpdateKnownFoodSource(mPairedFoodSource, mFoodSourceData);
+	mParentHive.TriggerWaggleDance();
 }
 
-void EmployedBee::updateScouting(sf::RenderWindow& window, const float& deltaTime)
+void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 
 	auto facePosition = mFace.getPosition();
 
 	// Onlookers do not scout. Should never meet this condition
-	auto rotationRadians = mFlowField.radianValueAtPosition(mPosition);
+	auto rotationRadians = mFlowField.RadianValueAtPosition(mPosition);
 	sf::Vector2f newPosition = sf::Vector2f(
 		mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
 		mPosition.y + sin(rotationRadians) * mSpeed * deltaTime
 	);
 
-	auto foodSourceManager = FoodSourceManager::getInstance();
-	for (auto iter = foodSourceManager->begin(); iter != foodSourceManager->end(); ++iter)
+	auto foodSourceManager = FoodSourceManager::GetInstance();
+	for (auto iter = foodSourceManager->Begin(); iter != foodSourceManager->End(); ++iter)
 	{
-		if (collidingWithFoodSource(*(*iter)))
+		if (CollidingWithFoodSource(*(*iter)))
 		{
 			mPairedFoodSource = (*iter);
 			mTargetFoodSource = (*iter);
-			mTargetFoodSource->setPairedWithEmployee(true);
-			setTarget(mTargetFoodSource->getCenterTarget());
+			mTargetFoodSource->SetPairedWithEmployee(true);
+			SetTarget(mTargetFoodSource->GetCenterTarget());
 			mHarvestingClock.restart();
 			mState = State::HarvestingFood;
 			break;
 		}
 	}
 
-	updatePosition(newPosition, rotationRadians);
+	UpdatePosition(newPosition, rotationRadians);
 }
 
-void EmployedBee::updateSeekingTarget(sf::RenderWindow& window, const float& deltaTime)
+void EmployedBee::UpdateSeekingTarget(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	auto facePosition = mFace.getPosition();
@@ -130,10 +130,10 @@ void EmployedBee::updateSeekingTarget(sf::RenderWindow& window, const float& del
 		mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
 		mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
 
-	updatePosition(newPosition, rotationRadians);
+	UpdatePosition(newPosition, rotationRadians);
 }
 
-void EmployedBee::updateHarvestingFood(sf::RenderWindow& window, const float& deltaTime)
+void EmployedBee::UpdateHarvestingFood(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 
@@ -143,13 +143,13 @@ void EmployedBee::updateHarvestingFood(sf::RenderWindow& window, const float& de
 
 	if (mTargetFoodSource != nullptr)
 	{
-		if (distanceBetween(mTarget, mPosition) <= TARGET_RADIUS)
+		if (DistanceBetween(mTarget, mPosition) <= TARGET_RADIUS)
 		{
-			auto dimensions = mTargetFoodSource->getDimensions();
+			auto dimensions = mTargetFoodSource->GetDimensions();
 			uniform_int_distribution<int> distributionX(static_cast<int>(-dimensions.x / 2), static_cast<int>(dimensions.x / 2));
 			uniform_int_distribution<int> distributionY(static_cast<int>(-dimensions.y / 2), static_cast<int>(dimensions.y / 2));
 			sf::Vector2f offset(static_cast<float>(distributionX(mGenerator)), static_cast<float>(distributionY(mGenerator)));
-			setTarget(mTargetFoodSource->getCenterTarget() + offset);
+			SetTarget(mTargetFoodSource->GetCenterTarget() + offset);
 		}
 
 		newPosition = sf::Vector2f(
@@ -161,60 +161,60 @@ void EmployedBee::updateHarvestingFood(sf::RenderWindow& window, const float& de
 
 	if (mHarvestingClock.getElapsedTime().asSeconds() >= mHarvestingDuration)
 	{	// Now we go back to finding a target
-		mFoodAmount += mTargetFoodSource->takeFood(EXTRACTION_YIELD);
-		mFoodSourceData.first = mTargetFoodSource->getFoodAmount();
+		mFoodAmount += mTargetFoodSource->TakeFood(EXTRACTION_YIELD);
+		mFoodSourceData.first = mTargetFoodSource->GetFoodAmount();
 		mTargeting = false;
 		mState = State::DeliveringFood;
 	}
 
-	setColor(Bee::NORMAL_COLOR);
-	for (auto iter = FoodSourceManager::getInstance()->begin(); iter != FoodSourceManager::getInstance()->end(); ++iter)
+	SetColor(Bee::NORMAL_COLOR);
+	for (auto iter = FoodSourceManager::GetInstance()->Begin(); iter != FoodSourceManager::GetInstance()->End(); ++iter)
 	{
-		if (collidingWithFoodSource(*(*iter)))
+		if (CollidingWithFoodSource(*(*iter)))
 		{
-			setColor(Bee::ALERT_COLOR);
+			SetColor(Bee::ALERT_COLOR);
 			break;
 		}
 	}
 
-	updatePosition(newPosition, rotationRadians);
+	UpdatePosition(newPosition, rotationRadians);
 }
 
-void EmployedBee::updateDeliveringFood(sf::RenderWindow& window, const float& deltaTime)
+void EmployedBee::UpdateDeliveringFood(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 
 	auto facePosition = mFace.getPosition();
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
-	mTarget = mParentHive.getCenterTarget();
+	mTarget = mParentHive.GetCenterTarget();
 
 	auto newPosition = sf::Vector2f(
 		mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
 		mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
 
-	if (distanceBetween(newPosition, mParentHive.getCenterTarget()) <= TARGET_RADIUS)
+	if (DistanceBetween(newPosition, mParentHive.GetCenterTarget()) <= TARGET_RADIUS)
 	{
 		mState = State::DepositingFood;
 		mHarvestingClock.restart();
 	}
 
-	updatePosition(newPosition, rotationRadians);
+	UpdatePosition(newPosition, rotationRadians);
 }
 
-void EmployedBee::updateDepositingFood(sf::RenderWindow& window, const float& deltaTime)
+void EmployedBee::UpdateDepositingFood(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 
 	auto facePosition = mFace.getPosition();
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 
-	if (distanceBetween(mTarget, mPosition) <= TARGET_RADIUS)
+	if (DistanceBetween(mTarget, mPosition) <= TARGET_RADIUS)
 	{
-		auto dimensions = mParentHive.getDimensions();
+		auto dimensions = mParentHive.GetDimensions();
 		uniform_int_distribution<int> distributionX(static_cast<int>(-dimensions.x / 2), static_cast<int>(dimensions.x / 2));
 		uniform_int_distribution<int> distributionY(static_cast<int>(-dimensions.y / 2), static_cast<int>(dimensions.y / 2));
 		sf::Vector2f offset(static_cast<float>(distributionX(mGenerator)), static_cast<float>(distributionY(mGenerator)));
-		setTarget(mParentHive.getCenterTarget() + offset);
+		SetTarget(mParentHive.GetCenterTarget() + offset);
 	}
 
 	auto newPosition = sf::Vector2f(
@@ -222,48 +222,48 @@ void EmployedBee::updateDepositingFood(sf::RenderWindow& window, const float& de
 		mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
 
 	mPosition = newPosition;
-	updatePosition(newPosition, rotationRadians);
+	UpdatePosition(newPosition, rotationRadians);
 
 	if (mHarvestingClock.getElapsedTime().asSeconds() >= mHarvestingDuration)
 	{	// Now we go back to looking for another food source
-		depositFood(mFoodAmount);
+		DepositFood(mFoodAmount);
 		mTargeting = false;
 		mState = State::Scouting;
-		setColor(Bee::NORMAL_COLOR);
-		waggleDance();
+		SetColor(Bee::NORMAL_COLOR);
+		WaggleDance();
 	}
 
-	setColor(Bee::NORMAL_COLOR);
-	for (auto iter = FoodSourceManager::getInstance()->begin(); iter != FoodSourceManager::getInstance()->end(); ++iter)
+	SetColor(Bee::NORMAL_COLOR);
+	for (auto iter = FoodSourceManager::GetInstance()->Begin(); iter != FoodSourceManager::GetInstance()->End(); ++iter)
 	{
-		if (collidingWithFoodSource(*(*iter)))
+		if (CollidingWithFoodSource(*(*iter)))
 		{
-			setColor(Bee::ALERT_COLOR);
+			SetColor(Bee::ALERT_COLOR);
 			break;
 		}
 	}
-	if (collidingWithHive(mParentHive))
+	if (CollidingWithHive(mParentHive))
 	{
-		setColor(Bee::ALERT_COLOR);
+		SetColor(Bee::ALERT_COLOR);
 	}
 }
 
-void EmployedBee::updatePosition(const sf::Vector2f& position, const float& rotation)
+void EmployedBee::UpdatePosition(const sf::Vector2f& position, const float& rotation)
 {
-	detectStructureCollisions();
+	DetectStructureCollisions();
 	mPosition = position;
 	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
 	mFace.setPosition(mPosition.x, mPosition.y);
 	mFace.setRotation(rotation);
 }
 
-void EmployedBee::updateFlowField(sf::RenderWindow& window, const float& deltaTime)
+void EmployedBee::UpdateFlowField(sf::RenderWindow& window, const float& deltaTime)
 {
-	auto fieldDimensions = mFlowField.getDimensions();
-	if (!mFlowField.collidingWith(mPosition))
+	auto fieldDimensions = mFlowField.GetDimensions();
+	if (!mFlowField.CollidingWith(mPosition))
 	{	// If we're not colliding with the flow field anymore, reset it on top of us
-		mFlowField.setPosition(sf::Vector2f(mPosition.x - (fieldDimensions.x / 2.0f), mPosition.y - (fieldDimensions.y / 2.0f)));
-		mFlowField.generateNewField();
+		mFlowField.SetPosition(sf::Vector2f(mPosition.x - (fieldDimensions.x / 2.0f), mPosition.y - (fieldDimensions.y / 2.0f)));
+		mFlowField.GenerateNewField();
 	}
-	mFlowField.update(window, deltaTime);
+	mFlowField.Update(window, deltaTime);
 }

@@ -7,19 +7,19 @@ Entity::Entity(const sf::Vector2f& position, const sf::Color& outlineColor, cons
 {
 }
 
-float Entity::distanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2)
+float Entity::DistanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2)
 {
 	auto xDif = abs(position_1.x - position_2.x);
 	auto yDif = abs(position_1.y - position_2.y);
 	return sqrt((xDif * xDif) + (yDif * yDif));
 }
 
-void Entity::setPosition(const sf::Vector2f& position)
+void Entity::SetPosition(const sf::Vector2f& position)
 {
 	mPosition = position;
 }
 
-const sf::Vector2f& Entity::getPosition() const
+const sf::Vector2f& Entity::GetPosition() const
 {
 	return mPosition;
 }

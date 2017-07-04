@@ -46,7 +46,7 @@ float** PerlinNoise::GenerateWhiteNoise(const sf::Vector2i& dimensions)
 	return noise;
 }
 
-float** PerlinNoise::generateSmoothNoise(float** values, const sf::Vector2i& dimensions, const int& octave)
+float** PerlinNoise::GenerateSmoothNoise(float** values, const sf::Vector2i& dimensions, const int& octave)
 {
 	float** smoothNoise = new float*[dimensions.x];
 	for (int i = 0; i < dimensions.x; i++)
@@ -72,22 +72,22 @@ float** PerlinNoise::generateSmoothNoise(float** values, const sf::Vector2i& dim
 			float vertical_blend = (j - sample_j0) * sampleFrequency;
 
 			//blend the top two corners
-			float top = interpolate(values[sample_i0][sample_j0],
+			float top = Interpolate(values[sample_i0][sample_j0],
 				values[sample_i1][sample_j0], horizontal_blend);
 
 			//blend the bottom two corners
-			float bottom = interpolate(values[sample_i0][sample_j1],
+			float bottom = Interpolate(values[sample_i0][sample_j1],
 				values[sample_i1][sample_j1], horizontal_blend);
 
 			//final blend
-			smoothNoise[i][j] = interpolate(top, bottom, vertical_blend);
+			smoothNoise[i][j] = Interpolate(top, bottom, vertical_blend);
 		}
 	}
 
 	return smoothNoise;
 }
 
-float** PerlinNoise::generatePerlinNoise(float** values, const sf::Vector2i& dimensions, const int& octaveCount)
+float** PerlinNoise::GeneratePerlinNoise(float** values, const sf::Vector2i& dimensions, const int& octaveCount)
 {
 	float*** smoothNoise = new float**[octaveCount];
 
@@ -96,7 +96,7 @@ float** PerlinNoise::generatePerlinNoise(float** values, const sf::Vector2i& dim
 	//generate smooth noise
 	for (int i = 0; i < octaveCount; i++)
 	{
-		smoothNoise[i] = generateSmoothNoise(values, dimensions, i);
+		smoothNoise[i] = GenerateSmoothNoise(values, dimensions, i);
 	}
 
 	float** perlinNoise = new float*[dimensions.x];
@@ -149,7 +149,7 @@ float** PerlinNoise::generatePerlinNoise(float** values, const sf::Vector2i& dim
 	return perlinNoise;
 }
 
-float PerlinNoise::interpolate(float x0, float x1, float alpha)
+float PerlinNoise::Interpolate(float x0, float x1, float alpha)
 {
 	return x0 * (1 - alpha) + alpha * x1;
 }
