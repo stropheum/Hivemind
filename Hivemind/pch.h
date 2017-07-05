@@ -19,3 +19,11 @@
 #include <iostream>
 #include <math.h>
 #include <sstream>
+
+///////////////////////////
+//  Local Dependencies  //
+/////////////////////////
+#include "OnlookerBee.h"
+#include "EmployedBee.h"
+#include "QueenBee.h"
+#include "Hive.h"

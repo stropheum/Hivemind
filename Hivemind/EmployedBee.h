@@ -38,7 +38,7 @@ public:
 private:
 
 	/// Performs the waggle dance and disseminates information into the hive
-	void WaggleDance();
+	void WaggleDance() const;
 
 	/// Updates the bee during its scouting state
 	/// @Param window: The window that the simulation is being rendered to

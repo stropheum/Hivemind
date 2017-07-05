@@ -3,7 +3,6 @@
 #include "Hive.h"
 #include "FoodSource.h"
 #include "FoodSourceManager.h"
-#include <cassert>
 
 
 using namespace std;
@@ -84,7 +83,7 @@ void EmployedBee::SetFlowFieldOctaveCount(const std::uint32_t& octaveCount)
 	mFlowField.GenerateNewField();
 }
 
-void EmployedBee::WaggleDance()
+void EmployedBee::WaggleDance() const
 {
 	mParentHive.UpdateKnownFoodSource(mPairedFoodSource, mFoodSourceData);
 	mParentHive.TriggerWaggleDance();

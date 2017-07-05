@@ -23,6 +23,11 @@ public:
 	/// @Param hive: The hive that the bee belongs to
 	void SpawnEmployee(const sf::Vector2f& position, Hive& hive);
 
+	/// Spawns a Queen bee and adds it to the local vector of queen bees
+	/// @Param position: The position of the bee being spawned
+	/// @Param hive: The hive that the bee belongs to
+	void SpawnQueen(const sf::Vector2f& position, Hive& hive);
+
 	/// Disseminates update calls to all bees in the simulation
 	/// @Param window: The window that the bees are being displayed to
 	/// @Param DeltaTime: The time since last update was called
@@ -48,6 +53,14 @@ public:
 	/// @Return: An iterator pointing to the end of the list of employed bees
 	std::vector<class EmployedBee*>::iterator EmployeeEnd();
 
+	/// Accessor method for the begin iterator of the queen bees collection
+	/// @Return: An iterator pointing to the beginning of the list of employed bees
+	std::vector<class QueenBee*>::iterator QueenBegin();
+
+	/// Accessor method for the end iterator of the queen bees collection
+	/// @Return: An iterator pointing to the end of the list of employed bees
+	std::vector<class QueenBee*>::iterator QueenEnd();
+
 	/// Accessor method for the size of the onlooker bee list
 	/// @Return: The total number of living onlooker bees in the simulation
 	std::uint32_t OnlookerCount() const;
@@ -55,6 +68,10 @@ public:
 	/// Accessor method for the size of the employed bee list
 	/// @Return: The total number of living employed bees in the simulation
 	std::uint32_t EmployeeCount() const;
+
+	/// Accessor method for the size of the queen bee list
+	/// @Return: The total number of living queen bees in the simulation
+	std::uint32_t QueenCount() const;
 
 	/// Toggles the flow field visualization for all employed bees
 	void ToggleEmployeeFlowFields();
@@ -70,6 +87,7 @@ private:
 	static BeeManager* sInstance;
 	std::vector<class OnlookerBee*> mOnlookers;
 	std::vector<class EmployedBee*> mEmployees;
+	std::vector<class QueenBee*> mQueens;
 	const float FOOD_RETARGET_INTERVAL = 20.0f;
 	float mTimeSinceRetarget;
 	std::default_random_engine generator;

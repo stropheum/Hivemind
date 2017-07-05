@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "BeeManager.h"
 #include <random>
-#include "OnlookerBee.h"
-#include "EmployedBee.h"
 
 
 BeeManager* BeeManager::sInstance = nullptr;
@@ -45,6 +43,11 @@ void BeeManager::SpawnEmployee(const sf::Vector2f& position, Hive& hive)
 	mEmployees.push_back(new EmployedBee(position, hive));
 }
 
+void BeeManager::SpawnQueen(const sf::Vector2f& position, Hive& hive)
+{
+	mQueens.push_back(new QueenBee(position, hive));
+}
+
 void BeeManager::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	for (auto iter = mOnlookers.begin(); iter != mOnlookers.end(); ++iter)
@@ -52,6 +55,10 @@ void BeeManager::Update(sf::RenderWindow& window, const float& deltaTime)
 		(*iter)->Update(window, deltaTime);
 	}
 	for (auto iter = mEmployees.begin(); iter != mEmployees.end(); ++iter)
+	{
+		(*iter)->Update(window, deltaTime);
+	}
+	for (auto iter = mQueens.begin(); iter != mQueens.end(); ++iter)
 	{
 		(*iter)->Update(window, deltaTime);
 	}
@@ -64,6 +71,10 @@ void BeeManager::Render(sf::RenderWindow& window)
 		(*iter)->Render(window);
 	}
 	for (auto iter = mEmployees.begin(); iter != mEmployees.end(); ++iter)
+	{
+		(*iter)->Render(window);
+	}
+	for (auto iter = mQueens.begin(); iter != mQueens.end(); ++iter)
 	{
 		(*iter)->Render(window);
 	}
@@ -89,6 +100,16 @@ std::vector<EmployedBee*>::iterator BeeManager::EmployeeEnd()
 	return mEmployees.end();
 }
 
+std::vector<QueenBee*>::iterator BeeManager::QueenBegin()
+{
+	return mQueens.begin();
+}
+
+std::vector<QueenBee*>::iterator BeeManager::QueenEnd()
+{
+	return mQueens.end();
+}
+
 std::uint32_t BeeManager::OnlookerCount() const
 {
 	return static_cast<std::uint32_t>(mOnlookers.size());
@@ -97,6 +118,11 @@ std::uint32_t BeeManager::OnlookerCount() const
 std::uint32_t BeeManager::EmployeeCount() const
 {
 	return static_cast<std::uint32_t>(mEmployees.size());
+}
+
+std::uint32_t BeeManager::QueenCount() const
+{
+	return static_cast<std::uint32_t>(mQueens.size());
 }
 
 void BeeManager::ToggleEmployeeFlowFields()

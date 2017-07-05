@@ -17,11 +17,10 @@ void OnlookerBee::Update(sf::RenderWindow& window, const float& deltaTime)
 	UNREFERENCED_PARAMETER(window);
 
 	auto facePosition = mFace.getPosition();
-
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 	float rotationAngle = rotationRadians * (180 / PI);
-
 	sf::Vector2f newPosition;
+
 	switch (mState)
 	{
 	case Idle:
