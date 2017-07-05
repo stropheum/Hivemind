@@ -93,7 +93,13 @@ int main(int argc, char* argv[])
 	}
 
 	// Spawn one queen for the hive
-	beeManager->SpawnQueen(hiveManager->GetHive(0)->GetCenterTarget(), *hiveManager->GetHive(0));
+	beeManager->SpawnQueen(spawnLocation, parentHive);
+
+	// Spawn some employees as some percentage of active onlookers, just cause
+	for (int i = 0; i < (beeRows * beeCols) / 10.0f; i++)
+	{
+		beeManager->SpawnDrone(spawnLocation, parentHive);
+	}
 
 	deltaClock.restart();
 

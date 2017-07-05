@@ -28,6 +28,11 @@ public:
 	/// @Param hive: The hive that the bee belongs to
 	void SpawnQueen(const sf::Vector2f& position, Hive& hive);
 
+	/// Spawns a Queen bee and adds it to the local vector of queen bees
+	/// @Param position: The position of the bee being spawned
+	/// @Param hive: The hive that the bee belongs to
+	void SpawnDrone(const sf::Vector2f& position, Hive& hive);
+
 	/// Disseminates update calls to all bees in the simulation
 	/// @Param window: The window that the bees are being displayed to
 	/// @Param DeltaTime: The time since last update was called
@@ -61,6 +66,14 @@ public:
 	/// @Return: An iterator pointing to the end of the list of employed bees
 	std::vector<class QueenBee*>::iterator QueenEnd();
 
+	/// Accessor method for the begin iterator of the drone bees collection
+	/// @Return: An iterator pointing to the beginning of the list of employed bees
+	std::vector<class Drone*>::iterator DroneBegin();
+
+	/// Accessor method for the end iterator of the drone bees collection
+	/// @Return: An iterator pointing to the end of the list of employed bees
+	std::vector<class Drone*>::iterator DroneEnd();
+
 	/// Accessor method for the size of the onlooker bee list
 	/// @Return: The total number of living onlooker bees in the simulation
 	std::uint32_t OnlookerCount() const;
@@ -72,6 +85,10 @@ public:
 	/// Accessor method for the size of the queen bee list
 	/// @Return: The total number of living queen bees in the simulation
 	std::uint32_t QueenCount() const;
+
+	/// Accessor method for the size of the drone bee list
+	/// @Return: The total number of living drone bees in the simulation
+	std::uint32_t DroneCount() const;
 
 	/// Toggles the flow field visualization for all employed bees
 	void ToggleEmployeeFlowFields();
@@ -88,6 +105,7 @@ private:
 	std::vector<class OnlookerBee*> mOnlookers;
 	std::vector<class EmployedBee*> mEmployees;
 	std::vector<class QueenBee*> mQueens;
+	std::vector<class Drone*> mDrones;
 	const float FOOD_RETARGET_INTERVAL = 20.0f;
 	float mTimeSinceRetarget;
 	std::default_random_engine generator;

@@ -29,8 +29,18 @@ BeeManager::~BeeManager()
 	{
 		delete (*iter);
 	}
+	for (auto iter = mQueens.begin(); iter != mQueens.end(); ++iter)
+	{
+		delete (*iter);
+	}
+	for (auto iter = mDrones.begin(); iter != mDrones.end(); ++iter)
+	{
+		delete (*iter);
+	}
 	mOnlookers.clear();
 	mEmployees.clear();
+	mQueens.clear();
+	mDrones.clear();
 }
 
 void BeeManager::SpawnOnlooker(const sf::Vector2f& position, Hive& hive)
@@ -48,6 +58,11 @@ void BeeManager::SpawnQueen(const sf::Vector2f& position, Hive& hive)
 	mQueens.push_back(new QueenBee(position, hive));
 }
 
+void BeeManager::SpawnDrone(const sf::Vector2f& position, Hive& hive)
+{
+	mDrones.push_back(new Drone(position, hive));
+}
+
 void BeeManager::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	for (auto iter = mOnlookers.begin(); iter != mOnlookers.end(); ++iter)
@@ -59,6 +74,10 @@ void BeeManager::Update(sf::RenderWindow& window, const float& deltaTime)
 		(*iter)->Update(window, deltaTime);
 	}
 	for (auto iter = mQueens.begin(); iter != mQueens.end(); ++iter)
+	{
+		(*iter)->Update(window, deltaTime);
+	}
+	for (auto iter = mDrones.begin(); iter != mDrones.end(); ++iter)
 	{
 		(*iter)->Update(window, deltaTime);
 	}
@@ -75,6 +94,10 @@ void BeeManager::Render(sf::RenderWindow& window)
 		(*iter)->Render(window);
 	}
 	for (auto iter = mQueens.begin(); iter != mQueens.end(); ++iter)
+	{
+		(*iter)->Render(window);
+	}
+	for (auto iter = mDrones.begin(); iter != mDrones.end(); ++iter)
 	{
 		(*iter)->Render(window);
 	}
@@ -110,6 +133,16 @@ std::vector<QueenBee*>::iterator BeeManager::QueenEnd()
 	return mQueens.end();
 }
 
+std::vector<Drone*>::iterator BeeManager::DroneBegin()
+{
+	return mDrones.begin();
+}
+
+std::vector<Drone*>::iterator BeeManager::DroneEnd()
+{
+	return mDrones.end();
+}
+
 std::uint32_t BeeManager::OnlookerCount() const
 {
 	return static_cast<std::uint32_t>(mOnlookers.size());
@@ -123,6 +156,11 @@ std::uint32_t BeeManager::EmployeeCount() const
 std::uint32_t BeeManager::QueenCount() const
 {
 	return static_cast<std::uint32_t>(mQueens.size());
+}
+
+std::uint32_t BeeManager::DroneCount() const
+{
+	return static_cast<std::uint32_t>(mDrones.size());
 }
 
 void BeeManager::ToggleEmployeeFlowFields()

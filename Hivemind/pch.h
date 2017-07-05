@@ -16,6 +16,7 @@
 #include <windows.h>
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <iostream>
 #include <math.h>
 #include <sstream>
@@ -26,4 +27,5 @@
 #include "OnlookerBee.h"
 #include "EmployedBee.h"
 #include "QueenBee.h"
+#include "Drone.h"
 #include "Hive.h"

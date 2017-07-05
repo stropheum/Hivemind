@@ -7,7 +7,7 @@
 
 using namespace std;
 
-EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive) :
+EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive):
 	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position), mDisplayFlowField(false),
 	mLineToFoodSource(sf::LineStrip, 2), mFoodSourceData(0.0f, 0.0f), mAbandoningFoodSource(false)
 {
