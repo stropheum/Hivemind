@@ -72,7 +72,7 @@ public:
 
 	/// Accessor method to determine if the food source is being actively scouted by an employee
 	/// @Return: True if the food source is actively being scouted
-	bool GetPairedWithEmployee() const;
+	bool PairedWithEmployee() const;
 
 	/// Mutator method for whether the food source is actively being scouted
 	/// @Param pairedWithEmployee: Value determining if the food source is paired or not

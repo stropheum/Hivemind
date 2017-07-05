@@ -67,8 +67,7 @@ void EmployedBee::Render(sf::RenderWindow& window) const
 		mFlowField.Render(window);
 	}
 
-	if (mPairedFoodSource != nullptr && 
-		(mState == State::DeliveringFood || mState == State::DepositingFood || mState == State::SeekingTarget))
+	if (mPairedFoodSource != nullptr && mState != State::Scouting)
 	{
 		window.draw(mLineToFoodSource);
 	}
@@ -107,7 +106,7 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 	auto foodSourceManager = FoodSourceManager::GetInstance();
 	for (auto iter = foodSourceManager->Begin(); iter != foodSourceManager->End(); ++iter)
 	{
-		if (CollidingWithFoodSource(*(*iter)))
+		if (CollidingWithFoodSource(*(*iter)) && !(*iter)->PairedWithEmployee())
 		{
 			mPairedFoodSource = (*iter);
 			mTargetFoodSource = (*iter);
@@ -250,6 +249,10 @@ void EmployedBee::UpdateDepositingFood(sf::RenderWindow& window, const float& de
 		if (mAbandoningFoodSource)
 		{	// If food source is marked for abandon, we forget about it and tell the hive to forget about it
 			mParentHive.RemoveFoodSource(mPairedFoodSource);
+			if (mPairedFoodSource != nullptr)
+			{
+				mPairedFoodSource->SetPairedWithEmployee(false);
+			}
 			mPairedFoodSource = nullptr;
 			mAbandoningFoodSource = false;
 		}
@@ -276,7 +279,8 @@ void EmployedBee::UpdatePosition(const sf::Vector2f& position, const float& rota
 	mPosition = position;
 	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
 	mFace.setPosition(mPosition.x, mPosition.y);
-	mFace.setRotation(rotation);
+	auto rotationAngle = rotation * (180.0f / PI);
+	mFace.setRotation(rotationAngle);
 }
 
 void EmployedBee::UpdateFlowField(sf::RenderWindow& window, const float& deltaTime)
