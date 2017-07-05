@@ -80,5 +80,6 @@ private:
 	bool mDisplayFlowField;
 	sf::VertexArray mLineToFoodSource;
 	std::pair<float, float> mFoodSourceData;
+	bool mAbandoningFoodSource;
 };
 

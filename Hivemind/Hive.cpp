@@ -139,6 +139,18 @@ void Hive::UpdateKnownFoodSource(FoodSource* const foodSource, const std::pair<f
 	mFoodSourceData[foodSource] = foodSourceData;
 }
 
+void Hive::RemoveFoodSource(FoodSource* const foodSource)
+{
+	for (auto iter = mFoodSourceData.begin(); iter != mFoodSourceData.end(); ++iter)
+	{
+		if (iter->first == foodSource)
+		{
+			mFoodSourceData.erase(iter);
+			break;
+		}
+	}
+}
+
 void Hive::TriggerWaggleDance()
 {
 	mWaggleDanceClock.restart();
@@ -148,6 +160,11 @@ void Hive::TriggerWaggleDance()
 
 void Hive::CompleteWaggleDance()
 {
+	if (mFoodSourceData.size() == 0)
+	{
+		return;
+	}
+
 	std::vector<std::pair<FoodSource*, float>> fitnessWeights;
 	float fitnessSum = 0.0f;
 
@@ -185,8 +202,11 @@ void Hive::CompleteWaggleDance()
 			roll -= fitnessIter->second;
 			if (roll < fitnessIter->second)
 			{
-				(*iter)->SetTarget(fitnessIter->first);
-				(*iter)->SetState(Bee::State::SeekingTarget);
+				if (*iter != nullptr && fitnessIter->first != nullptr)
+				{
+					(*iter)->SetTarget(fitnessIter->first);
+					(*iter)->SetState(Bee::State::SeekingTarget);
+				}
 				break;
 			}
 		}

@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	int employeeCount = static_cast<int>(foodSourceManager->FoodSourceCount() / 2);
+	int employeeCount = static_cast<int>(foodSourceManager->GetFoodSourceCount() / 2);
 	auto spawnLocation = hiveManager->GetHive(0)->GetCenterTarget();
 	auto& parentHive = *hiveManager->GetHive(0);
 	for (int i = 0; i < employeeCount; i++)

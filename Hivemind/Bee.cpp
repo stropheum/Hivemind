@@ -126,7 +126,7 @@ void Bee::HandleFoodSourceCollisions()
 	if (!HasTarget() && mState == State::SeekingTarget)
 	{	// Set initial target
 		mTargeting = true;
-		std::uniform_int_distribution<int> distribution(0, foodSourceManager->GetFoodsourceCount() - 1);
+		std::uniform_int_distribution<int> distribution(0, foodSourceManager->GetFoodSourceCount() - 1);
 		int targetIndex = distribution(mGenerator);
 		mTargetFoodSource = &foodSourceManager->GetFoodSource(targetIndex);
 		sf::Vector2f newTarget = mTargetFoodSource->GetCenterTarget();

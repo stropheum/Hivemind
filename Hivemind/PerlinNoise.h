@@ -10,7 +10,7 @@ public:
 	PerlinNoise();
 
 	/// Destructor
-	~PerlinNoise();
+	~PerlinNoise() = default;
 
 	/// Method which generates a base noise map
 	/// @Param dimensions: The size of the noise map to be generated

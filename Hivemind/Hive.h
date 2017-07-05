@@ -56,6 +56,9 @@ public:
 	/// Deposits food source information into the hive
 	void UpdateKnownFoodSource(class FoodSource* const foodSource, const std::pair<float, float>& foodSourceData);
 
+	/// Removes the food source from the list of known food sources, if it exists
+	void RemoveFoodSource(class FoodSource* const foodSource);
+
 	/// Causes all bees within the hive to watch the waggle dance and decide on updated food source data
 	void TriggerWaggleDance();
 

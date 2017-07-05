@@ -27,7 +27,7 @@ public:
 
 	/// Accessor method for the size of the food source lsit
 	/// @Retrun: The total number of food sources in the simulation
-	std::uint32_t GetFoodsourceCount() const;
+	std::uint32_t GetFoodSourceCount() const;
 
 	/// Accessor method for the begin iterator of the food source collection
 	/// @Return: An iterator pointing to the beginning of the food source vector

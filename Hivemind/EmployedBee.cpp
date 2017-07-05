@@ -8,9 +8,9 @@
 
 using namespace std;
 
-EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive): 
-	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position), mDisplayFlowField(false), 
-	mLineToFoodSource(sf::LineStrip, 2), mFoodSourceData(0.0f, 0.0f)
+EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive) :
+	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position), mDisplayFlowField(false),
+	mLineToFoodSource(sf::LineStrip, 2), mFoodSourceData(0.0f, 0.0f), mAbandoningFoodSource(false)
 {
 	mState = State::Scouting;
 
@@ -67,7 +67,8 @@ void EmployedBee::Render(sf::RenderWindow& window) const
 		mFlowField.Render(window);
 	}
 
-	if (mPairedFoodSource != nullptr)
+	if (mPairedFoodSource != nullptr && 
+		(mState == State::DeliveringFood || mState == State::DepositingFood || mState == State::SeekingTarget))
 	{
 		window.draw(mLineToFoodSource);
 	}
@@ -131,6 +132,12 @@ void EmployedBee::UpdateSeekingTarget(sf::RenderWindow& window, const float& del
 		mPosition.y + sin(rotationRadians) * mSpeed * deltaTime);
 
 	UpdatePosition(newPosition, rotationRadians);
+
+	if (DistanceBetween(newPosition, mTarget) <= TARGET_RADIUS)
+	{
+		mState = State::HarvestingFood;
+		mHarvestingClock.restart();
+	}
 }
 
 void EmployedBee::UpdateHarvestingFood(sf::RenderWindow& window, const float& deltaTime)
@@ -160,8 +167,12 @@ void EmployedBee::UpdateHarvestingFood(sf::RenderWindow& window, const float& de
 	mPosition = newPosition;
 
 	if (mHarvestingClock.getElapsedTime().asSeconds() >= mHarvestingDuration)
-	{	// Now we go back to finding a target
+	{	
 		mFoodAmount += mTargetFoodSource->TakeFood(EXTRACTION_YIELD);
+		if (mTargetFoodSource->GetFoodAmount() == 0.0f)
+		{	// We just learned that the food source is no longer viable
+			mAbandoningFoodSource = true;
+		}
 		mFoodSourceData.first = mTargetFoodSource->GetFoodAmount();
 		mTargeting = false;
 		mState = State::DeliveringFood;
@@ -228,9 +239,20 @@ void EmployedBee::UpdateDepositingFood(sf::RenderWindow& window, const float& de
 	{	// Now we go back to looking for another food source
 		DepositFood(mFoodAmount);
 		mTargeting = false;
-		mState = State::Scouting;
+		if (mPairedFoodSource != nullptr)
+		{
+			SetTarget(mPairedFoodSource->GetCenterTarget());
+		}
+		mState = (mPairedFoodSource == nullptr) ? State::Scouting : State::SeekingTarget;
 		SetColor(Bee::NORMAL_COLOR);
 		WaggleDance();
+
+		if (mAbandoningFoodSource)
+		{	// If food source is marked for abandon, we forget about it and tell the hive to forget about it
+			mParentHive.RemoveFoodSource(mPairedFoodSource);
+			mPairedFoodSource = nullptr;
+			mAbandoningFoodSource = false;
+		}
 	}
 
 	SetColor(Bee::NORMAL_COLOR);
