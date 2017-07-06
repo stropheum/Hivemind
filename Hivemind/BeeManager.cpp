@@ -37,10 +37,15 @@ BeeManager::~BeeManager()
 	{
 		delete (*iter);
 	}
+	for (auto iter = mGuards.begin(); iter != mGuards.end(); ++iter)
+	{
+		delete (*iter);
+	}
 	mOnlookers.clear();
 	mEmployees.clear();
 	mQueens.clear();
 	mDrones.clear();
+	mGuards.clear();
 }
 
 void BeeManager::SpawnOnlooker(const sf::Vector2f& position, Hive& hive)
@@ -63,6 +68,11 @@ void BeeManager::SpawnDrone(const sf::Vector2f& position, Hive& hive)
 	mDrones.push_back(new Drone(position, hive));
 }
 
+void BeeManager::SpawnGuard(const sf::Vector2f& position, Hive& hive)
+{
+	mGuards.push_back(new Guard(position, hive));
+}
+
 void BeeManager::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	for (auto iter = mOnlookers.begin(); iter != mOnlookers.end(); ++iter)
@@ -78,6 +88,10 @@ void BeeManager::Update(sf::RenderWindow& window, const float& deltaTime)
 		(*iter)->Update(window, deltaTime);
 	}
 	for (auto iter = mDrones.begin(); iter != mDrones.end(); ++iter)
+	{
+		(*iter)->Update(window, deltaTime);
+	}
+	for (auto iter = mGuards.begin(); iter != mGuards.end(); ++iter)
 	{
 		(*iter)->Update(window, deltaTime);
 	}
@@ -98,6 +112,10 @@ void BeeManager::Render(sf::RenderWindow& window)
 		(*iter)->Render(window);
 	}
 	for (auto iter = mDrones.begin(); iter != mDrones.end(); ++iter)
+	{
+		(*iter)->Render(window);
+	}
+	for (auto iter = mGuards.begin(); iter != mGuards.end(); ++iter)
 	{
 		(*iter)->Render(window);
 	}
@@ -143,6 +161,16 @@ std::vector<Drone*>::iterator BeeManager::DroneEnd()
 	return mDrones.end();
 }
 
+std::vector<Guard*>::iterator BeeManager::GuardBegin()
+{
+	return mGuards.begin();
+}
+
+std::vector<Guard*>::iterator BeeManager::GuardEnd()
+{
+	return mGuards.end();
+}
+
 std::uint32_t BeeManager::OnlookerCount() const
 {
 	return static_cast<std::uint32_t>(mOnlookers.size());
@@ -161,6 +189,11 @@ std::uint32_t BeeManager::QueenCount() const
 std::uint32_t BeeManager::DroneCount() const
 {
 	return static_cast<std::uint32_t>(mDrones.size());
+}
+
+std::uint32_t BeeManager::GuardCount() const
+{
+	return static_cast<std::uint32_t>(mGuards.size());
 }
 
 void BeeManager::ToggleEmployeeFlowFields()

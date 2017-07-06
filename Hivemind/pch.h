@@ -28,4 +28,5 @@
 #include "EmployedBee.h"
 #include "QueenBee.h"
 #include "Drone.h"
+#include "Guard.h"
 #include "Hive.h"

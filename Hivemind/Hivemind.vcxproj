@@ -170,6 +170,7 @@
     <ClInclude Include="FlowField.h" />
     <ClInclude Include="FoodSource.h" />
     <ClInclude Include="FoodSourceManager.h" />
+    <ClInclude Include="Guard.h" />
     <ClInclude Include="Hive.h" />
     <ClInclude Include="HiveManager.h" />
     <ClInclude Include="OnlookerBee.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="FlowField.cpp" />
     <ClCompile Include="FoodSource.cpp" />
     <ClCompile Include="FoodSourceManager.cpp" />
+    <ClCompile Include="Guard.cpp" />
     <ClCompile Include="Hive.cpp" />
     <ClCompile Include="HiveManager.cpp" />
     <ClCompile Include="Hivemind.cpp" />
