@@ -5,7 +5,8 @@
 using namespace std;
 
 QueenBee::QueenBee(const sf::Vector2f& position, Hive& hive): 
-	Bee(position, hive)
+	Bee(position, hive),
+	mLarvaDepositInterval(5.0f), mTimeSinceLarvaDeposit(0.0f)
 {
 	mFillColor = sf::Color::Magenta;
 	mBody.setFillColor(mFillColor);
@@ -14,6 +15,13 @@ QueenBee::QueenBee(const sf::Vector2f& position, Hive& hive):
 void QueenBee::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
+
+	mTimeSinceLarvaDeposit += deltaTime;
+	if (mTimeSinceLarvaDeposit >= mLarvaDepositInterval)
+	{
+		BeeManager::GetInstance()->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Onlooker);
+		mTimeSinceLarvaDeposit = 0.0f;
+	}
 
 	auto facePosition = mFace.getPosition();
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);

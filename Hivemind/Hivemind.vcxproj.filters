@@ -63,6 +63,9 @@
     <ClInclude Include="Guard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Larva.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Hivemind.cpp">
@@ -111,6 +114,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Guard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Larva.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

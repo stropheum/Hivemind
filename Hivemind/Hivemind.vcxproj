@@ -173,6 +173,7 @@
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Hive.h" />
     <ClInclude Include="HiveManager.h" />
+    <ClInclude Include="Larva.h" />
     <ClInclude Include="OnlookerBee.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PerlinNoise.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="Hive.cpp" />
     <ClCompile Include="HiveManager.cpp" />
     <ClCompile Include="Hivemind.cpp" />
+    <ClCompile Include="Larva.cpp" />
     <ClCompile Include="OnlookerBee.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

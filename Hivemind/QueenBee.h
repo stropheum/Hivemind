@@ -23,5 +23,10 @@ public:
 	/// @Param window: The window that the simulation is being rendered to
 	void Render(sf::RenderWindow& window) const override;
 
+private:
+
+	float mLarvaDepositInterval;
+	float mTimeSinceLarvaDeposit;
+
 };
 

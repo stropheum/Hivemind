@@ -1,6 +1,7 @@
 #pragma once
 #include "Bee.h"
 #include <random>
+#include "Larva.h"
 
 class BeeManager
 {
@@ -28,15 +29,20 @@ public:
 	/// @Param hive: The hive that the bee belongs to
 	void SpawnQueen(const sf::Vector2f& position, Hive& hive);
 
-	/// Spawns a Queen bee and adds it to the local vector of queen bees
+	/// Spawns a Drone bee and adds it to the local vector of drone bees
 	/// @Param position: The position of the bee being spawned
 	/// @Param hive: The hive that the bee belongs to
 	void SpawnDrone(const sf::Vector2f& position, Hive& hive);
 
-	/// Spawns a Queen bee and adds it to the local vector of queen bees
+	/// Spawns a Guard bee and adds it to the local vector of guard bees
 	/// @Param position: The position of the bee being spawned
 	/// @Param hive: The hive that the bee belongs to
 	void SpawnGuard(const sf::Vector2f& position, Hive& hive);
+
+	/// Spawns a Larva and adds it to the local vector of larva
+	/// @Param position: The position of the larva being spawned
+	/// @Param hive: The hive that the larva belongs to
+	void SpawnLarva(const sf::Vector2f& position, Hive& hive, const Larva::LarvaType& larvaType);
 
 	/// Disseminates update calls to all bees in the simulation
 	/// @Param window: The window that the bees are being displayed to
@@ -87,6 +93,14 @@ public:
 	/// @Return: An iterator pointing to the end of the list of guard bees
 	std::vector<class Guard*>::iterator GuardEnd();
 
+	/// Accessor method for the begin iterator of the larva collection
+	/// @Return: An iterator pointing to the beginning of the list of larva
+	std::vector<class Larva*>::iterator LarvaBegin();
+
+	/// Accessor method for the end iterator of the larva collection
+	/// @Return: An iterator pointing to the end of the list of larva
+	std::vector<class Larva*>::iterator LarvaEnd();
+
 	/// Accessor method for the size of the onlooker bee list
 	/// @Return: The total number of living onlooker bees in the simulation
 	std::uint32_t OnlookerCount() const;
@@ -107,6 +121,10 @@ public:
 	/// @Return: The total number of living drone bees in the simulation
 	std::uint32_t GuardCount() const;
 
+	/// Accessor method for the size of the larva list
+	/// @Return: The total number of living larva in the simulation
+	std::uint32_t LarvaCount() const;
+
 	/// Toggles the flow field visualization for all employed bees
 	void ToggleEmployeeFlowFields();
 
@@ -118,12 +136,31 @@ private:
 	/// Constructor
 	BeeManager();
 
+	/// Removes all onlookers marked for delete
+	void CleanupOnlooker() = delete;
+
+	/// Removes all employees marked for delete
+	void CleanupEmployee() = delete;
+
+	/// Removes all queens marked for delete
+	void CleanupQueen() = delete;
+
+	/// Removes all drones marked for delete
+	void CleanupDrone() = delete;
+
+	/// Removes all guards marked for delete
+	void CleanupGuard() = delete;
+
+	/// Removes all larva marked for delete
+	void CleanupLarva();
+
 	static BeeManager* sInstance;
 	std::vector<class OnlookerBee*> mOnlookers;
 	std::vector<class EmployedBee*> mEmployees;
 	std::vector<class QueenBee*> mQueens;
 	std::vector<class Drone*> mDrones;
 	std::vector<class Guard*> mGuards;
+	std::vector<class Larva*> mLarva;
 	const float FOOD_RETARGET_INTERVAL = 20.0f;
 	float mTimeSinceRetarget;
 	std::default_random_engine generator;
