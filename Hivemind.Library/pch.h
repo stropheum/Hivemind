@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SDKDDKVer.h>
-#include <stdio.h>
-#include <tchar.h>
+
+#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
 
 //////////////////////////////
@@ -19,14 +19,14 @@
 ///////////////////////////
 //  Local Dependencies  //
 /////////////////////////
-#include "BeeManager.h"
-#include "FoodSourceManager.h"
-#include "HiveManager.h"
-#include "Hive.h"
-#include "FoodSource.h"
-#include "OnlookerBee.h"
-#include "EmployedBee.h"
-#include "QueenBee.h"
-#include "Drone.h"
-#include "Guard.h"
-#include "Larva.h"
+//#include "BeeManager.h"
+//#include "FoodSourceManager.h"
+//#include "HiveManager.h"
+//#include "Hive.h"
+//#include "FoodSource.h"
+//#include "OnlookerBee.h"
+//#include "EmployedBee.h"
+//#include "QueenBee.h"
+//#include "Drone.h"
+//#include "Guard.h"
+//#include "Larva.h"
