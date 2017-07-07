@@ -1,5 +1,5 @@
-// pch.cpp : source file that includes just the standard includes
-// Hivemind.Library.pch will be the pre-compiled header
+// stdafx.cpp : source file that includes just the standard includes
+// Hivemind.Library.Test.pch will be the pre-compiled header
 // stdafx.obj will contain the pre-compiled type information
 
 #include "pch.h"

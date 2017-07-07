@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hivemind.Desktop", "Source\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hivemind.Library", "Source\Hivemind.Library\Hivemind.Library.vcxproj", "{D1C8CF49-C927-4B47-AC0F-6E4695BBF677}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hivemind.Library.Test", "Hivemind.Library.Test\Hivemind.Library.Test.vcxproj", "{BF086ED2-566E-4ABF-B893-34170AECEE93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{D1C8CF49-C927-4B47-AC0F-6E4695BBF677}.Release|x64.Build.0 = Release|x64
 		{D1C8CF49-C927-4B47-AC0F-6E4695BBF677}.Release|x86.ActiveCfg = Release|Win32
 		{D1C8CF49-C927-4B47-AC0F-6E4695BBF677}.Release|x86.Build.0 = Release|Win32
+		{BF086ED2-566E-4ABF-B893-34170AECEE93}.Debug|x64.ActiveCfg = Debug|x64
+		{BF086ED2-566E-4ABF-B893-34170AECEE93}.Debug|x64.Build.0 = Debug|x64
+		{BF086ED2-566E-4ABF-B893-34170AECEE93}.Debug|x86.ActiveCfg = Debug|Win32
+		{BF086ED2-566E-4ABF-B893-34170AECEE93}.Debug|x86.Build.0 = Debug|Win32
+		{BF086ED2-566E-4ABF-B893-34170AECEE93}.Release|x64.ActiveCfg = Release|x64
+		{BF086ED2-566E-4ABF-B893-34170AECEE93}.Release|x64.Build.0 = Release|x64
+		{BF086ED2-566E-4ABF-B893-34170AECEE93}.Release|x86.ActiveCfg = Release|Win32
+		{BF086ED2-566E-4ABF-B893-34170AECEE93}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
