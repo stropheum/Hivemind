@@ -7,7 +7,7 @@
 
 using namespace std;
 
-EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive):
+EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive) :
 	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position), mDisplayFlowField(false),
 	mLineToFoodSource(sf::LineStrip, 2), mFoodSourceData(0.0f, 0.0f), mAbandoningFoodSource(false)
 {
@@ -25,23 +25,23 @@ void EmployedBee::Update(sf::RenderWindow& window, const float& deltaTime)
 
 	switch (mState)
 	{
-		case Scouting:
-			UpdateScouting(window, deltaTime);
-			break;
-		case State::SeekingTarget:
-			UpdateSeekingTarget(window, deltaTime);
-			break;
-		case State::HarvestingFood:
-			UpdateHarvestingFood(window, deltaTime);
-			break;
-		case State::DeliveringFood:
-			UpdateDeliveringFood(window, deltaTime);
-			break;
-		case State::DepositingFood:
-			UpdateDepositingFood(window, deltaTime);
-			break;
-		default:
-			break;
+	case Scouting:
+		UpdateScouting(window, deltaTime);
+		break;
+	case State::SeekingTarget:
+		UpdateSeekingTarget(window, deltaTime);
+		break;
+	case State::HarvestingFood:
+		UpdateHarvestingFood(window, deltaTime);
+		break;
+	case State::DeliveringFood:
+		UpdateDeliveringFood(window, deltaTime);
+		break;
+	case State::DepositingFood:
+		UpdateDepositingFood(window, deltaTime);
+		break;
+	default:
+		break;
 	}
 
 	if (mPairedFoodSource != nullptr)
@@ -165,7 +165,7 @@ void EmployedBee::UpdateHarvestingFood(sf::RenderWindow& window, const float& de
 	mPosition = newPosition;
 
 	if (mHarvestingClock.getElapsedTime().asSeconds() >= mHarvestingDuration)
-	{	
+	{
 		mFoodAmount += mTargetFoodSource->TakeFood(EXTRACTION_YIELD);
 		if (mTargetFoodSource->GetFoodAmount() == 0.0f)
 		{	// We just learned that the food source is no longer viable

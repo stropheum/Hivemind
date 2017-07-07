@@ -10,6 +10,60 @@
     <Filter Include="Entities\Entity">
       <UniqueIdentifier>{2d35dc4f-2bd3-4f73-b6fe-2550b4489689}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Bees">
+      <UniqueIdentifier>{cd828183-4e96-43cf-bea1-24cdc682c977}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Bees\Bee">
+      <UniqueIdentifier>{fb0e3d26-c345-4433-8079-c3ee8da198f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Bees\Drone">
+      <UniqueIdentifier>{f6dc8deb-549b-4dda-af69-1be5c40d7740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Bees\Employee">
+      <UniqueIdentifier>{2273df54-79e1-4edf-9e64-e2c815b0bd7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Bees\Guard">
+      <UniqueIdentifier>{d248e9c0-b917-472f-8db5-4ff99f5384df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Bees\Larva">
+      <UniqueIdentifier>{185ce1a2-0619-422d-ba4c-d48140b369f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Bees\Onlooker">
+      <UniqueIdentifier>{f79c643d-6c13-409e-85a0-8f57e8c063b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Bees\Queen">
+      <UniqueIdentifier>{9f148b9b-83c0-4461-a1e1-e8216a8738cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Structures">
+      <UniqueIdentifier>{d909848a-b4e3-41fa-8bb5-5395b0731a03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Structures\FoodSource">
+      <UniqueIdentifier>{d1dc0ec7-fe97-4ed9-a241-937913640af4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Structures\Hive">
+      <UniqueIdentifier>{881b5683-4a08-4556-b5fc-7664d2313aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{b4a8de46-5b93-4b75-941c-2cc94aaf146a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{54c4933d-0ed7-4c75-9b45-f8e2ef2b9cc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\BeeManager">
+      <UniqueIdentifier>{57db2ee9-6b21-42c9-8445-8190db25378a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\FoodSourceManager">
+      <UniqueIdentifier>{6d796bf2-3432-463b-8b03-f9dfcd950a57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\HiveManager">
+      <UniqueIdentifier>{d86b67de-149b-407d-87d5-ca1b1cae8364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Flow Field">
+      <UniqueIdentifier>{82e727c6-4375-4ee7-bc33-d12bccad2e94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Perlin Noise">
+      <UniqueIdentifier>{ba8f67e9-ce7b-469f-84c0-9f0b8b744ff0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -18,6 +72,48 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Entities\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Bee.cpp">
+      <Filter>Entities\Bees\Bee</Filter>
+    </ClCompile>
+    <ClCompile Include="Drone.cpp">
+      <Filter>Entities\Bees\Drone</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployedBee.cpp">
+      <Filter>Entities\Bees\Employee</Filter>
+    </ClCompile>
+    <ClCompile Include="Guard.cpp">
+      <Filter>Entities\Bees\Guard</Filter>
+    </ClCompile>
+    <ClCompile Include="Larva.cpp">
+      <Filter>Entities\Bees\Larva</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlookerBee.cpp">
+      <Filter>Entities\Bees\Onlooker</Filter>
+    </ClCompile>
+    <ClCompile Include="QueenBee.cpp">
+      <Filter>Entities\Bees\Queen</Filter>
+    </ClCompile>
+    <ClCompile Include="FoodSource.cpp">
+      <Filter>Entities\Structures\FoodSource</Filter>
+    </ClCompile>
+    <ClCompile Include="Hive.cpp">
+      <Filter>Entities\Structures\Hive</Filter>
+    </ClCompile>
+    <ClCompile Include="BeeManager.cpp">
+      <Filter>Managers\BeeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="FoodSourceManager.cpp">
+      <Filter>Managers\FoodSourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HiveManager.cpp">
+      <Filter>Managers\HiveManager</Filter>
+    </ClCompile>
+    <ClCompile Include="FlowField.cpp">
+      <Filter>Tools\Flow Field</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinNoise.cpp">
+      <Filter>Tools\Perlin Noise</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -25,6 +121,48 @@
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Entities\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Bee.h">
+      <Filter>Entities\Bees\Bee</Filter>
+    </ClInclude>
+    <ClInclude Include="Drone.h">
+      <Filter>Entities\Bees\Drone</Filter>
+    </ClInclude>
+    <ClInclude Include="EmployedBee.h">
+      <Filter>Entities\Bees\Employee</Filter>
+    </ClInclude>
+    <ClInclude Include="Guard.h">
+      <Filter>Entities\Bees\Guard</Filter>
+    </ClInclude>
+    <ClInclude Include="Larva.h">
+      <Filter>Entities\Bees\Larva</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlookerBee.h">
+      <Filter>Entities\Bees\Onlooker</Filter>
+    </ClInclude>
+    <ClInclude Include="QueenBee.h">
+      <Filter>Entities\Bees\Queen</Filter>
+    </ClInclude>
+    <ClInclude Include="FoodSource.h">
+      <Filter>Entities\Structures\FoodSource</Filter>
+    </ClInclude>
+    <ClInclude Include="Hive.h">
+      <Filter>Entities\Structures\Hive</Filter>
+    </ClInclude>
+    <ClInclude Include="BeeManager.h">
+      <Filter>Managers\BeeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="FoodSourceManager.h">
+      <Filter>Managers\FoodSourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HiveManager.h">
+      <Filter>Managers\HiveManager</Filter>
+    </ClInclude>
+    <ClInclude Include="FlowField.h">
+      <Filter>Tools\Flow Field</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoise.h">
+      <Filter>Tools\Perlin Noise</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

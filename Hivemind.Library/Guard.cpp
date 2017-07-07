@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Guard::Guard(const sf::Vector2f& position, Hive& hive): 
+Guard::Guard(const sf::Vector2f& position, Hive& hive) :
 	Bee(position, hive)
 {
 	mFillColor = sf::Color(128, 0, 0);

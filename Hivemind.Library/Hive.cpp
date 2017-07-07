@@ -5,8 +5,8 @@
 
 using namespace std;
 
-Hive::Hive(const sf::Vector2f& position):
-	Entity(position, sf::Color::White, sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions), 
+Hive::Hive(const sf::Vector2f& position) :
+	Entity(position, sf::Color::White, sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
 	mFoodAmount(0.0f), mFont(), mText(), mGenerator(), mWaggleDanceClock(), mWaggleDanceWaitPeriod(Bee::STANDARD_HARVESTING_DURATION), mWaggleDanceInProgress(false)
 {
 	std::random_device device;
@@ -43,10 +43,10 @@ void Hive::Update(sf::RenderWindow& window, const float& deltaTime)
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);
 
-//	if (mWaggleDanceInProgress && mWaggleDanceClock.getElapsedTime().asSeconds() > mWaggleDanceWaitPeriod)
-//	{
-//		CompleteWaggleDance();
-//	}
+	//	if (mWaggleDanceInProgress && mWaggleDanceClock.getElapsedTime().asSeconds() > mWaggleDanceWaitPeriod)
+	//	{
+	//		CompleteWaggleDance();
+	//	}
 
 	std::stringstream ss;
 	ss << "Food: " << mFoodAmount;
@@ -216,8 +216,8 @@ void Hive::CompleteWaggleDance()
 	mWaggleDanceInProgress = false;
 }
 
-float Hive::ComputeFitness(const std::pair<float, float>& foodData, 
-	const float& minYield, const float& maxYield, 
+float Hive::ComputeFitness(const std::pair<float, float>& foodData,
+	const float& minYield, const float& maxYield,
 	const float& minDistance, const float& maxDistance)
 {
 	UNREFERENCED_PARAMETER(minDistance);

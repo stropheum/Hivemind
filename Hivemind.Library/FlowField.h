@@ -1,12 +1,7 @@
 #pragma once
-#include "Entity.h"
 #include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-namespace sf {
-	class Color;
-	class RenderWindow;
-}
 
 class FlowField : public Entity
 {

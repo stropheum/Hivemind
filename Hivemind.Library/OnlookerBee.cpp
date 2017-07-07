@@ -6,7 +6,7 @@
 
 using namespace std;
 
-OnlookerBee::OnlookerBee(const sf::Vector2f& position, Hive& hive): 
+OnlookerBee::OnlookerBee(const sf::Vector2f& position, Hive& hive) :
 	Bee(position, hive)
 {
 	mState = State::DeliveringFood;
@@ -42,7 +42,7 @@ void OnlookerBee::Update(sf::RenderWindow& window, const float& deltaTime)
 
 		mPosition = newPosition;
 		break;
-	case Scouting: 
+	case Scouting:
 		// Onlookers do not scout. Should never meet this condition
 		break;
 
@@ -140,8 +140,8 @@ void OnlookerBee::Update(sf::RenderWindow& window, const float& deltaTime)
 			}
 		}
 		break;
-	
-	default: 
+
+	default:
 		break;
 	}
 

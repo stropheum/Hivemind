@@ -5,6 +5,8 @@
 #include "FoodSourceManager.h"
 #include "Hive.h"
 #include "HiveManager.h"
+#include "HiveManager.h"
+#include "FoodSourceManager.h"
 
 using namespace std;
 
@@ -16,12 +18,12 @@ const sf::Color Bee::NORMAL_COLOR = sf::Color(192, 192, 192);
 const sf::Color Bee::ALERT_COLOR = sf::Color::Red;
 const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
 
-Bee::Bee(const sf::Vector2f& position, Hive& hive):
-	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mParentHive(hive), mGenerator(), mBody(BODY_RADIUS), 
-	mFace(sf::Vector2f(BODY_RADIUS, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED), mFoodAmount(0.0f), 
+Bee::Bee(const sf::Vector2f& position, Hive& hive) :
+	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mParentHive(hive), mGenerator(), mBody(BODY_RADIUS),
+	mFace(sf::Vector2f(BODY_RADIUS, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED), mFoodAmount(0.0f),
 	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mTargeting(false), mState(State::SeekingTarget), mTargetFoodSource(nullptr)
 {
-//	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
+	//	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
 
@@ -48,17 +50,17 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive):
 	stringstream ss;
 	ss << "Food: " << mFoodAmount;
 	mText.setString(ss.str());
-	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width/2.0f, 35));
+	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
 }
 
 void Bee::Render(sf::RenderWindow& window) const
 {
 	window.draw(mBody);
 	if (mState != State::Scouting)
-	{	
+	{
 		window.draw(mFace);
 	}
-//	window.draw(mText);
+	//	window.draw(mText);
 }
 
 bool Bee::HasTarget() const
@@ -122,7 +124,7 @@ void Bee::HandleFoodSourceCollisions()
 {
 	auto foodSourceManager = FoodSourceManager::GetInstance();
 	bool reachedCenterOfSource = false;
-	
+
 	if (!HasTarget() && mState == State::SeekingTarget)
 	{	// Set initial target
 		mTargeting = true;
@@ -134,7 +136,7 @@ void Bee::HandleFoodSourceCollisions()
 		SetTarget(newTarget);
 		mState = State::DeliveringFood;
 	}
-	
+
 	switch (mState)
 	{
 	case State::SeekingTarget:
@@ -150,11 +152,11 @@ void Bee::HandleFoodSourceCollisions()
 			}
 		}
 		break;
-	case HarvestingFood: 
+	case HarvestingFood:
 		break;
 	case DeliveringFood:
 		break;
-	default: ;
+	default:;
 	}
 
 	if (reachedCenterOfSource)

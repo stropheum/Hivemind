@@ -38,22 +38,22 @@ void Larva::Hatch()
 	auto beeManager = BeeManager::GetInstance();
 	switch (mLarvaType)
 	{
-	case Drone: 
+	case Drone:
 		beeManager->SpawnDrone(mPosition, mParentHive);
 		break;
 	case Employee:
 		beeManager->SpawnEmployee(mPosition, mParentHive);
 		break;
-	case Onlooker: 
+	case Onlooker:
 		beeManager->SpawnOnlooker(mPosition, mParentHive);
 		break;
-	case Queen: 
+	case Queen:
 		beeManager->SpawnQueen(mPosition, mParentHive);
 		break;
-	case Guard: 
+	case Guard:
 		beeManager->SpawnGuard(mPosition, mParentHive);
 		break;
-	default: 
+	default:
 		break;
 	}
 }

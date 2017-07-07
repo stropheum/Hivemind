@@ -4,7 +4,7 @@
 class FoodSource : public Entity
 {
 public:
-	
+
 #pragma region Constructors / Destructor / Move semantics
 
 	/// Constructor

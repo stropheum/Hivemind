@@ -10,7 +10,7 @@ public:
 	/// @Param position: The starting position of the bee
 	/// @Param hive: The hive that this bee belongs to
 	explicit QueenBee(const sf::Vector2f& position, Hive& hive);
-	
+
 	/// Destructor
 	~QueenBee() = default;
 

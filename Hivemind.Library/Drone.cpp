@@ -1,27 +1,19 @@
 #include "pch.h"
-#include "QueenBee.h"
+#include "Drone.h"
 
 
 using namespace std;
 
-QueenBee::QueenBee(const sf::Vector2f& position, Hive& hive): 
-	Bee(position, hive),
-	mLarvaDepositInterval(5.0f), mTimeSinceLarvaDeposit(0.0f)
+Drone::Drone(const sf::Vector2f& position, Hive& hive) :
+	Bee(position, hive)
 {
-	mFillColor = sf::Color::Magenta;
+	mFillColor = sf::Color(128, 128, 128);
 	mBody.setFillColor(mFillColor);
 }
 
-void QueenBee::Update(sf::RenderWindow& window, const float& deltaTime)
+void Drone::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
-
-	mTimeSinceLarvaDeposit += deltaTime;
-	if (mTimeSinceLarvaDeposit >= mLarvaDepositInterval)
-	{
-		BeeManager::GetInstance()->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Onlooker);
-		mTimeSinceLarvaDeposit = 0.0f;
-	}
 
 	auto facePosition = mFace.getPosition();
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
@@ -48,7 +40,7 @@ void QueenBee::Update(sf::RenderWindow& window, const float& deltaTime)
 	mFace.setRotation(rotationAngle);
 }
 
-void QueenBee::Render(sf::RenderWindow& window) const
+void Drone::Render(sf::RenderWindow& window) const
 {
 	Bee::Render(window);
 }

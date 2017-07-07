@@ -9,7 +9,7 @@ public:
 	/// Constructor
 	/// @Param position: The starting position of the food source
 	explicit Hive(const sf::Vector2f& position);
-	
+
 	/// Destructor
 	virtual ~Hive();
 
@@ -17,7 +17,7 @@ public:
 	/// @Param window: The screen that the game is being rendered to
 	/// @Param deltaTime: The time elapsed since last Update
 	void Update(sf::RenderWindow& window, const float& deltaTime) override;
-	
+
 	/// Renders the hive to the screen
 	/// @Param window: The screen which the hive is being rendered to
 	void Render(sf::RenderWindow& window) const override;
@@ -29,7 +29,7 @@ public:
 	/// Accessor method for the dimensions of the food source
 	/// @Return: A vector representing the width and height of the food source
 	const sf::Vector2f& GetDimensions() const;
-	
+
 	/// Adds food to the hive
 	/// @Param foodAmount: Amount of food being added to the hive
 	void DepositFood(const float& foodAmount);

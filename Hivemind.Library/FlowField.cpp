@@ -8,7 +8,7 @@
 
 using namespace std;
 
-FlowField::FlowField(const sf::Vector2f& position):
+FlowField::FlowField(const sf::Vector2f& position) :
 	Entity(position, sf::Color(100, 100, 100), sf::Color(100, 100, 100)),
 	mImage(), mSprite(), mTexture(), mOctaveCount(8)
 {
