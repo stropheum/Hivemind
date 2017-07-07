@@ -2,7 +2,7 @@
 #include "Entity.h"
 
 
-Entity::Entity(const sf::Vector2f& position, const sf::Color& outlineColor, const sf::Color& fillColor):
+Entity::Entity(const sf::Vector2f& position, const sf::Color& outlineColor, const sf::Color& fillColor) :
 	mPosition(position), mOutlineColor(outlineColor), mFillColor(fillColor)
 {
 }

@@ -4,15 +4,27 @@
     <Filter Include="Precompiled Header">
       <UniqueIdentifier>{a0be82d7-0a03-401a-a542-402ec58e6202}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{6b233883-4f3f-43d6-a06a-dc25811a3430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Entity">
+      <UniqueIdentifier>{2d35dc4f-2bd3-4f73-b6fe-2550b4489689}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Precompiled Header</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entities\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Precompiled Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Entities\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

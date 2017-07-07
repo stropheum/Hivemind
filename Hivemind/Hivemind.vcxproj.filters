@@ -73,9 +73,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Entity.h">
-      <Filter>Entities\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Bee.h">
       <Filter>Entities\Bees\Bee</Filter>
     </ClInclude>
@@ -123,9 +120,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Entities\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Bee.cpp">
       <Filter>Entities\Bees\Bee</Filter>
     </ClCompile>
