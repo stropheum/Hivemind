@@ -17,16 +17,70 @@
     <Filter Include="Test Components\FooEntity">
       <UniqueIdentifier>{00b2f47c-1624-44ec-bd70-c7561c554a5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Unit Tests\Entity Tests">
+      <UniqueIdentifier>{95d26d53-93ac-4527-ba65-52ac66ff2cd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unit Tests\Structure Tests">
+      <UniqueIdentifier>{ec2103c3-14f5-4584-b1f6-26fb9d6fd91c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unit Tests\Manager Tests">
+      <UniqueIdentifier>{afa679db-36d9-443d-8514-206eadce55f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unit Tests\Tool Tests">
+      <UniqueIdentifier>{9c96ef4d-4287-47ec-a855-d1222b65be04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Precompiled Header</Filter>
     </ClCompile>
-    <ClCompile Include="EntityTest.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
     <ClCompile Include="FooEntity.cpp">
       <Filter>Test Components\FooEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityTest.cpp">
+      <Filter>Unit Tests\Entity Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="BeeTest.cpp">
+      <Filter>Unit Tests\Entity Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlookerTest.cpp">
+      <Filter>Unit Tests\Entity Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="DroneTest.cpp">
+      <Filter>Unit Tests\Entity Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeTest.cpp">
+      <Filter>Unit Tests\Entity Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="GuardTest.cpp">
+      <Filter>Unit Tests\Entity Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="LarvaTest.cpp">
+      <Filter>Unit Tests\Entity Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="QueenTest.cpp">
+      <Filter>Unit Tests\Entity Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="FoodSourceTest.cpp">
+      <Filter>Unit Tests\Structure Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="HiveTest.cpp">
+      <Filter>Unit Tests\Structure Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="BeeManagerTest.cpp">
+      <Filter>Unit Tests\Manager Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="FoodSourceManagerTest.cpp">
+      <Filter>Unit Tests\Manager Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="HiveManagerTest.cpp">
+      <Filter>Unit Tests\Manager Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="FlowFieldTest.cpp">
+      <Filter>Unit Tests\Tool Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinNoiseTest.cpp">
+      <Filter>Unit Tests\Tool Tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -36,5 +90,11 @@
     <ClInclude Include="FooEntity.h">
       <Filter>Test Components\FooEntity</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Hivemind.Library.Test.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
