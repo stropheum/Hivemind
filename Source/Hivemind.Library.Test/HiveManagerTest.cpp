@@ -32,17 +32,17 @@ namespace HivemindLibraryTest
 			// ReSharper restore CppSomeObjectMembersMightNotBeInitialized
 		}
 
-		TEST_METHOD_INITIALIZE(methodInitialize)
+		TEST_METHOD_INITIALIZE(MethodInitialize)
 		{
 			InitializeLeakDetection();
 		}
 
-		TEST_METHOD_CLEANUP(methodCleanup)
+		TEST_METHOD_CLEANUP(MethodCleanup)
 		{
 			FinalizeLeakDetection();
 		}
 
-		TEST_METHOD(UnitTest1)
+		TEST_METHOD(HiveManager_Stub)
 		{
 			Assert::Fail(L"Test not implemented");
 		}

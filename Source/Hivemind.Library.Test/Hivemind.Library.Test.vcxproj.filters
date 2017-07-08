@@ -90,7 +90,6 @@
     <ClInclude Include="FooEntity.h">
       <Filter>Test Components\FooEntity</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Hivemind.Library.Test.rc">

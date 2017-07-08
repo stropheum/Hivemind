@@ -32,24 +32,24 @@ namespace HivemindLibraryTest
 			// ReSharper restore CppSomeObjectMembersMightNotBeInitialized
 		}
 
-		TEST_METHOD_INITIALIZE(methodInitialize)
+		TEST_METHOD_INITIALIZE(MethodInitialize)
 		{
 			InitializeLeakDetection();
 		}
 
-		TEST_METHOD_CLEANUP(methodCleanup)
+		TEST_METHOD_CLEANUP(MethodCleanup)
 		{
 			FinalizeLeakDetection();
 		}
 		
-		TEST_METHOD(TestConstruction)
+		TEST_METHOD(Entity_Construction)
 		{
 			sf::Vector2f position(100, 100);
 			FooEntity entity(position);
 			Assert::AreEqual(sf::Vector2f(100, 100), entity.GetPosition());
 		}
 
-		TEST_METHOD(TestPosition)
+		TEST_METHOD(Entity_Position)
 		{
 			sf::Vector2f position(100, 100);
 			FooEntity entity(position);

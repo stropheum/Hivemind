@@ -186,7 +186,6 @@
   <ItemGroup>
     <ClInclude Include="FooEntity.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BeeManagerTest.cpp" />

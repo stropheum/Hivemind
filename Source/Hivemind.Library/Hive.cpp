@@ -22,6 +22,7 @@ Hive::Hive(const sf::Vector2f& position) :
 		throw exception("Error loading font from file");
 	}
 
+	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
 	mText.setFont(mFont);
 	mText.setCharacterSize(16);
 	mText.setOutlineColor(sf::Color::White);
@@ -29,7 +30,6 @@ Hive::Hive(const sf::Vector2f& position) :
 	std::stringstream ss;
 	ss << "Food: " << mFoodAmount;
 	mText.setString(ss.str());
-	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
 }
 
 Hive::~Hive()
@@ -42,12 +42,6 @@ void Hive::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);
-
-	//	if (mWaggleDanceInProgress && mWaggleDanceClock.getElapsedTime().asSeconds() > mWaggleDanceWaitPeriod)
-	//	{
-	//		CompleteWaggleDance();
-	//	}
-
 	std::stringstream ss;
 	ss << "Food: " << mFoodAmount;
 	mText.setString(ss.str());
