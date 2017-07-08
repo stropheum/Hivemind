@@ -29,11 +29,6 @@ namespace HivemindLibraryTest
 				_CrtMemDumpStatistics(&diffMemState);
 				Assert::Fail(L"Memory Leaks!");
 			}
-
-			// ReSharper disable CppSomeObjectMembersMightNotBeInitialized
-			UNREFERENCED_PARAMETER(endMemState);
-			UNREFERENCED_PARAMETER(diffMemState);
-			// ReSharper restore CppSomeObjectMembersMightNotBeInitialized
 #endif
 		}
 

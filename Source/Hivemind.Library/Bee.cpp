@@ -5,8 +5,6 @@
 #include "FoodSourceManager.h"
 #include "Hive.h"
 #include "HiveManager.h"
-#include "HiveManager.h"
-#include "FoodSourceManager.h"
 
 using namespace std;
 
@@ -23,7 +21,6 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 	mFace(sf::Vector2f(BODY_RADIUS, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED), mFoodAmount(0.0f),
 	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mTargeting(false), mState(State::SeekingTarget), mTargetFoodSource(nullptr)
 {
-	//	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
 
@@ -51,6 +48,10 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 	ss << "Food: " << mFoodAmount;
 	mText.setString(ss.str());
 	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
+}
+
+Bee::~Bee()
+{
 }
 
 void Bee::Render(sf::RenderWindow& window) const

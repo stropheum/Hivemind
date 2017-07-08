@@ -36,7 +36,7 @@ public:
 	explicit Bee(const sf::Vector2f& position, Hive& hive);
 
 	/// Default destructor
-	virtual ~Bee() = default;
+	virtual ~Bee();
 
 #pragma endregion
 

@@ -13,7 +13,7 @@ public:
 	explicit Drone(const sf::Vector2f& position, Hive& hive);
 
 	/// Destructor
-	~Drone() = default;
+	virtual ~Drone();
 
 	/// Update method called by the main game loop
 	/// @Param window: The window that the simulation is being rendered to

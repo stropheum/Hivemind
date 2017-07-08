@@ -11,6 +11,10 @@ Drone::Drone(const sf::Vector2f& position, Hive& hive) :
 	mBody.setFillColor(mFillColor);
 }
 
+Drone::~Drone()
+{
+}
+
 void Drone::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);

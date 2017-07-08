@@ -113,7 +113,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>Hivemind.Library.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;sfml-system-s.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;flac.lib;openal32.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib\;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
@@ -134,7 +134,7 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>Hivemind.Library.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;sfml-system-s-d.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;flac.lib;openal32.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib\;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
@@ -155,7 +155,7 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>Hivemind.Library.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;sfml-system-s-d.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;flac.lib;openal32.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib\;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
@@ -180,7 +180,7 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>Hivemind.Library.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;sfml-system-s.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;flac.lib;openal32.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib\;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
