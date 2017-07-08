@@ -69,6 +69,11 @@ bool Bee::HasTarget() const
 	return mTargeting;
 }
 
+float Bee::GetFoodAmount() const
+{
+	return mFoodAmount;
+}
+
 bool Bee::CollidingWithFoodSource(const FoodSource& foodSource) const
 {
 	auto foodPosition = foodSource.GetPosition();
@@ -194,6 +199,11 @@ void Bee::DetectStructureCollisions()
 	SetColor(colliding ? Bee::ALERT_COLOR : Bee::NORMAL_COLOR);
 }
 
+void Bee::HarvestFood(const float& foodAmount)
+{
+	mFoodAmount += foodAmount;
+}
+
 void Bee::DepositFood(float foodAmount)
 {
 	if (foodAmount > mFoodAmount)
@@ -201,7 +211,7 @@ void Bee::DepositFood(float foodAmount)
 		foodAmount = mFoodAmount;
 	}
 	mParentHive.DepositFood(foodAmount);
-	mFoodAmount = 0;
+	mFoodAmount -= foodAmount;
 }
 
 void Bee::SetState(const State& state)

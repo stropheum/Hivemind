@@ -188,6 +188,7 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="FooBee.h" />
     <ClInclude Include="FooEntity.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -197,6 +198,7 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     <ClCompile Include="DroneTest.cpp" />
     <ClCompile Include="EmployeeTest.cpp" />
     <ClCompile Include="FlowFieldTest.cpp" />
+    <ClCompile Include="FooBee.cpp" />
     <ClCompile Include="FoodSourceManagerTest.cpp" />
     <ClCompile Include="FoodSourceTest.cpp" />
     <ClCompile Include="FooEntity.cpp" />

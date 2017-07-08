@@ -29,6 +29,9 @@
     <Filter Include="Unit Tests\Tool Tests">
       <UniqueIdentifier>{9c96ef4d-4287-47ec-a855-d1222b65be04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test Components\FooBee">
+      <UniqueIdentifier>{4c96f1ba-c175-4808-bd4d-41b46315d2cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -82,6 +85,9 @@
     <ClCompile Include="PerlinNoiseTest.cpp">
       <Filter>Unit Tests\Tool Tests</Filter>
     </ClCompile>
+    <ClCompile Include="FooBee.cpp">
+      <Filter>Test Components\FooBee</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -89,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="FooEntity.h">
       <Filter>Test Components\FooEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="FooBee.h">
+      <Filter>Test Components\FooBee</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

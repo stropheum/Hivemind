@@ -19,6 +19,8 @@
 /////////////////////////
 #include "Entity.h"
 #include "FooEntity.h"
+#include "Bee.h"
+#include "FooBee.h"
 #include "BeeManager.h"
 #include "FoodSourceManager.h"
 #include "HiveManager.h"
@@ -42,7 +44,7 @@ namespace Microsoft {
 			template<> inline std::wstring ToString<sf::Vector2f>(const sf::Vector2f& vector)
 			{
 				std::stringstream ss;
-				ss << "(" << vector.x << ", " << vector.y << ")";
+				ss << vector.x << ", " << vector.y;
 				auto string = ss.str();
 				std::wstring result(string.length(), L' ');
 				std::copy(string.begin(), string.end(), result.begin());
@@ -52,10 +54,38 @@ namespace Microsoft {
 			template<> inline std::wstring ToString<sf::Vector2i>(const sf::Vector2i& vector)
 			{
 				std::stringstream ss;
-				ss << "(" << vector.x << ", " << vector.y << ")";
+				ss << vector.x << ", " << vector.y;
 				auto string = ss.str();
 				std::wstring result(string.length(), L' ');
 				std::copy(string.begin(), string.end(), result.begin());
+				return result;
+			}
+
+			template<> inline std::wstring ToString<Bee::State>(const Bee::State& state)
+			{
+				auto result = L"";
+				switch (state)
+				{
+				case Bee::Idle: 
+					result = L"Idle";
+					break;
+				case Bee::Scouting: 
+					result = L"Scouting";
+					break;
+				case Bee::SeekingTarget: 
+					result = L"SeekingTarget";
+					break;
+				case Bee::HarvestingFood: 
+					result = L"HarvestingFood";
+					break;
+				case Bee::DeliveringFood: 
+					result = L"DeliveringFood";
+					break;
+				case Bee::DepositingFood: 
+					result = L"DepositingFood";
+					break;
+				}
+
 				return result;
 			}
 
