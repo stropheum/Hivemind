@@ -116,7 +116,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -136,7 +137,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -156,7 +158,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -180,7 +183,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib;$(SolutionDir)build\bin\$(PlatformTarget)\$(Configuration)\Hivemind.Library\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

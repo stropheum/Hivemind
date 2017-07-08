@@ -31,9 +31,9 @@ FlowField::~FlowField()
 {
 	for (int i = 0; i < mFieldDimensions.x; i++)
 	{
-		delete mValues[i];
+		delete[] mValues[i];
 	}
-	delete mValues;
+	delete[] mValues;
 }
 
 void FlowField::Update(sf::RenderWindow& window, const float& deltaTime)

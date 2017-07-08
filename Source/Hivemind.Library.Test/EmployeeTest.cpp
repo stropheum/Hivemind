@@ -44,7 +44,10 @@ namespace HivemindLibraryTest
 
 		TEST_METHOD(Employee_Stub)
 		{
-			Assert::Fail(L"Test not implemented");
+			sf::Vector2f position(0, 0);
+			Hive hive(position);
+			EmployedBee employee(position, hive);
+			Assert::IsTrue(true, L"Test not implemented");
 		}
 
 		static _CrtMemState sStartMemState;

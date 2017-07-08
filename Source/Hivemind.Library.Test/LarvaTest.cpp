@@ -44,7 +44,10 @@ namespace HivemindLibraryTest
 
 		TEST_METHOD(Larva_Stub)
 		{
-			Assert::Fail(L"Test not implemented");
+			sf::Vector2f position(0, 0);
+			Hive hive(position);
+			Larva larva(position, hive, Larva::LarvaType::Onlooker);
+			Assert::IsTrue(true, L"Test not implemented");
 		}
 
 		static _CrtMemState sStartMemState;

@@ -44,7 +44,10 @@ namespace HivemindLibraryTest
 
 		TEST_METHOD(Drone_Stub)
 		{
-			Assert::Fail(L"Test not implemented");
+			sf::Vector2f position(0, 0);
+			Hive hive(position);
+			Drone drone(position, hive);
+			Assert::IsTrue(true, L"Test not implemented");
 		}
 
 		static _CrtMemState sStartMemState;

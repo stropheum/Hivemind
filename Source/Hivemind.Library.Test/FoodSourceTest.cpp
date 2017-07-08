@@ -44,7 +44,9 @@ namespace HivemindLibraryTest
 
 		TEST_METHOD(FoodSource_Stub)
 		{
-			Assert::Fail(L"Test not implemented");
+			sf::Vector2f position(0, 0);
+			FoodSource foodSource(position);
+			Assert::IsTrue(true, L"Test not implemented");
 		}
 
 		static _CrtMemState sStartMemState;

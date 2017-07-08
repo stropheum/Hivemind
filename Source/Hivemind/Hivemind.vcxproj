@@ -108,7 +108,8 @@
       <StackReserveSize>52430000</StackReserveSize>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -128,7 +129,8 @@
       <StackReserveSize>52430000</StackReserveSize>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -152,7 +154,8 @@
       <StackReserveSize>52430000</StackReserveSize>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -176,7 +179,8 @@
       <StackReserveSize>52430000</StackReserveSize>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
