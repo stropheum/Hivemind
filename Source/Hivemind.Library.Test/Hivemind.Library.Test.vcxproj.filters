@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -16,18 +8,33 @@
     <Filter Include="Precompiled Header">
       <UniqueIdentifier>{8c210d50-8a13-43a6-a80b-d370e8c427bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Unit Tests">
+      <UniqueIdentifier>{d4b605ca-6441-4831-9701-c628e644fcbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test Components">
+      <UniqueIdentifier>{9f20211d-7409-4b81-a64e-7bc616e62135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test Components\FooEntity">
+      <UniqueIdentifier>{00b2f47c-1624-44ec-bd70-c7561c554a5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EntityTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Precompiled Header</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityTest.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="FooEntity.cpp">
+      <Filter>Test Components\FooEntity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Precompiled Header</Filter>
+    </ClInclude>
+    <ClInclude Include="FooEntity.h">
+      <Filter>Test Components\FooEntity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

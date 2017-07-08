@@ -107,6 +107,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;sfml-system-s.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;flac.lib;openal32.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -125,6 +128,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;sfml-system-s-d.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;flac.lib;openal32.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -143,6 +149,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;sfml-system-s-d.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;flac.lib;openal32.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -165,6 +174,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)External\$(PlatformTarget)\SFML-2.4.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;sfml-system-s.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;flac.lib;openal32.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Bee.h" />
