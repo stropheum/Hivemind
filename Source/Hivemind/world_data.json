@@ -1,0 +1,42 @@
+{
+	"Hives": 
+	[
+		{
+			"position": {"x": 700, "y": 350},
+			"Onlookers": 100,
+			"Employees": 5,
+			"Drones": 25,
+			"Guards": 5
+		}
+	],
+	"FoodSources":
+	[
+		{"position": {"x": 0, "y": -50}},
+		{"position": {"x": 200, "y": -50}},
+		{"position": {"x": 400, "y": -50}},
+		{"position": {"x": 600, "y": -50}},
+		{"position": {"x": 800, "y": -50}},
+		{"position": {"x": 1000, "y": -50}},
+		{"position": {"x": 1200, "y": -50}},
+		{"position": {"x": 1400, "y": -50}},
+
+		{"position": {"x": 0, "y": 750}},
+		{"position": {"x": 200, "y": 750}},
+		{"position": {"x": 400, "y": 750}},
+		{"position": {"x": 600, "y": 750}},
+		{"position": {"x": 800, "y": 750}},
+		{"position": {"x": 1000, "y": 750}},
+		{"position": {"x": 1200, "y": 750}},
+		{"position": {"x": 1400, "y": 750}},
+
+		{"position": {"x": 0, "y": 150}},
+		{"position": {"x": 0, "y": 350}},
+		{"position": {"x": 0, "y": 550}},
+		{"position": {"x": 0, "y": 750}},
+
+		{"position": {"x": 1400, "y": 150}},
+		{"position": {"x": 1400, "y": 350}},
+		{"position": {"x": 1400, "y": 550}},
+		{"position": {"x": 1400, "y": 750}}
+	]
+}

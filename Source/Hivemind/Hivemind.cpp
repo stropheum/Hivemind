@@ -7,6 +7,7 @@
 #include "HiveManager.h"
 #include "Hive.h"
 #include "FlowField.h"
+#include "WorldGenerator.h"
 
 
 using namespace std;
@@ -51,59 +52,61 @@ int main(int argc, char* argv[])
 	fpsMeter.setFillColor(sf::Color(200, 200, 200));
 
 	bool running = false;
-	const int beeRows = 10;
-	const int beeCols = 10;
-	const int horizontalSpacing = window.getSize().x / beeCols;
-	const int verticalSpacing = window.getSize().y / beeRows;
+//	const int beeRows = 10;
+//	const int beeCols = 10;
+//	const int horizontalSpacing = window.getSize().x / beeCols;
+//	const int verticalSpacing = window.getSize().y / beeRows;
 
 	HiveManager* hiveManager = HiveManager::GetInstance();
 	BeeManager* beeManager = BeeManager::GetInstance();
 	FoodSourceManager* foodSourceManager = FoodSourceManager::GetInstance();
 
-	auto windowSize = window.getSize();
-	hiveManager->SpawnHive(sf::Vector2f(float(windowSize.x / 2) - 100, float(windowSize.y / 2) - 100));
+	WorldGenerator::GetInstance()->Generate("world_data.json");
 
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(100.0f, 100));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, 100.0f));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(100.0f, windowSize.y - 300.0f));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, windowSize.y - 300.0f));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 100, windowSize.y / 4.0f - 250));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 100, windowSize.y / 2.0f + windowSize.y / 4.0f +50));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 400, windowSize.y / 4.0f - 250));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 400, windowSize.y / 2.0f + windowSize.y / 4.0f + 50));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f + 200, windowSize.y / 4.0f - 250));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f + 200, windowSize.y / 2.0f + windowSize.y / 4.0f + 50));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 4.0f - 400, windowSize.y / 2.0f - 100));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2 + windowSize.x / 4.0f + 200, windowSize.y / 2.0f - 100));
-
-	for (int i = 0; i < beeRows; i++)
-	{
-		for (int j = 0; j < beeCols; j++)
-		{	// Distribute bees evenly across the screen
-			beeManager->SpawnOnlooker(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i), *hiveManager->GetHive(0));
-		}
-	}
-
-	int employeeCount = static_cast<int>(foodSourceManager->GetFoodSourceCount() / 2);
-	auto spawnLocation = hiveManager->GetHive(0)->GetCenterTarget();
-	auto& parentHive = *hiveManager->GetHive(0);
-	for (int i = 0; i < employeeCount; i++)
-	{	// Spawn exactly half as many employeed bees as existing food sources
-		beeManager->SpawnEmployee(spawnLocation, parentHive);
-	}
-
-	// Spawn one queen for the hive
-	beeManager->SpawnQueen(spawnLocation, parentHive);
-
-	// Spawn some workers and guards as some percentage of active onlookers, just cause
-	for (int i = 0; i < (beeRows * beeCols) / 10.0f; i++)
-	{
-		beeManager->SpawnDrone(spawnLocation, parentHive);
-		if (i % 2 == 0)
-		{
-			beeManager->SpawnGuard(spawnLocation, parentHive);
-		}
-	}
+//	auto windowSize = window.getSize();
+//	hiveManager->SpawnHive(sf::Vector2f(float(windowSize.x / 2) - 100, float(windowSize.y / 2) - 100));
+//
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(100.0f, 100));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, 100.0f));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(100.0f, windowSize.y - 300.0f));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, windowSize.y - 300.0f));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 100, windowSize.y / 4.0f - 250));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 100, windowSize.y / 2.0f + windowSize.y / 4.0f +50));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 400, windowSize.y / 4.0f - 250));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 400, windowSize.y / 2.0f + windowSize.y / 4.0f + 50));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f + 200, windowSize.y / 4.0f - 250));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f + 200, windowSize.y / 2.0f + windowSize.y / 4.0f + 50));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 4.0f - 400, windowSize.y / 2.0f - 100));
+//	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2 + windowSize.x / 4.0f + 200, windowSize.y / 2.0f - 100));
+//
+//	for (int i = 0; i < beeRows; i++)
+//	{
+//		for (int j = 0; j < beeCols; j++)
+//		{	// Distribute bees evenly across the screen
+//			beeManager->SpawnOnlooker(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i), *hiveManager->GetHive(0));
+//		}
+//	}
+//
+//	int employeeCount = static_cast<int>(foodSourceManager->GetFoodSourceCount() / 2);
+//	auto spawnLocation = hiveManager->GetHive(0)->GetCenterTarget();
+//	auto& parentHive = *hiveManager->GetHive(0);
+//	for (int i = 0; i < employeeCount; i++)
+//	{	// Spawn exactly half as many employeed bees as existing food sources
+//		beeManager->SpawnEmployee(spawnLocation, parentHive);
+//	}
+//
+//	// Spawn one queen for the hive
+//	beeManager->SpawnQueen(spawnLocation, parentHive);
+//
+//	// Spawn some workers and guards as some percentage of active onlookers, just cause
+//	for (int i = 0; i < (beeRows * beeCols) / 10.0f; i++)
+//	{
+//		beeManager->SpawnDrone(spawnLocation, parentHive);
+//		if (i % 2 == 0)
+//		{
+//			beeManager->SpawnGuard(spawnLocation, parentHive);
+//		}
+//	}
 
 	deltaClock.restart();
 

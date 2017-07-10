@@ -13,7 +13,7 @@ Hive::Hive(const sf::Vector2f& position) :
 	mGenerator = std::default_random_engine(device());
 	mFoodSourceData.clear();
 	mBody.setPosition(mPosition);
-	mBody.setOutlineThickness(5);
+	mBody.setOutlineThickness(1);
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setFillColor(mFillColor);
 
