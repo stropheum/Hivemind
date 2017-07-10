@@ -1,0 +1,40 @@
+{
+	"Hives": 
+	[
+		{
+			"position": {"x": 700, "y": 350},
+			"Onlookers": 50,
+			"Employees": 10,
+			"Drones": 5,
+			"Guards": 5
+		}
+	],
+	"FoodSources":
+	[
+		{"position": {"x": -35, "y": -75}},
+		{"position": {"x": 175, "y": -75}},
+		{"position": {"x": 385, "y": -75}},
+		{"position": {"x": 595, "y": -75}},
+		{"position": {"x": 805, "y": -75}},
+		{"position": {"x": 1015, "y": -75}},
+		{"position": {"x": 1225, "y": -75}},
+		{"position": {"x": 1435, "y": -75}},
+
+		{"position": {"x": -35, "y": 765}},
+		{"position": {"x": 175, "y": 765}},
+		{"position": {"x": 385, "y": 765}},
+		{"position": {"x": 595, "y": 765}},
+		{"position": {"x": 805, "y": 765}},
+		{"position": {"x": 1015, "y": 765}},
+		{"position": {"x": 1225, "y": 765}},
+		{"position": {"x": 1435, "y": 765}},
+
+		{"position": {"x": -35, "y": 135}},
+		{"position": {"x": -35, "y": 345}},
+		{"position": {"x": -35, "y": 555}},
+
+		{"position": {"x": 1435, "y": 135}},
+		{"position": {"x": 1435, "y": 345}},
+		{"position": {"x": 1435, "y": 555}}
+	]
+}

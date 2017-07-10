@@ -29,9 +29,10 @@ HiveManager::~HiveManager()
 	mHives.clear();
 }
 
-void HiveManager::SpawnHive(const sf::Vector2f& position)
+Hive& HiveManager::SpawnHive(const sf::Vector2f& position)
 {
 	mHives.push_back(new Hive(position));
+	return (*mHives.back());
 }
 
 void HiveManager::Update(sf::RenderWindow& window, const float& deltaTime)

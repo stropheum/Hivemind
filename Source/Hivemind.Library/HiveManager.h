@@ -17,7 +17,7 @@ public:
 
 	/// Spawns a hive and adds it to the list of existing hives
 	/// @Param position: The position of the hive in the world
-	void SpawnHive(const sf::Vector2f& position);
+	Hive& SpawnHive(const sf::Vector2f& position);
 
 	/// Disseminates update calls to all existing hives
 	/// @Param window: The screen which all hives are rendered to

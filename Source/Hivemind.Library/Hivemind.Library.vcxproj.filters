@@ -64,6 +64,9 @@
     <Filter Include="Tools\Perlin Noise">
       <UniqueIdentifier>{ba8f67e9-ce7b-469f-84c0-9f0b8b744ff0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools\World Generator">
+      <UniqueIdentifier>{602d3496-d628-46ae-bdf4-1adf07a9ef30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -114,6 +117,7 @@
     <ClCompile Include="PerlinNoise.cpp">
       <Filter>Tools\Perlin Noise</Filter>
     </ClCompile>
+    <ClCompile Include="WorldGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -164,5 +168,9 @@
     <ClInclude Include="PerlinNoise.h">
       <Filter>Tools\Perlin Noise</Filter>
     </ClInclude>
+    <ClInclude Include="WorldGenerator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

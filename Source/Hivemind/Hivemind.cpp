@@ -7,14 +7,16 @@
 #include "HiveManager.h"
 #include "Hive.h"
 #include "FlowField.h"
+#include "WorldGenerator.h"
 
 
 using namespace std;
 using namespace std::chrono;
 
 const float FRAME_INTERVAL = 1.0f / 120.0f;
-const float CAMERA_SPEED = 5.0f;
+const float CAMERA_SPEED = 350.0f;
 sf::Clock deltaClock;
+sf::Clock uiDeltaClock;
 
 string computeFrameRate();
 
@@ -33,7 +35,8 @@ int main(int argc, char* argv[])
 	contextSettings.antialiasingLevel = 8;
 
 	sf::View view(sf::FloatRect(0, 0, 1600, 900));
-	view.zoom(1.25f);
+	float scaleFactor = 1.25f;
+	view.zoom(scaleFactor);
 	sf::Vector2f cameraMovement(0, 0);
 
 	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Default);
@@ -49,63 +52,17 @@ int main(int argc, char* argv[])
 	fpsMeter.setCharacterSize(16);
 	fpsMeter.setPosition(0, 0);
 	fpsMeter.setFillColor(sf::Color(200, 200, 200));
+	
+	auto beeManager = BeeManager::GetInstance();
+	auto hiveManager = HiveManager::GetInstance();
+	auto foodSourceManager = FoodSourceManager::GetInstance();
+
+	string worldConfig = argc >= 2 ? argv[1] : "default_world.json";
+	WorldGenerator::GetInstance()->Generate(worldConfig);
 
 	bool running = false;
-	const int beeRows = 10;
-	const int beeCols = 10;
-	const int horizontalSpacing = window.getSize().x / beeCols;
-	const int verticalSpacing = window.getSize().y / beeRows;
-
-	HiveManager* hiveManager = HiveManager::GetInstance();
-	BeeManager* beeManager = BeeManager::GetInstance();
-	FoodSourceManager* foodSourceManager = FoodSourceManager::GetInstance();
-
-	auto windowSize = window.getSize();
-	hiveManager->SpawnHive(sf::Vector2f(float(windowSize.x / 2) - 100, float(windowSize.y / 2) - 100));
-
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(100.0f, 100));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, 100.0f));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(100.0f, windowSize.y - 300.0f));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x - 300.0f, windowSize.y - 300.0f));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 100, windowSize.y / 4.0f - 250));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 100, windowSize.y / 2.0f + windowSize.y / 4.0f +50));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 400, windowSize.y / 4.0f - 250));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f - 400, windowSize.y / 2.0f + windowSize.y / 4.0f + 50));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f + 200, windowSize.y / 4.0f - 250));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2.0f + 200, windowSize.y / 2.0f + windowSize.y / 4.0f + 50));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 4.0f - 400, windowSize.y / 2.0f - 100));
-	foodSourceManager->SpawnFoodSource(sf::Vector2f(windowSize.x / 2 + windowSize.x / 4.0f + 200, windowSize.y / 2.0f - 100));
-
-	for (int i = 0; i < beeRows; i++)
-	{
-		for (int j = 0; j < beeCols; j++)
-		{	// Distribute bees evenly across the screen
-			beeManager->SpawnOnlooker(sf::Vector2f(float(horizontalSpacing / 2) + horizontalSpacing * j, float(verticalSpacing / 2) + verticalSpacing * i), *hiveManager->GetHive(0));
-		}
-	}
-
-	int employeeCount = static_cast<int>(foodSourceManager->GetFoodSourceCount() / 2);
-	auto spawnLocation = hiveManager->GetHive(0)->GetCenterTarget();
-	auto& parentHive = *hiveManager->GetHive(0);
-	for (int i = 0; i < employeeCount; i++)
-	{	// Spawn exactly half as many employeed bees as existing food sources
-		beeManager->SpawnEmployee(spawnLocation, parentHive);
-	}
-
-	// Spawn one queen for the hive
-	beeManager->SpawnQueen(spawnLocation, parentHive);
-
-	// Spawn some workers and guards as some percentage of active onlookers, just cause
-	for (int i = 0; i < (beeRows * beeCols) / 10.0f; i++)
-	{
-		beeManager->SpawnDrone(spawnLocation, parentHive);
-		if (i % 2 == 0)
-		{
-			beeManager->SpawnGuard(spawnLocation, parentHive);
-		}
-	}
-
 	deltaClock.restart();
+	uiDeltaClock.restart();
 
 	while (window.isOpen())
 	{
@@ -157,8 +114,6 @@ int main(int argc, char* argv[])
 					cameraMovement = sf::Vector2f(0, 0);
 				}
 
-				view.move(cameraMovement);
-
 				fpsMeter.setPosition(
 					sf::Vector2f(view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2));
 				window.setView(view);
@@ -186,7 +141,7 @@ int main(int argc, char* argv[])
 
 			if (event.type == sf::Event::MouseWheelScrolled)
 			{
-				auto scaleFactor =  1.0f - (2 * event.mouseWheelScroll.delta / 100.0f);
+				scaleFactor = 1.0f - (2 * event.mouseWheelScroll.delta / 100.0f);
 				view.zoom(scaleFactor);
 				window.setView(view);
 				fpsMeter.scale(scaleFactor, scaleFactor);
@@ -206,8 +161,11 @@ int main(int argc, char* argv[])
 			auto deltaTime = deltaClock.restart().asSeconds();
 			hiveManager->Update(window, deltaTime);
 			beeManager->Update(window, deltaTime);
-			foodSourceManager->Update(window, deltaTime);
+			foodSourceManager->Update(window, deltaTime); 
 		}
+
+		auto uiDeltaTime = uiDeltaClock.restart().asSeconds();
+		view.move(cameraMovement * scaleFactor * uiDeltaTime);
 
 		// Handle rendering
 		window.clear(sf::Color(32, 32, 32));

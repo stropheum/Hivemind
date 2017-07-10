@@ -15,6 +15,8 @@
 #include <iostream>
 #include <math.h>
 #include <sstream>
+#include <fstream>
+#include <rapidjson/document.h>
 
 
 ///////////////////////////

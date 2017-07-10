@@ -53,7 +53,7 @@ void EmployedBee::Update(sf::RenderWindow& window, const float& deltaTime)
 	}
 
 	stringstream ss;
-	ss << "Food: " << mFoodAmount;
+	ss << static_cast<int>(mVelocity.x) << ", " << static_cast<int>(mVelocity.y);
 	mText.setString(ss.str());
 	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
 }
@@ -69,6 +69,10 @@ void EmployedBee::Render(sf::RenderWindow& window) const
 	if (mPairedFoodSource != nullptr && mState != State::Scouting)
 	{
 		window.draw(mLineToFoodSource);
+	}
+	if (mState == State::Scouting)
+	{
+		window.draw(mText);
 	}
 }
 
@@ -95,12 +99,19 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 
 	auto facePosition = mFace.getPosition();
 
-	// Onlookers do not scout. Should never meet this condition
 	auto rotationRadians = mFlowField.RadianValueAtPosition(mPosition);
-	sf::Vector2f newPosition = sf::Vector2f(
-		mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
-		mPosition.y + sin(rotationRadians) * mSpeed * deltaTime
-	);
+	
+	auto magnitude = sqrt(mVelocity.x * mVelocity.x + mVelocity.y + mVelocity.y);
+	
+	mVelocity.x += cos(rotationRadians);
+	mVelocity.y += sin(rotationRadians);
+	if (magnitude > mSpeed)
+	{
+		mVelocity.x -= 2 * cos(rotationRadians);
+		mVelocity.y -= 2 * sin(rotationRadians);
+	}
+
+	sf::Vector2f newPosition = mPosition + (mVelocity * 0.25f * deltaTime);
 
 	auto foodSourceManager = FoodSourceManager::GetInstance();
 	for (auto iter = foodSourceManager->Begin(); iter != foodSourceManager->End(); ++iter)
