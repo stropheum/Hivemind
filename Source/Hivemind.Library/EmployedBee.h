@@ -81,5 +81,6 @@ private:
 	sf::VertexArray mLineToFoodSource;
 	std::pair<float, float> mFoodSourceData;
 	bool mAbandoningFoodSource;
+	sf::Vector2f mVelocity;
 };
 

@@ -3,40 +3,38 @@
 	[
 		{
 			"position": {"x": 700, "y": 350},
-			"Onlookers": 100,
-			"Employees": 5,
-			"Drones": 25,
+			"Onlookers": 50,
+			"Employees": 10,
+			"Drones": 5,
 			"Guards": 5
 		}
 	],
 	"FoodSources":
 	[
-		{"position": {"x": 0, "y": -50}},
-		{"position": {"x": 200, "y": -50}},
-		{"position": {"x": 400, "y": -50}},
-		{"position": {"x": 600, "y": -50}},
-		{"position": {"x": 800, "y": -50}},
-		{"position": {"x": 1000, "y": -50}},
-		{"position": {"x": 1200, "y": -50}},
-		{"position": {"x": 1400, "y": -50}},
+		{"position": {"x": -35, "y": -75}},
+		{"position": {"x": 175, "y": -75}},
+		{"position": {"x": 385, "y": -75}},
+		{"position": {"x": 595, "y": -75}},
+		{"position": {"x": 805, "y": -75}},
+		{"position": {"x": 1015, "y": -75}},
+		{"position": {"x": 1225, "y": -75}},
+		{"position": {"x": 1435, "y": -75}},
 
-		{"position": {"x": 0, "y": 750}},
-		{"position": {"x": 200, "y": 750}},
-		{"position": {"x": 400, "y": 750}},
-		{"position": {"x": 600, "y": 750}},
-		{"position": {"x": 800, "y": 750}},
-		{"position": {"x": 1000, "y": 750}},
-		{"position": {"x": 1200, "y": 750}},
-		{"position": {"x": 1400, "y": 750}},
+		{"position": {"x": -35, "y": 765}},
+		{"position": {"x": 175, "y": 765}},
+		{"position": {"x": 385, "y": 765}},
+		{"position": {"x": 595, "y": 765}},
+		{"position": {"x": 805, "y": 765}},
+		{"position": {"x": 1015, "y": 765}},
+		{"position": {"x": 1225, "y": 765}},
+		{"position": {"x": 1435, "y": 765}},
 
-		{"position": {"x": 0, "y": 150}},
-		{"position": {"x": 0, "y": 350}},
-		{"position": {"x": 0, "y": 550}},
-		{"position": {"x": 0, "y": 750}},
+		{"position": {"x": -35, "y": 135}},
+		{"position": {"x": -35, "y": 345}},
+		{"position": {"x": -35, "y": 555}},
 
-		{"position": {"x": 1400, "y": 150}},
-		{"position": {"x": 1400, "y": 350}},
-		{"position": {"x": 1400, "y": 550}},
-		{"position": {"x": 1400, "y": 750}}
+		{"position": {"x": 1435, "y": 135}},
+		{"position": {"x": 1435, "y": 345}},
+		{"position": {"x": 1435, "y": 555}}
 	]
 }

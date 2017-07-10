@@ -95,12 +95,28 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 
 	auto facePosition = mFace.getPosition();
 
-	// Onlookers do not scout. Should never meet this condition
 	auto rotationRadians = mFlowField.RadianValueAtPosition(mPosition);
-	sf::Vector2f newPosition = sf::Vector2f(
-		mPosition.x + cos(rotationRadians) * mSpeed * deltaTime,
-		mPosition.y + sin(rotationRadians) * mSpeed * deltaTime
-	);
+	
+	mVelocity.x += cos(rotationRadians) * deltaTime * 0.5f;
+	if (mVelocity.x < -100.0f)
+	{
+		mVelocity.x = -100.0f;
+	}
+	if (mVelocity.x > 100.0f)
+	{
+		mVelocity.x = 100.0f;
+	}
+	mVelocity.y += sin(rotationRadians) * deltaTime * 0.5f;
+	if (mVelocity.y < -100.0f)
+	{
+		mVelocity.y = -100.0f;
+	}
+	if (mVelocity.y > 100.0f)
+	{
+		mVelocity.y = 100.0f;
+	}
+
+	sf::Vector2f newPosition = mPosition + mVelocity;
 
 	auto foodSourceManager = FoodSourceManager::GetInstance();
 	for (auto iter = foodSourceManager->Begin(); iter != foodSourceManager->End(); ++iter)
