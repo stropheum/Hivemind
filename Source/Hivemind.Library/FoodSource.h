@@ -41,6 +41,8 @@ public:
 	/// @Return: True if the food source is viable (current food > 0.0f)
 	bool IsViable() const;
 
+	static float DetectionRadius;
+
 #pragma endregion 
 
 #pragma region Public API

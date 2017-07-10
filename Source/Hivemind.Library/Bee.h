@@ -21,7 +21,7 @@ public:
 	};
 
 	const static float STANDARD_BEE_SPEED;
-	const static float BODY_RADIUS;
+	const static float BodyRadius;
 	const static float TARGET_RADIUS;
 	const static float STANDARD_HARVESTING_DURATION;
 	const static sf::Color NORMAL_COLOR;
@@ -77,6 +77,11 @@ public:
 	/// @Param foodSource: The food source being checked
 	/// @Return: True if the bee is within the bounds of the food source. False otherwise
 	bool CollidingWithFoodSource(const class FoodSource& foodSource) const;
+
+	/// Determines if the bee is close enough to detect the specified food source
+	/// @Param foodSource; The food source being checked
+	/// @return: True if the bee is within the detectable range of the food source. False otherwise
+	bool DetectingFoodSource(const class FoodSource& foodSource) const;
 
 	/// Determines if the bee is colliding with the specified hive
 	/// @Param hive: The hive being checked

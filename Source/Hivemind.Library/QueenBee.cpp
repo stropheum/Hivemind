@@ -43,7 +43,7 @@ void QueenBee::Update(sf::RenderWindow& window, const float& deltaTime)
 
 	DetectStructureCollisions();
 	mPosition = newPosition;
-	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
+	mBody.setPosition(sf::Vector2f(mPosition.x - BodyRadius, mPosition.y - BodyRadius));
 	mFace.setPosition(mPosition.x, mPosition.y);
 	mFace.setRotation(rotationAngle);
 }

@@ -47,9 +47,9 @@ void EmployedBee::Update(sf::RenderWindow& window, const float& deltaTime)
 	if (mPairedFoodSource != nullptr)
 	{
 		mLineToFoodSource[0].position = mPosition;
-		mLineToFoodSource[0].color = sf::Color::Red;
+		mLineToFoodSource[0].color = sf::Color(255, 0, 0, 64);
 		mLineToFoodSource[1].position = mPairedFoodSource->GetCenterTarget();
-		mLineToFoodSource[1].color = sf::Color::Red;
+		mLineToFoodSource[1].color = sf::Color(255, 0, 0, 64);
 	}
 
 	stringstream ss;
@@ -116,7 +116,7 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 	auto foodSourceManager = FoodSourceManager::GetInstance();
 	for (auto iter = foodSourceManager->Begin(); iter != foodSourceManager->End(); ++iter)
 	{
-		if (CollidingWithFoodSource(*(*iter)) && !(*iter)->PairedWithEmployee())
+		if (DetectingFoodSource(*(*iter)) && !(*iter)->PairedWithEmployee())
 		{
 			mPairedFoodSource = (*iter);
 			mTargetFoodSource = (*iter);
@@ -287,7 +287,7 @@ void EmployedBee::UpdatePosition(const sf::Vector2f& position, const float& rota
 {
 	DetectStructureCollisions();
 	mPosition = position;
-	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
+	mBody.setPosition(sf::Vector2f(mPosition.x - BodyRadius, mPosition.y - BodyRadius));
 	mFace.setPosition(mPosition.x, mPosition.y);
 	auto rotationAngle = rotation * (180.0f / PI);
 	mFace.setRotation(rotationAngle);

@@ -4,6 +4,8 @@
 
 using namespace std;
 
+float FoodSource::DetectionRadius = 400.0f;
+
 FoodSource::FoodSource(const sf::Vector2f& position) :
 	Entity(position, sf::Color::White, sf::Color(32, 128, 32)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
 	mFoodAmount(1000.0f), mFont(), mText(), mPairedWithEmployee(false)

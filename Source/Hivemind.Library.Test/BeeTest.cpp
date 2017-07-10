@@ -100,13 +100,13 @@ namespace HivemindLibraryTest
 			Assert::IsTrue(bee.CollidingWithFoodSource(foodSource), Message["Collision"]);
 
 			// Barely touching origin
-			bee.SetPosition(sf::Vector2f(0 - (bee.BODY_RADIUS - 1), 0 - (bee.BODY_RADIUS - 1)));
+			bee.SetPosition(sf::Vector2f(0 - (bee.BodyRadius - 1), 0 - (bee.BodyRadius - 1)));
 			Assert::IsTrue(bee.CollidingWithFoodSource(foodSource), Message["Collision"]);
 
 			// Barely touching edge corner
 			auto bottomRight = foodSource.GetDimensions();
-			bottomRight.x += (bee.BODY_RADIUS - 1);
-			bottomRight.y += (bee.BODY_RADIUS - 1);
+			bottomRight.x += (bee.BodyRadius - 1);
+			bottomRight.y += (bee.BodyRadius - 1);
 			bee.SetPosition(bottomRight);
 			Assert::IsTrue(bee.CollidingWithFoodSource(foodSource), Message["Collision"]);
 
@@ -136,13 +136,13 @@ namespace HivemindLibraryTest
 			Assert::IsTrue(bee.CollidingWithHive(hive), Message["Collision"]);
 
 			// Barely touching origin
-			bee.SetPosition(sf::Vector2f(0 - (bee.BODY_RADIUS - 1), 0 - (bee.BODY_RADIUS - 1)));
+			bee.SetPosition(sf::Vector2f(0 - (bee.BodyRadius - 1), 0 - (bee.BodyRadius - 1)));
 			Assert::IsTrue(bee.CollidingWithHive(hive), Message["Collision"]);
 
 			// Barely touching edge corner
 			auto bottomRight = hive.GetDimensions();
-			bottomRight.x += (bee.BODY_RADIUS - 1);
-			bottomRight.y += (bee.BODY_RADIUS - 1);
+			bottomRight.x += (bee.BodyRadius - 1);
+			bottomRight.y += (bee.BodyRadius - 1);
 			bee.SetPosition(bottomRight);
 			Assert::IsTrue(bee.CollidingWithHive(hive), Message["Collision"]);
 

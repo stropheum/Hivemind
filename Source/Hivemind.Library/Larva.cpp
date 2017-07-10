@@ -8,7 +8,7 @@ Larva::Larva(const sf::Vector2f& position, Hive& hive, const LarvaType& larvaTyp
 {
 	mFillColor = sf::Color::Blue;
 	mFace.setSize(sf::Vector2f(0, 0));
-	mBody.setRadius(BODY_RADIUS / 3.0f);
+	mBody.setRadius(BodyRadius / 3.0f);
 }
 
 void Larva::Update(sf::RenderWindow& window, const float& deltaTime)

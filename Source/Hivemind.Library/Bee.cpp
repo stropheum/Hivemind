@@ -9,7 +9,7 @@
 using namespace std;
 
 const float Bee::STANDARD_BEE_SPEED = 200.0f;
-const float Bee::BODY_RADIUS = 12.0f;
+const float Bee::BodyRadius = 12.0f;
 const float Bee::TARGET_RADIUS = 5.0f;
 const float Bee::STANDARD_HARVESTING_DURATION = 5.0f;
 const sf::Color Bee::NORMAL_COLOR = sf::Color(192, 192, 192);
@@ -17,8 +17,8 @@ const sf::Color Bee::ALERT_COLOR = sf::Color::Red;
 const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
 
 Bee::Bee(const sf::Vector2f& position, Hive& hive) :
-	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mParentHive(hive), mGenerator(), mBody(BODY_RADIUS),
-	mFace(sf::Vector2f(BODY_RADIUS, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED), mFoodAmount(0.0f),
+	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mParentHive(hive), mGenerator(), mBody(BodyRadius),
+	mFace(sf::Vector2f(BodyRadius, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED), mFoodAmount(0.0f),
 	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mTargeting(false), mState(State::SeekingTarget), mTargetFoodSource(nullptr)
 {
 	std::random_device device;
@@ -32,8 +32,8 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setOutlineThickness(3);
 	mFace.setFillColor(sf::Color::White);
-	mBody.setPosition(sf::Vector2f(mPosition.x - BODY_RADIUS, mPosition.y - BODY_RADIUS));
-	mFace.setPosition(mBody.getPosition().x, mBody.getPosition().y + BODY_RADIUS);
+	mBody.setPosition(sf::Vector2f(mPosition.x - BodyRadius, mPosition.y - BodyRadius));
+	mFace.setPosition(mBody.getPosition().x, mBody.getPosition().y + BodyRadius);
 
 	if (!mFont.loadFromFile("Hack-Regular.ttf"))
 	{
@@ -83,10 +83,16 @@ bool Bee::CollidingWithFoodSource(const FoodSource& foodSource) const
 	auto topWall = foodPosition.y;
 	auto bottomWall = foodPosition.y + foodDimensions.y;
 	return
-		(mPosition.x + BODY_RADIUS > leftWall) &&
-		(mPosition.x - BODY_RADIUS < rightWall) &&
-		(mPosition.y + BODY_RADIUS > topWall) &&
-		(mPosition.y - BODY_RADIUS < bottomWall);
+		(mPosition.x + BodyRadius > leftWall) &&
+		(mPosition.x - BodyRadius < rightWall) &&
+		(mPosition.y + BodyRadius > topWall) &&
+		(mPosition.y - BodyRadius < bottomWall);
+}
+
+bool Bee::DetectingFoodSource(const FoodSource& foodSource) const
+{
+	auto distance = DistanceBetween(mPosition, foodSource.GetCenterTarget()) - Bee::BodyRadius;
+	return distance < FoodSource::DetectionRadius;
 }
 
 bool Bee::CollidingWithHive(const Hive& hive) const
@@ -98,10 +104,10 @@ bool Bee::CollidingWithHive(const Hive& hive) const
 	auto topWall = foodPosition.y;
 	auto bottomWall = foodPosition.y + foodDimensions.y;
 	return
-		(mPosition.x + BODY_RADIUS > leftWall) &&
-		(mPosition.x - BODY_RADIUS < rightWall) &&
-		(mPosition.y + BODY_RADIUS > topWall) &&
-		(mPosition.y - BODY_RADIUS < bottomWall);
+		(mPosition.x + BodyRadius > leftWall) &&
+		(mPosition.x - BodyRadius < rightWall) &&
+		(mPosition.y + BodyRadius > topWall) &&
+		(mPosition.y - BodyRadius < bottomWall);
 }
 
 void Bee::SetColor(const sf::Color& color)
