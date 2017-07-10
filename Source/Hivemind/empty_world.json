@@ -1,0 +1,12 @@
+{
+	"Hives": 
+	[
+		{
+			"position": {"x": 700, "y": 350},
+			"Onlookers": 50,
+			"Employees": 10,
+			"Drones": 5,
+			"Guards": 5
+		}
+	]
+}

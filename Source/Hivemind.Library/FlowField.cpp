@@ -67,9 +67,9 @@ void FlowField::GenerateNewField()
 {
 	PerlinNoise noise;
 	auto initialNoiseMap = noise.GenerateWhiteNoise(mFieldDimensions);
-	auto perlinNoise = noise.GenerateSmoothNoise(initialNoiseMap, mFieldDimensions, mOctaveCount);
-//	int tileSize = 50;
+	auto perlinNoise = noise.GeneratePerlinNoise(initialNoiseMap, mFieldDimensions, mOctaveCount);
 
+//	int tileSize = 10;
 //	for (int i = 0; i < mFieldDimensions.x / tileSize; i++)
 //	{
 //		for (int j = 0; j < mFieldDimensions.y / tileSize; j++)
@@ -108,7 +108,7 @@ void FlowField::GenerateNewField()
 	{
 		for (int j = 0; j < mFieldDimensions.y; j++)
 		{
-			mImage.setPixel(j, i, sf::Color(mValues[i][j], mValues[i][j], mValues[i][j], 128));
+			mImage.setPixel(i, j, sf::Color(0, mValues[i][j], mValues[i][j], 128));
 		}
 	}
 
