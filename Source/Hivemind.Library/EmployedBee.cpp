@@ -166,7 +166,7 @@ void EmployedBee::UpdateHarvestingFood(sf::RenderWindow& window, const float& de
 
 	if (mHarvestingClock.getElapsedTime().asSeconds() >= mHarvestingDuration)
 	{
-		mFoodAmount += mTargetFoodSource->TakeFood(EXTRACTION_YIELD);
+		HarvestFood(mTargetFoodSource->TakeFood(EXTRACTION_YIELD));
 		if (mTargetFoodSource->GetFoodAmount() == 0.0f)
 		{	// We just learned that the food source is no longer viable
 			mAbandoningFoodSource = true;

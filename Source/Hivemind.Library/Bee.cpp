@@ -5,8 +5,6 @@
 #include "FoodSourceManager.h"
 #include "Hive.h"
 #include "HiveManager.h"
-#include "HiveManager.h"
-#include "FoodSourceManager.h"
 
 using namespace std;
 
@@ -23,7 +21,6 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 	mFace(sf::Vector2f(BODY_RADIUS, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED), mFoodAmount(0.0f),
 	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mTargeting(false), mState(State::SeekingTarget), mTargetFoodSource(nullptr)
 {
-	//	mGenerator.seed(static_cast<long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
 
@@ -53,6 +50,10 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
 }
 
+Bee::~Bee()
+{
+}
+
 void Bee::Render(sf::RenderWindow& window) const
 {
 	window.draw(mBody);
@@ -66,6 +67,11 @@ void Bee::Render(sf::RenderWindow& window) const
 bool Bee::HasTarget() const
 {
 	return mTargeting;
+}
+
+float Bee::GetFoodAmount() const
+{
+	return mFoodAmount;
 }
 
 bool Bee::CollidingWithFoodSource(const FoodSource& foodSource) const
@@ -193,6 +199,11 @@ void Bee::DetectStructureCollisions()
 	SetColor(colliding ? Bee::ALERT_COLOR : Bee::NORMAL_COLOR);
 }
 
+void Bee::HarvestFood(const float& foodAmount)
+{
+	mFoodAmount += foodAmount;
+}
+
 void Bee::DepositFood(float foodAmount)
 {
 	if (foodAmount > mFoodAmount)
@@ -200,7 +211,7 @@ void Bee::DepositFood(float foodAmount)
 		foodAmount = mFoodAmount;
 	}
 	mParentHive.DepositFood(foodAmount);
-	mFoodAmount = 0;
+	mFoodAmount -= foodAmount;
 }
 
 void Bee::SetState(const State& state)

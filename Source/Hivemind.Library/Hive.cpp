@@ -227,3 +227,8 @@ float Hive::ComputeFitness(const std::pair<float, float>& foodData,
 	}
 	return result;
 }
+
+float Hive::GetFoodAmount() const
+{
+	return mFoodAmount;
+}

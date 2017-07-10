@@ -30,6 +30,10 @@ public:
 	/// @Return: A vector representing the width and height of the food source
 	const sf::Vector2f& GetDimensions() const;
 
+	/// Accessor method for the food amount stored in the hive
+	/// @Return: A float representing the amount of food in the hive
+	float GetFoodAmount() const;
+
 	/// Adds food to the hive
 	/// @Param foodAmount: Amount of food being added to the hive
 	void DepositFood(const float& foodAmount);

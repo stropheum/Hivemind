@@ -36,7 +36,7 @@ public:
 	explicit Bee(const sf::Vector2f& position, Hive& hive);
 
 	/// Default destructor
-	virtual ~Bee() = default;
+	virtual ~Bee();
 
 #pragma endregion
 
@@ -102,6 +102,14 @@ public:
 	/// Determines if the bee currently has an active target
 	/// @Return: True if the bee has a target. False otherwise
 	bool HasTarget() const;
+
+	/// Accessor method for the bee's current food amount
+	/// @Return: A float representing how much food the bee currently has
+	float GetFoodAmount() const;
+
+	/// Adds food to the bee's body
+	/// @Param foodAmount: The amount of food being added to the bee
+	void HarvestFood(const float& foodAmount);
 
 	/// Deposits food from the bee's body to its parent hive
 	/// @Param foodAmount; The amount of food being deposited into the hive

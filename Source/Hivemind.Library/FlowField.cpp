@@ -86,7 +86,15 @@ void FlowField::GenerateNewField()
 		}
 	}
 
+	for (int i = 0; i < mFieldDimensions.x; i++)
+	{
+		delete[] initialNoiseMap[i];
+	}
 	delete[] initialNoiseMap;
+	for (int i = 0; i < mFieldDimensions.x; i++)
+	{
+		delete[] perlinNoise[i];
+	}
 	delete[] perlinNoise;
 }
 
