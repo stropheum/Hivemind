@@ -24,6 +24,7 @@
 /////////////////////////
 #include "BeeManager.h"
 #include "FoodSourceManager.h"
+#include "FontManager.h"
 #include "HiveManager.h"
 #include "Hive.h"
 #include "FoodSource.h"

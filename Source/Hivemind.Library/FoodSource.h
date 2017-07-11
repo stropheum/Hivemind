@@ -91,7 +91,6 @@ private:
 	sf::Vector2f mDimensions;
 	sf::RectangleShape mBody;
 	float mFoodAmount;
-	sf::Font mFont;
 	sf::Text mText;
 	bool mPairedWithEmployee;
 };

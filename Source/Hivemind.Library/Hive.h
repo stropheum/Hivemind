@@ -87,7 +87,6 @@ private:
 	sf::Vector2f mDimensions;
 	sf::RectangleShape mBody;
 	float mFoodAmount;
-	sf::Font mFont;
 	sf::Text mText;
 	std::vector<OnlookerBee*> mIdleBees;
 	std::map<class FoodSource* const, std::pair<float, float>> mFoodSourceData;

@@ -7,7 +7,7 @@ using namespace std;
 
 Hive::Hive(const sf::Vector2f& position) :
 	Entity(position, sf::Color::White, sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
-	mFoodAmount(0.0f), mFont(), mText(), mGenerator(), mWaggleDanceClock(), mWaggleDanceWaitPeriod(Bee::STANDARD_HARVESTING_DURATION), mWaggleDanceInProgress(false)
+	mFoodAmount(0.0f), mText(), mGenerator(), mWaggleDanceClock(), mWaggleDanceWaitPeriod(Bee::STANDARD_HARVESTING_DURATION), mWaggleDanceInProgress(false)
 {
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
@@ -17,13 +17,8 @@ Hive::Hive(const sf::Vector2f& position) :
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setFillColor(mFillColor);
 
-	if (!mFont.loadFromFile("Hack-Regular.ttf"))
-	{
-		throw exception("Error loading font from file");
-	}
-
 	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
-	mText.setFont(mFont);
+	mText.setFont(FontManager::GetInstance()->Hack());
 	mText.setCharacterSize(16);
 	mText.setOutlineColor(sf::Color::White);
 	mText.setFillColor(sf::Color::White);

@@ -146,7 +146,6 @@ protected:
 	sf::RectangleShape mFace;
 	sf::Vector2f mTarget;
 	sf::Text mText;
-	sf::Font mFont;
 	sf::Clock mHarvestingClock;
 	float mSpeed;
 	float mFoodAmount;

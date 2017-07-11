@@ -67,6 +67,9 @@
     <Filter Include="Tools\World Generator">
       <UniqueIdentifier>{602d3496-d628-46ae-bdf4-1adf07a9ef30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Managers\FontManager">
+      <UniqueIdentifier>{8c8ea85f-ec1f-4b5b-9e32-e858c872bd50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -120,6 +123,9 @@
     <ClCompile Include="WorldGenerator.cpp">
       <Filter>Tools\World Generator</Filter>
     </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Managers\FontManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -172,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="WorldGenerator.h">
       <Filter>Tools\World Generator</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>Managers\FontManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -35,12 +35,7 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 	mBody.setPosition(sf::Vector2f(mPosition.x - BodyRadius, mPosition.y - BodyRadius));
 	mFace.setPosition(mBody.getPosition().x, mBody.getPosition().y + BodyRadius);
 
-	if (!mFont.loadFromFile("Hack-Regular.ttf"))
-	{
-		throw exception("Error loading font from file");
-	}
-
-	mText.setFont(mFont);
+	mText.setFont(FontManager::GetInstance()->Hack());
 	mText.setCharacterSize(16);
 	mText.setOutlineColor(sf::Color::White);
 	mText.setFillColor(sf::Color::White);
@@ -61,7 +56,7 @@ void Bee::Render(sf::RenderWindow& window) const
 	{
 		window.draw(mFace);
 	}
-	//	window.draw(mText);
+		window.draw(mText);
 }
 
 bool Bee::HasTarget() const
