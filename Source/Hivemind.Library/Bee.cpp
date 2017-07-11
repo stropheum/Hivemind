@@ -56,7 +56,6 @@ void Bee::Render(sf::RenderWindow& window) const
 	{
 		window.draw(mFace);
 	}
-		window.draw(mText);
 }
 
 bool Bee::HasTarget() const

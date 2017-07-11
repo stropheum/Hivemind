@@ -8,14 +8,12 @@ float FoodSource::DetectionRadius = 400.0f;
 
 FoodSource::FoodSource(const sf::Vector2f& position) :
 	Entity(position, sf::Color::White, sf::Color(32, 128, 32)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
-	mFoodAmount(1000.0f), mText(), mPairedWithEmployee(false)
+	mFoodAmount(10000.0f), mText(), mPairedWithEmployee(false)
 {
 	mBody.setPosition(mPosition);
 	mBody.setOutlineThickness(-2);
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setFillColor(mFillColor);
-
-//	mFont.loadFromFile("Hack-Regular.ttf");
 
 	mText.setFont(FontManager::GetInstance()->Hack());
 	mText.setCharacterSize(16);

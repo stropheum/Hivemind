@@ -106,15 +106,16 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 	}
 
 	auto rotationRadians = mFlowField.RadianValueAtPosition(mPosition);
-	auto magnitude = sqrt(mVelocity.x * mVelocity.x + mVelocity.y + mVelocity.y);
 	
-	mVelocity.x += cos(rotationRadians);
-	mVelocity.y += sin(rotationRadians);
-	if (magnitude > mSpeed)
-	{
-		mVelocity.x -= 2 * cos(rotationRadians);
-		mVelocity.y -= 2 * sin(rotationRadians);
-	}
+	mVelocity.x += 2 * cos(rotationRadians);
+	mVelocity.y += 2 * sin(rotationRadians);
+
+//	auto magnitude = sqrt(mVelocity.x * mVelocity.x + mVelocity.y + mVelocity.y);
+//	if (magnitude > mSpeed)
+//	{
+//		mVelocity.x -= 2 * cos(rotationRadians);
+//		mVelocity.y -= 2 * sin(rotationRadians);
+//	}
 
 	sf::Vector2f newPosition = mPosition + (mVelocity * deltaTime);
 

@@ -3,7 +3,7 @@
 	[
 		{
 			"position": {"x": 700, "y": 350},
-			"Onlookers": 200,
+			"Onlookers": 100,
 			"Employees": 50,
 			"Drones": 5,
 			"Guards": 5
