@@ -38,5 +38,6 @@ private:
 
 	/// Base-level data object for the world data
 	rapidjson::Document mData;
+	std::default_random_engine mGenerator;
 };
 

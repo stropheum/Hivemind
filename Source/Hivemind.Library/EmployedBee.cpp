@@ -70,10 +70,10 @@ void EmployedBee::Render(sf::RenderWindow& window) const
 	{
 		window.draw(mLineToFoodSource);
 	}
-	if (mState == State::Scouting)
-	{
-		window.draw(mText);
-	}
+//	if (mState == State::Scouting)
+//	{
+//		window.draw(mText);
+//	}
 }
 
 void EmployedBee::ToggleFlowField()
@@ -97,10 +97,13 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 {
 	UNREFERENCED_PARAMETER(window);
 
-	auto facePosition = mFace.getPosition();
+	//TODO: Remove this when metabolism can trigger giving up on scouting. for not. just give up if you go too far
+	if (mPosition.x < -10000 || mPosition.x > 10000 || mPosition.y < -10000 || mPosition.y > 10000)
+	{
+		mState = State::DeliveringFood;
+	}
 
 	auto rotationRadians = mFlowField.RadianValueAtPosition(mPosition);
-	
 	auto magnitude = sqrt(mVelocity.x * mVelocity.x + mVelocity.y + mVelocity.y);
 	
 	mVelocity.x += cos(rotationRadians);
@@ -111,7 +114,7 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 		mVelocity.y -= 2 * sin(rotationRadians);
 	}
 
-	sf::Vector2f newPosition = mPosition + (mVelocity * 0.25f * deltaTime);
+	sf::Vector2f newPosition = mPosition + (mVelocity * deltaTime);
 
 	auto foodSourceManager = FoodSourceManager::GetInstance();
 	for (auto iter = foodSourceManager->Begin(); iter != foodSourceManager->End(); ++iter)

@@ -10,6 +10,8 @@ WorldGenerator* WorldGenerator::sInstance = nullptr;
 WorldGenerator::WorldGenerator():
 	mData()
 {
+	std::random_device device;
+	mGenerator = std::default_random_engine(device());
 }
 
 WorldGenerator* WorldGenerator::GetInstance()
@@ -83,10 +85,27 @@ void WorldGenerator::GenerateFoodSources()
 
 	for (uint32_t i = 0; i < foodSources.Size(); i++)
 	{	// Construct food source data and pass it to the food source manager
-		assert(foodSources[i].HasMember("position"));
-		auto& pos = foodSources[i]["position"];
-		assert(pos.HasMember("x") && pos.HasMember("y"));
-		foodSourceManager->SpawnFoodSource(sf::Vector2f(pos["x"].GetDouble(), pos["y"].GetDouble()));
+		if (foodSources[i].HasMember("position"))
+		{
+			auto& pos = foodSources[i]["position"];
+			assert(pos.HasMember("x") && pos.HasMember("y"));
+			foodSourceManager->SpawnFoodSource(sf::Vector2f(pos["x"].GetDouble(), pos["y"].GetDouble()));
+		}
+
+		else if (foodSources[i].HasMember("random_position"))
+		{
+			auto& pos = foodSources[i]["random_position"];
+			assert(pos.HasMember("lower_bound"));
+			assert(pos.HasMember("upper_bound"));
+
+			auto& lower = pos["lower_bound"];
+			auto& upper = pos["upper_bound"];
+			assert(lower.IsDouble());
+			assert(upper.IsDouble());
+
+			std::uniform_real_distribution<float> distribution(lower.GetDouble(), upper.GetDouble());
+			foodSourceManager->SpawnFoodSource(sf::Vector2f(distribution(mGenerator), distribution(mGenerator)));
+		}
 	}
 }
 
@@ -94,6 +113,8 @@ void WorldGenerator::GenerateBees(const rapidjson::Value& data, Hive& hive)
 {
 	auto beeManager = BeeManager::GetInstance();
 	auto spawnLocation = hive.GetCenterTarget();
+
+	beeManager->SpawnQueen(spawnLocation, hive);
 
 	if (data.HasMember("Onlookers"))
 	{

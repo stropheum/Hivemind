@@ -35,8 +35,8 @@ int main(int argc, char* argv[])
 	contextSettings.antialiasingLevel = 8;
 
 	sf::View view(sf::FloatRect(0, 0, 1600, 900));
-	float scaleFactor = 1.25f;
-	view.zoom(scaleFactor);
+	float totalZoom = 1.25f;
+	view.zoom(totalZoom);
 	sf::Vector2f cameraMovement(0, 0);
 
 	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Default);
@@ -141,7 +141,8 @@ int main(int argc, char* argv[])
 
 			if (event.type == sf::Event::MouseWheelScrolled)
 			{
-				scaleFactor = 1.0f - (2 * event.mouseWheelScroll.delta / 100.0f);
+				float scaleFactor = 1.0f - (2 * event.mouseWheelScroll.delta / 100.0f);
+				totalZoom -= 2 * event.mouseWheelScroll.delta / 100.0f;
 				view.zoom(scaleFactor);
 				window.setView(view);
 				fpsMeter.scale(scaleFactor, scaleFactor);
@@ -165,7 +166,7 @@ int main(int argc, char* argv[])
 		}
 
 		auto uiDeltaTime = uiDeltaClock.restart().asSeconds();
-		view.move(cameraMovement * scaleFactor * uiDeltaTime);
+		view.move(cameraMovement * totalZoom * uiDeltaTime);
 
 		// Handle rendering
 		window.clear(sf::Color(32, 32, 32));

@@ -11,7 +11,7 @@ FoodSource::FoodSource(const sf::Vector2f& position) :
 	mFoodAmount(1000.0f), mFont(), mText(), mPairedWithEmployee(false)
 {
 	mBody.setPosition(mPosition);
-	mBody.setOutlineThickness(2);
+	mBody.setOutlineThickness(-2);
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setFillColor(mFillColor);
 

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-const float Bee::STANDARD_BEE_SPEED = 200.0f;
+const float Bee::STANDARD_BEE_SPEED = 300.0f;
 const float Bee::BodyRadius = 12.0f;
 const float Bee::TARGET_RADIUS = 5.0f;
 const float Bee::STANDARD_HARVESTING_DURATION = 5.0f;
@@ -30,7 +30,7 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 
 	mBody.setFillColor(mFillColor);
 	mBody.setOutlineColor(mOutlineColor);
-	mBody.setOutlineThickness(3);
+	mBody.setOutlineThickness(-2);
 	mFace.setFillColor(sf::Color::White);
 	mBody.setPosition(sf::Vector2f(mPosition.x - BodyRadius, mPosition.y - BodyRadius));
 	mFace.setPosition(mBody.getPosition().x, mBody.getPosition().y + BodyRadius);

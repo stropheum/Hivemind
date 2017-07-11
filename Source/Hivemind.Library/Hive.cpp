@@ -13,7 +13,7 @@ Hive::Hive(const sf::Vector2f& position) :
 	mGenerator = std::default_random_engine(device());
 	mFoodSourceData.clear();
 	mBody.setPosition(mPosition);
-	mBody.setOutlineThickness(2);
+	mBody.setOutlineThickness(-2);
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setFillColor(mFillColor);
 
@@ -147,9 +147,12 @@ void Hive::RemoveFoodSource(FoodSource* const foodSource)
 
 void Hive::TriggerWaggleDance()
 {
-	mWaggleDanceClock.restart();
-	mWaggleDanceInProgress = true;
-	CompleteWaggleDance();
+	if (mFoodSourceData.size() > 2)
+	{
+		mWaggleDanceClock.restart();
+		mWaggleDanceInProgress = true;
+		CompleteWaggleDance();
+	}
 }
 
 void Hive::CompleteWaggleDance()

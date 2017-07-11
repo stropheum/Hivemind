@@ -117,7 +117,9 @@
     <ClCompile Include="PerlinNoise.cpp">
       <Filter>Tools\Perlin Noise</Filter>
     </ClCompile>
-    <ClCompile Include="WorldGenerator.cpp" />
+    <ClCompile Include="WorldGenerator.cpp">
+      <Filter>Tools\World Generator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -168,7 +170,9 @@
     <ClInclude Include="PerlinNoise.h">
       <Filter>Tools\Perlin Noise</Filter>
     </ClInclude>
-    <ClInclude Include="WorldGenerator.h" />
+    <ClInclude Include="WorldGenerator.h">
+      <Filter>Tools\World Generator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
