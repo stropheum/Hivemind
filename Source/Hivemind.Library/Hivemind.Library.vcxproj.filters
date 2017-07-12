@@ -70,6 +70,9 @@
     <Filter Include="Managers\FontManager">
       <UniqueIdentifier>{8c8ea85f-ec1f-4b5b-9e32-e858c872bd50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Managers\FlowFieldManager">
+      <UniqueIdentifier>{07166db7-6173-49ac-8711-2087bcadacd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -126,6 +129,9 @@
     <ClCompile Include="FontManager.cpp">
       <Filter>Managers\FontManager</Filter>
     </ClCompile>
+    <ClCompile Include="FlowFieldManager.cpp">
+      <Filter>Managers\FlowFieldManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -181,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="FontManager.h">
       <Filter>Managers\FontManager</Filter>
+    </ClInclude>
+    <ClInclude Include="FlowFieldManager.h">
+      <Filter>Managers\FlowFieldManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@
 using namespace std;
 
 EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive) :
-	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(position), mDisplayFlowField(false),
+	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(FlowFieldManager::GetInstance()->GetField()), mDisplayFlowField(false),
 	mLineToFoodSource(sf::LineStrip, 2), mFoodSourceData(0.0f, 0.0f), mAbandoningFoodSource(false)
 {
 	mState = State::Scouting;
@@ -83,8 +83,10 @@ void EmployedBee::ToggleFlowField()
 
 void EmployedBee::SetFlowFieldOctaveCount(const std::uint32_t& octaveCount)
 {
+//	mFlowField.SetOctaveCount(octaveCount);
+//	mFlowField.GenerateNewField();
+	mFlowField = FlowFieldManager::GetInstance()->GetField();
 	mFlowField.SetOctaveCount(octaveCount);
-	mFlowField.GenerateNewField();
 }
 
 void EmployedBee::WaggleDance() const
@@ -304,8 +306,8 @@ void EmployedBee::UpdateFlowField(sf::RenderWindow& window, const float& deltaTi
 	auto fieldDimensions = mFlowField.GetDimensions();
 	if (!mFlowField.CollidingWith(mPosition))
 	{	// If we're not colliding with the flow field anymore, reset it on top of us
+		mFlowField = FlowFieldManager::GetInstance()->GetField();
 		mFlowField.SetPosition(sf::Vector2f(mPosition.x - (fieldDimensions.x / 2.0f), mPosition.y - (fieldDimensions.y / 2.0f)));
-		mFlowField.GenerateNewField();
 	}
 	mFlowField.Update(window, deltaTime);
 }

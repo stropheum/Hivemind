@@ -27,6 +27,7 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 	// Randomly offset the bee's speed by a random value
 	uniform_real_distribution<float> distribution(-50.0f, 50.0f);
 	mSpeed += distribution(mGenerator);
+	mHarvestingDuration *= (1 / (mSpeed / STANDARD_BEE_SPEED));
 
 	mBody.setFillColor(mFillColor);
 	mBody.setOutlineColor(mOutlineColor);

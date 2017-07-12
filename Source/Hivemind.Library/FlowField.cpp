@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "FlowField.h"
-#include "Bee.h"
 #include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include "PerlinNoise.h"
@@ -31,9 +30,50 @@ FlowField::~FlowField()
 {
 	for (int i = 0; i < mFieldDimensions.x; i++)
 	{
-		delete[] mValues[i];
+		if (mValues[i] != nullptr)
+		{
+			delete[] mValues[i];
+		}
 	}
-	delete[] mValues;
+	if (mValues != nullptr)
+	{
+		delete[] mValues;
+	}
+}
+
+FlowField::FlowField(const FlowField& rhs):
+	Entity(rhs), mImage(), mSprite(), mTexture(), mOctaveCount(rhs.mOctaveCount)
+{
+	mValues = new sf::Uint8*[mFieldDimensions.x];
+	for (int i = 0; i < mFieldDimensions.x; i++)
+	{
+		mValues[i] = new sf::Uint8[mFieldDimensions.y];
+		for (int j = 0; j < mFieldDimensions.y; j++)
+		{
+			mValues[i][j] = rhs.mValues[i][j];
+		}
+	}
+
+	mImage = rhs.mImage;
+}
+
+FlowField& FlowField::operator=(const FlowField& rhs)
+{
+	mPosition = rhs.mPosition;
+
+	mValues = new sf::Uint8*[mFieldDimensions.x];
+	for (int i = 0; i < mFieldDimensions.x; i++)
+	{
+		mValues[i] = new sf::Uint8[mFieldDimensions.y];
+		for (int j = 0; j < mFieldDimensions.y; j++)
+		{
+			mValues[i][j] = rhs.mValues[i][j];
+		}
+	}
+
+	mImage = rhs.mImage;
+
+	return (*this);
 }
 
 void FlowField::Update(sf::RenderWindow& window, const float& deltaTime)
@@ -68,32 +108,6 @@ void FlowField::GenerateNewField()
 	PerlinNoise noise;
 	auto initialNoiseMap = noise.GenerateWhiteNoise(mFieldDimensions);
 	auto perlinNoise = noise.GeneratePerlinNoise(initialNoiseMap, mFieldDimensions, mOctaveCount);
-
-//	int tileSize = 10;
-//	for (int i = 0; i < mFieldDimensions.x / tileSize; i++)
-//	{
-//		for (int j = 0; j < mFieldDimensions.y / tileSize; j++)
-//		{
-//			float sum = 0;
-//			for (int k = 0; k < tileSize; k++)
-//			{	// Sum values in 10x10 pixel square
-//				for (int l = 0; l < tileSize; l++)
-//				{
-//					sum += perlinNoise[i * tileSize + k][j * tileSize + l];
-//				}
-//			}
-//
-//			float average = sum / tileSize;
-//
-//			for (int k = 0; k < tileSize; k++)
-//			{	// Apply averaged color over those 10x10 pixel cubes
-//				for (int l = 0; l < tileSize; l++)
-//				{
-//					mValues[i * tileSize + k][j * tileSize + l] = static_cast<sf::Uint8>(average * 255.0f);
-//				}
-//			}
-//		}
-//	}
 
 	for (int i = 0; i < mFieldDimensions.x; i++)
 	{

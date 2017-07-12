@@ -8,6 +8,7 @@
 #include "Hive.h"
 #include "FlowField.h"
 #include "WorldGenerator.h"
+#include "FlowFieldManager.h"
 
 
 using namespace std;
@@ -53,6 +54,7 @@ int main(int argc, char* argv[])
 	fpsMeter.setPosition(0, 0);
 	fpsMeter.setFillColor(sf::Color(200, 200, 200));
 	
+	FlowFieldManager::GetInstance();
 	auto beeManager = BeeManager::GetInstance();
 	auto hiveManager = HiveManager::GetInstance();
 	auto foodSourceManager = FoodSourceManager::GetInstance();
@@ -82,12 +84,6 @@ int main(int argc, char* argv[])
 
 			if (event.type == sf::Event::KeyPressed)
 			{
-				if (event.key.code == sf::Keyboard::Space)
-				{
-					running = !running;
-					deltaClock.restart();
-				}
-
 				if (event.key.code == sf::Keyboard::LControl)
 				{
 					beeManager->ToggleEmployeeFlowFields();
@@ -136,6 +132,12 @@ int main(int argc, char* argv[])
 				else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
 				{
 					cameraMovement.y = 0;
+				}
+
+				if (event.key.code == sf::Keyboard::Space)
+				{
+					running = !running;
+					deltaClock.restart();
 				}
 			}
 
