@@ -29,6 +29,7 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 	mSpeed += distribution(mGenerator);
 	mHarvestingDuration *= (1 / (mSpeed / STANDARD_BEE_SPEED));
 
+	mBody.setPointCount(360);
 	mBody.setFillColor(mFillColor);
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setOutlineThickness(-2);
@@ -48,6 +49,24 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 
 Bee::~Bee()
 {
+}
+
+void Bee::Update(sf::RenderWindow& window, const float& deltaTime)
+{
+	UNREFERENCED_PARAMETER(window);
+	UNREFERENCED_PARAMETER(deltaTime);
+
+	if (mCollisionNode != nullptr && !mCollisionNode->ContainsPoint(mPosition))
+	{	// If we haev a collision node and we leave it, invalidate the pointer
+		mCollisionNode->UnregisterBee(this);
+		mCollisionNode = nullptr;
+	}
+
+	if (mCollisionNode == nullptr)
+	{	// If the collision node is invalidated, get a new one and register to it
+		mCollisionNode = CollisionGrid::GetInstance()->CollisionNodeFromPosition(mPosition);
+		mCollisionNode->RegisterBee(this);
+	}
 }
 
 void Bee::Render(sf::RenderWindow& window) const

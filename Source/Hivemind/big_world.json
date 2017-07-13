@@ -2,7 +2,7 @@
 	"Hives": 
 	[
 		{
-			"position": {"x": 700, "y": 350},
+			"position": {"x": 850, "y": 850},
 			"Onlookers": 100,
 			"Employees": 50,
 			"Drones": 5,

@@ -14,7 +14,7 @@ QueenBee::QueenBee(const sf::Vector2f& position, Hive& hive) :
 
 void QueenBee::Update(sf::RenderWindow& window, const float& deltaTime)
 {
-	UNREFERENCED_PARAMETER(window);
+	Bee::Update(window, deltaTime);
 
 	mTimeSinceLarvaDeposit += deltaTime;
 	if (mTimeSinceLarvaDeposit >= mLarvaDepositInterval)

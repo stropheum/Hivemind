@@ -13,7 +13,7 @@ Larva::Larva(const sf::Vector2f& position, Hive& hive, const LarvaType& larvaTyp
 
 void Larva::Update(sf::RenderWindow& window, const float& deltaTime)
 {
-	UNREFERENCED_PARAMETER(window);
+	Bee::Update(window, deltaTime);
 
 	mTimeSinceBirth += deltaTime;
 	if (mTimeSinceBirth >= mLarvaDuration)

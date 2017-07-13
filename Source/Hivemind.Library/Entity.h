@@ -66,5 +66,6 @@ public:
 protected:
 	sf::Vector2f mPosition;
 	sf::Color mOutlineColor, mFillColor;
+	class CollisionNode* mCollisionNode;
 };
 

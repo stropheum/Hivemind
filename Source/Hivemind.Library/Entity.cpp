@@ -3,7 +3,7 @@
 
 
 Entity::Entity(const sf::Vector2f& position, const sf::Color& outlineColor, const sf::Color& fillColor) :
-	mPosition(position), mOutlineColor(outlineColor), mFillColor(fillColor)
+	mPosition(position), mOutlineColor(outlineColor), mFillColor(fillColor), mCollisionNode(nullptr)
 {
 }
 

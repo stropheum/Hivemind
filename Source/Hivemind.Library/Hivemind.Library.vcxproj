@@ -185,6 +185,8 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
   <ItemGroup>
     <ClInclude Include="Bee.h" />
     <ClInclude Include="BeeManager.h" />
+    <ClInclude Include="CollisionGrid.h" />
+    <ClInclude Include="CollisionNode.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="EmployedBee.h" />
     <ClInclude Include="Entity.h" />
@@ -206,6 +208,8 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
   <ItemGroup>
     <ClCompile Include="Bee.cpp" />
     <ClCompile Include="BeeManager.cpp" />
+    <ClCompile Include="CollisionGrid.cpp" />
+    <ClCompile Include="CollisionNode.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="EmployedBee.cpp" />
     <ClCompile Include="Entity.cpp" />
