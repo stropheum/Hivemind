@@ -17,7 +17,7 @@ Drone::~Drone()
 
 void Drone::Update(sf::RenderWindow& window, const float& deltaTime)
 {
-	UNREFERENCED_PARAMETER(window);
+	Bee::Update(window, deltaTime);
 
 	auto facePosition = mFace.getPosition();
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);

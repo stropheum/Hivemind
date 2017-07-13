@@ -73,6 +73,12 @@
     <Filter Include="Managers\FlowFieldManager">
       <UniqueIdentifier>{07166db7-6173-49ac-8711-2087bcadacd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Managers\CollisionGrid">
+      <UniqueIdentifier>{49d607b9-7189-4858-88a0-7971983ec00a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\CollisionGrid\CollisionNode">
+      <UniqueIdentifier>{97974218-1c8e-4d96-9722-b667cf1c2c30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -132,6 +138,12 @@
     <ClCompile Include="FlowFieldManager.cpp">
       <Filter>Managers\FlowFieldManager</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionNode.cpp">
+      <Filter>Managers\CollisionGrid\CollisionNode</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionGrid.cpp">
+      <Filter>Managers\CollisionGrid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -190,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="FlowFieldManager.h">
       <Filter>Managers\FlowFieldManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionNode.h">
+      <Filter>Managers\CollisionGrid\CollisionNode</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionGrid.h">
+      <Filter>Managers\CollisionGrid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

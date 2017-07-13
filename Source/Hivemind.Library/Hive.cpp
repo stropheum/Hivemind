@@ -37,6 +37,19 @@ void Hive::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);
+
+	if (mCollisionNode != nullptr && !mCollisionNode->ContainsPoint(mPosition))
+	{	// If we haev a collision node and we leave it, invalidate the pointer
+		mCollisionNode->UnregisterHive(this);
+		mCollisionNode = nullptr;
+	}
+
+	if (mCollisionNode == nullptr)
+	{	// If the collision node is invalidated, get a new one and register to it
+		mCollisionNode = CollisionGrid::GetInstance()->CollisionNodeFromPosition(mPosition);
+		mCollisionNode->RegisterHive(this);
+	}
+
 	std::stringstream ss;
 	ss << "Food: " << mFoodAmount;
 	mText.setString(ss.str());

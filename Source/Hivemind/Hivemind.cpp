@@ -9,6 +9,8 @@
 #include "FlowField.h"
 #include "WorldGenerator.h"
 #include "FlowFieldManager.h"
+#include "CollisionNode.h"
+#include "CollisionGrid.h"
 
 
 using namespace std;
@@ -33,7 +35,7 @@ int main(int argc, char* argv[])
 #endif
 
 	sf::ContextSettings contextSettings;
-	contextSettings.antialiasingLevel = 8;
+	contextSettings.antialiasingLevel = 16;
 
 	sf::View view(sf::FloatRect(0, 0, 1600, 900));
 	float totalZoom = 1.25f;
@@ -43,6 +45,7 @@ int main(int argc, char* argv[])
 	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Hivemind", sf::Style::Default);
 	window.setView(view);
 	window.setSize(sf::Vector2u(1600, 900));
+	view.setCenter(1000, 1000);
 	window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - window.getSize().x / 2,
 		sf::VideoMode::getDesktopMode().height / 2 - window.getSize().y / 2));
 	
@@ -58,6 +61,7 @@ int main(int argc, char* argv[])
 	auto beeManager = BeeManager::GetInstance();
 	auto hiveManager = HiveManager::GetInstance();
 	auto foodSourceManager = FoodSourceManager::GetInstance();
+	auto collisionGrid = CollisionGrid::GetInstance();
 
 	string worldConfig = argc >= 2 ? argv[1] : "default_world.json";
 	WorldGenerator::GetInstance()->Generate(worldConfig);
@@ -84,7 +88,11 @@ int main(int argc, char* argv[])
 
 			if (event.type == sf::Event::KeyPressed)
 			{
-				if (event.key.code == sf::Keyboard::LControl)
+				if (event.key.code == sf::Keyboard::Numpad1)
+				{
+					collisionGrid->ToggleGridVisualization();
+				}
+				if (event.key.code == sf::Keyboard::Numpad2)
 				{
 					beeManager->ToggleEmployeeFlowFields();
 				}
@@ -144,7 +152,11 @@ int main(int argc, char* argv[])
 			if (event.type == sf::Event::MouseWheelScrolled)
 			{
 				float scaleFactor = 1.0f - (2 * event.mouseWheelScroll.delta / 100.0f);
-				totalZoom -= 2 * event.mouseWheelScroll.delta / 100.0f;
+				if (totalZoom - 2 * event.mouseWheelScroll.delta / 100.0f > 0.0f)
+				{
+					totalZoom -= 2 * event.mouseWheelScroll.delta / 100.0f;
+				}
+				
 				view.zoom(scaleFactor);
 				window.setView(view);
 				fpsMeter.scale(scaleFactor, scaleFactor);
@@ -182,6 +194,7 @@ int main(int argc, char* argv[])
 		hiveManager->Render(window);
 		foodSourceManager->Render(window);
 		beeManager->Render(window);
+		collisionGrid->Render(window);
 
 		window.display();
 		

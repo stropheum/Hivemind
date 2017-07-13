@@ -19,7 +19,7 @@ EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive) :
 
 void EmployedBee::Update(sf::RenderWindow& window, const float& deltaTime)
 {
-	UNREFERENCED_PARAMETER(window);
+	Bee::Update(window, deltaTime);
 
 	UpdateFlowField(window, deltaTime);
 
