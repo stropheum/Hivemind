@@ -121,8 +121,9 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 
 	sf::Vector2f newPosition = mPosition + (mVelocity * deltaTime);
 
-	auto foodSourceManager = FoodSourceManager::GetInstance();
-	for (auto iter = foodSourceManager->Begin(); iter != foodSourceManager->End(); ++iter)
+//	auto foodSourceManager = FoodSourceManager::GetInstance();
+	auto foodSources = mCollisionNode->FoodSources();
+	for (auto iter = foodSources.begin(); iter != foodSources.end(); ++iter)
 	{
 		if (DetectingFoodSource(*(*iter)) && !(*iter)->PairedWithEmployee())
 		{
@@ -196,7 +197,17 @@ void EmployedBee::UpdateHarvestingFood(sf::RenderWindow& window, const float& de
 	}
 
 	SetColor(Bee::NORMAL_COLOR);
-	for (auto iter = FoodSourceManager::GetInstance()->Begin(); iter != FoodSourceManager::GetInstance()->End(); ++iter)
+//	for (auto iter = FoodSourceManager::GetInstance()->Begin(); iter != FoodSourceManager::GetInstance()->End(); ++iter)
+//	{
+//		if (CollidingWithFoodSource(*(*iter)))
+//		{
+//			SetColor(Bee::ALERT_COLOR);
+//			break;
+//		}
+//	}
+	
+	auto foodSources = mCollisionNode->FoodSources();
+	for (auto iter = foodSources.begin(); iter != foodSources.end(); ++iter)
 	{
 		if (CollidingWithFoodSource(*(*iter)))
 		{
@@ -277,7 +288,9 @@ void EmployedBee::UpdateDepositingFood(sf::RenderWindow& window, const float& de
 	}
 
 	SetColor(Bee::NORMAL_COLOR);
-	for (auto iter = FoodSourceManager::GetInstance()->Begin(); iter != FoodSourceManager::GetInstance()->End(); ++iter)
+
+	auto foodSources = mCollisionNode->FoodSources();
+	for (auto iter = foodSources.begin(); iter != foodSources.end(); ++iter)
 	{
 		if (CollidingWithFoodSource(*(*iter)))
 		{

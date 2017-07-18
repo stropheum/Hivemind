@@ -163,12 +163,13 @@ void Bee::HandleFoodSourceCollisions()
 		mState = State::DeliveringFood;
 	}
 
+	auto foodSources = mCollisionNode->FoodSources();
 	switch (mState)
 	{
 	case State::SeekingTarget:
-		for (auto foodIter = foodSourceManager->Begin(); foodIter != foodSourceManager->End(); ++foodIter)
+		for (auto iter = foodSources.begin(); iter != foodSources.end(); ++iter)
 		{
-			if (CollidingWithFoodSource(*(*foodIter)))
+			if (CollidingWithFoodSource(*(*iter)))
 			{
 				if (Entity::DistanceBetween(GetPosition(), GetTarget()) <= Bee::TARGET_RADIUS)
 				{
@@ -194,11 +195,10 @@ void Bee::HandleFoodSourceCollisions()
 
 void Bee::DetectStructureCollisions()
 {
-	auto hiveManager = HiveManager::GetInstance();
-	auto foodManager = FoodSourceManager::GetInstance();
 
 	bool colliding = false;
-	for (auto iter = hiveManager->Begin(); iter != hiveManager->End(); ++iter)
+	auto hives = mCollisionNode->Hives();
+	for (auto iter = hives.begin(); iter != hives.end(); ++iter)
 	{
 		if (CollidingWithHive(*(*iter)))
 		{
@@ -207,7 +207,8 @@ void Bee::DetectStructureCollisions()
 		}
 	}
 
-	for (auto iter = foodManager->Begin(); iter != foodManager->End(); ++iter)
+	auto foodSources = mCollisionNode->FoodSources();
+	for (auto iter = foodSources.begin(); iter != foodSources.end(); ++iter)
 	{
 		if (CollidingWithFoodSource(*(*iter)))
 		{

@@ -48,6 +48,12 @@ public:
 
 	bool ContainsPoint(const sf::Vector2f& point) const;
 
+	std::vector<Hive*> Hives() const;
+
+	std::vector<FoodSource*> FoodSources() const;
+
+	std::vector<Bee*> Bees() const;
+
 private:
 
 	void UpdateTextDisplay();

@@ -134,6 +134,21 @@ bool CollisionNode::ContainsPoint(const sf::Vector2f& point) const
 		point.y < (mPosition.y + mSize);
 }
 
+std::vector<Hive*> CollisionNode::Hives() const
+{
+	return mHives;
+}
+
+std::vector<FoodSource*> CollisionNode::FoodSources() const
+{
+	return mFoodSources;
+}
+
+std::vector<Bee*> CollisionNode::Bees() const
+{
+	return mBees;
+}
+
 void CollisionNode::UpdateTextDisplay()
 {
 	stringstream ss;
