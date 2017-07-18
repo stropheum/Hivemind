@@ -83,8 +83,6 @@ void EmployedBee::ToggleFlowField()
 
 void EmployedBee::SetFlowFieldOctaveCount(const std::uint32_t& octaveCount)
 {
-//	mFlowField.SetOctaveCount(octaveCount);
-//	mFlowField.GenerateNewField();
 	mFlowField = FlowFieldManager::GetInstance()->GetField();
 	mFlowField.SetOctaveCount(octaveCount);
 }
@@ -112,18 +110,10 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 	mVelocity.x += 2 * cos(rotationRadians);
 	mVelocity.y += 2 * sin(rotationRadians);
 
-//	auto magnitude = sqrt(mVelocity.x * mVelocity.x + mVelocity.y + mVelocity.y);
-//	if (magnitude > mSpeed)
-//	{
-//		mVelocity.x -= 2 * cos(rotationRadians);
-//		mVelocity.y -= 2 * sin(rotationRadians);
-//	}
-
 	sf::Vector2f newPosition = mPosition + (mVelocity * deltaTime);
 
-//	auto foodSourceManager = FoodSourceManager::GetInstance();
-	auto foodSources = mCollisionNode->FoodSources();
-	for (auto iter = foodSources.begin(); iter != foodSources.end(); ++iter)
+	auto foodSources = FoodSourceManager::GetInstance();
+	for (auto iter = foodSources->Begin(); iter != foodSources->End(); ++iter)
 	{
 		if (DetectingFoodSource(*(*iter)) && !(*iter)->PairedWithEmployee())
 		{
@@ -197,22 +187,35 @@ void EmployedBee::UpdateHarvestingFood(sf::RenderWindow& window, const float& de
 	}
 
 	SetColor(Bee::NORMAL_COLOR);
-//	for (auto iter = FoodSourceManager::GetInstance()->Begin(); iter != FoodSourceManager::GetInstance()->End(); ++iter)
-//	{
-//		if (CollidingWithFoodSource(*(*iter)))
-//		{
-//			SetColor(Bee::ALERT_COLOR);
-//			break;
-//		}
-//	}
-	
+
 	auto foodSources = mCollisionNode->FoodSources();
+	bool foodSourceFound = false;
 	for (auto iter = foodSources.begin(); iter != foodSources.end(); ++iter)
 	{
 		if (CollidingWithFoodSource(*(*iter)))
 		{
+			foodSourceFound = true;
 			SetColor(Bee::ALERT_COLOR);
 			break;
+		}
+	}
+
+	if (!foodSourceFound)
+	{	// We need to search the neighbors now
+		vector<CollisionNode*> neighbors = CollisionGrid::GetInstance()->NeighborsOf(mCollisionNode);
+		for (int i = 0; i < neighbors.size(); i++)
+		{
+			auto neighborFoodSources = neighbors[i]->FoodSources();
+			for (auto iter = neighborFoodSources.begin(); iter != neighborFoodSources.end(); ++iter)
+			{
+				foodSourceFound = true;
+				SetColor(Bee::ALERT_COLOR);
+				break;
+			}
+			if (foodSourceFound)
+			{	// Early out if we find a collision
+				break;
+			}
 		}
 	}
 
@@ -290,14 +293,39 @@ void EmployedBee::UpdateDepositingFood(sf::RenderWindow& window, const float& de
 	SetColor(Bee::NORMAL_COLOR);
 
 	auto foodSources = mCollisionNode->FoodSources();
+	bool foodSourceFound = false;
 	for (auto iter = foodSources.begin(); iter != foodSources.end(); ++iter)
 	{
 		if (CollidingWithFoodSource(*(*iter)))
 		{
+			foodSourceFound = true;
 			SetColor(Bee::ALERT_COLOR);
 			break;
 		}
 	}
+
+	if (!foodSourceFound)
+	{
+		vector<CollisionNode*> neighbors = CollisionGrid::GetInstance()->NeighborsOf(mCollisionNode);
+		for (int i = 0; i < neighbors.size(); i++)
+		{
+			auto neighborFoodSources = neighbors[i]->FoodSources();
+			for (auto iter = neighborFoodSources.begin(); iter != neighborFoodSources.end(); ++iter)
+			{
+				if (CollidingWithFoodSource(*(*iter)))
+				{
+					foodSourceFound = true;
+					SetColor(Bee::ALERT_COLOR);
+					break;
+				}
+			}
+			if (foodSourceFound)
+			{	// Early out if we found a collision
+				break;
+			}
+		}
+	}
+
 	if (CollidingWithHive(mParentHive))
 	{
 		SetColor(Bee::ALERT_COLOR);

@@ -145,7 +145,7 @@ void FlowField::SetOctaveCount(const std::uint32_t& octaveCount)
 
 float FlowField::RadianValueAtPosition(const sf::Vector2f& position) const
 {
-	auto fieldPosition = position - mPosition; // Player's relative position to the flow field
-	auto fieldValue = mValues[static_cast<int>(fieldPosition.x)][static_cast<int>(fieldPosition.y)];
+	sf::Vector2f fieldPosition = position - mPosition; // Player's relative position to the flow field
+	float fieldValue = mValues[static_cast<int>(fieldPosition.x)][static_cast<int>(fieldPosition.y)];
 	return static_cast<float>(fieldValue * 2.0f); // values range from 0-1, radians range from 0-2
 }

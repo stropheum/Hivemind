@@ -27,6 +27,11 @@ public:
 	/// @Return: The collision node that is responsible for the position
 	class CollisionNode* CollisionNodeFromPosition(const sf::Vector2f& position) const;
 
+	/// Gets all valid neighbor nodes of the specified node. Used for handling overlapping collisions
+	/// @Param node: The node being checked for neighbors
+	/// @Return: A vector containing all valid neighbors of the node
+	std::vector<CollisionNode*> NeighborsOf(CollisionNode* const node) const;
+
 private:
 	static CollisionGrid* sInstance;
 	class CollisionNode** mGrid;

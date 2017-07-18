@@ -150,6 +150,7 @@ void Bee::HandleFoodSourceCollisions()
 {
 	auto foodSourceManager = FoodSourceManager::GetInstance();
 	bool reachedCenterOfSource = false;
+	bool foodSourceFound = false;
 
 	if (!HasTarget() && mState == State::SeekingTarget)
 	{	// Set initial target
@@ -167,21 +168,46 @@ void Bee::HandleFoodSourceCollisions()
 	switch (mState)
 	{
 	case State::SeekingTarget:
+		foodSourceFound = false;
 		for (auto iter = foodSources.begin(); iter != foodSources.end(); ++iter)
 		{
 			if (CollidingWithFoodSource(*(*iter)))
 			{
+				foodSourceFound = true;
 				if (Entity::DistanceBetween(GetPosition(), GetTarget()) <= Bee::TARGET_RADIUS)
 				{
 					reachedCenterOfSource = true;
 					mState = State::HarvestingFood;
+					break;
 				}
 			}
 		}
-		break;
-	case HarvestingFood:
-		break;
-	case DeliveringFood:
+
+		if (!foodSourceFound)
+		{
+			auto neighbors = CollisionGrid::GetInstance()->NeighborsOf(mCollisionNode);
+			for (int i = 0; i < neighbors.size(); i++)
+			{
+				vector<FoodSource*> neighborFoodSources = neighbors[i]->FoodSources();
+				for (auto iter = neighborFoodSources.begin(); iter != neighborFoodSources.end(); ++iter)
+				{
+					if (CollidingWithFoodSource(*(*iter)))
+					{
+						foodSourceFound = true;
+						if (Entity::DistanceBetween(GetPosition(), GetTarget()) <= Bee::TARGET_RADIUS)
+						{
+							reachedCenterOfSource = true;
+							mState = State::HarvestingFood;
+							break;
+						}
+					}
+				}
+				if (foodSourceFound)
+				{	// Early out so we know the others don't matter
+					break;
+				}
+			}
+		}
 		break;
 	default:;
 	}
