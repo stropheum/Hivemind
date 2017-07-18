@@ -48,9 +48,9 @@ public:
 	/// @Return: A float value from 0-2 which will correspond to a radian rotation value
 	float RadianValueAtPosition(const sf::Vector2f& position) const;
 
-//	/// Mutator method for the position where the flow field is generated
-//	/// @Param position: The new position of the flow field
-//	void SetPosition(const sf::Vector2f& position);
+	/// Mutator method for the position where the flow field is generated
+	/// @Param position: The new position of the flow field
+	void SetPosition(const sf::Vector2f& position) override;
 //
 //	/// Accessor method for the position of the flow field
 //	/// @Return: An sf::Vector2f representing the position of the flow field

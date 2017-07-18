@@ -22,7 +22,6 @@ FlowField::FlowField(const sf::Vector2f& position):
 	}
 
 	mImage.create(mFieldDimensions.x, mFieldDimensions.y);
-
 	GenerateNewField();
 }
 
@@ -80,10 +79,7 @@ void FlowField::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);
-
-	mTexture.loadFromImage(mImage);
-	mSprite.setPosition(mPosition);
-	mSprite.setTexture(mTexture);
+	
 }
 
 void FlowField::Render(sf::RenderWindow& window) const
@@ -99,8 +95,8 @@ sf::Vector2i FlowField::GetDimensions() const
 bool FlowField::CollidingWith(const sf::Vector2f& position) const
 {
 	return
-		position.x >= mPosition.x && position.x <= mPosition.x + mFieldDimensions.x &&
-		position.y >= mPosition.y && position.y <= mPosition.y + mFieldDimensions.y;
+		position.x >= mPosition.x && position.x < mPosition.x + mFieldDimensions.x &&
+		position.y >= mPosition.y && position.y < mPosition.y + mFieldDimensions.y;
 }
 
 void FlowField::GenerateNewField()
@@ -148,4 +144,13 @@ float FlowField::RadianValueAtPosition(const sf::Vector2f& position) const
 	sf::Vector2f fieldPosition = position - mPosition; // Player's relative position to the flow field
 	float fieldValue = mValues[static_cast<int>(fieldPosition.x)][static_cast<int>(fieldPosition.y)];
 	return static_cast<float>(fieldValue * 2.0f); // values range from 0-1, radians range from 0-2
+}
+
+void FlowField::SetPosition(const sf::Vector2f& position)
+{
+	Entity::SetPosition(position);
+	mSprite.setPosition(mPosition);
+	mTexture.loadFromImage(mImage);
+	mTexture.setSmooth(true);
+	mSprite.setTexture(mTexture);
 }

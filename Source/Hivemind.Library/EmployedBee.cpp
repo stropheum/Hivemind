@@ -105,7 +105,7 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 		mState = State::DeliveringFood;
 	}
 
-	auto rotationRadians = mFlowField.RadianValueAtPosition(mPosition);
+	float rotationRadians = mFlowField.RadianValueAtPosition(mPosition);
 	
 	mVelocity.x += 2 * cos(rotationRadians);
 	mVelocity.y += 2 * sin(rotationRadians);
