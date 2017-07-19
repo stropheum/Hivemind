@@ -6,14 +6,14 @@
 using namespace std;
 
 Hive::Hive(const sf::Vector2f& position) :
-	Entity(position, sf::Color::White, sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
+	Entity(position, sf::Color(196, 196, 196), sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
 	mFoodAmount(0.0f), mText(), mGenerator(), mWaggleDanceClock(), mWaggleDanceWaitPeriod(Bee::STANDARD_HARVESTING_DURATION), mWaggleDanceInProgress(false)
 {
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
 	mFoodSourceData.clear();
 	mBody.setPosition(mPosition);
-	mBody.setOutlineThickness(-2);
+	mBody.setOutlineThickness(14);
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setFillColor(mFillColor);
 

@@ -98,7 +98,7 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 	UNREFERENCED_PARAMETER(window);
 
 	//TODO: Remove this when metabolism can trigger giving up on scouting. for not. just give up if you go too far
-	auto bounds = 10000;
+	auto bounds = 5000;
 	if (mPosition.x < mParentHive.GetCenterTarget().x - bounds || mPosition.x > mParentHive.GetCenterTarget().x + bounds || 
 		mPosition.y < mParentHive.GetCenterTarget().y - bounds || mPosition.y > mParentHive.GetCenterTarget().y + bounds)
 	{

@@ -65,6 +65,7 @@ int main(int argc, char* argv[])
 
 	string worldConfig = argc >= 2 ? argv[1] : "default_world.json";
 	WorldGenerator::GetInstance()->Generate(worldConfig);
+	view.setCenter(HiveManager::GetInstance()->GetHive(0)->GetCenterTarget());
 
 	bool running = false;
 	deltaClock.restart();
