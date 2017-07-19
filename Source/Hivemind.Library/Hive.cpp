@@ -207,7 +207,6 @@ void Hive::CompleteWaggleDance()
 		fitnessSum += weight;
 	}
 	
-	// TODO: Sort fitness weights by highest fitness first, to make them more likely to be selected
 	std::sort(fitnessWeights.begin(), fitnessWeights.end(), 
 		[](const std::pair<FoodSource* const, float>& lhs, const std::pair<FoodSource* const, float>& rhs)
 	{

@@ -186,7 +186,7 @@ void Bee::HandleFoodSourceCollisions()
 		if (!foodSourceFound)
 		{
 			auto neighbors = CollisionGrid::GetInstance()->NeighborsOf(mCollisionNode);
-			for (int i = 0; i < neighbors.size(); i++)
+			for (uint32_t i = 0; i < neighbors.size(); i++)
 			{
 				vector<FoodSource*> neighborFoodSources = neighbors[i]->FoodSources();
 				for (auto iter = neighborFoodSources.begin(); iter != neighborFoodSources.end(); ++iter)

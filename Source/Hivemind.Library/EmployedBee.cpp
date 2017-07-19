@@ -204,7 +204,7 @@ void EmployedBee::UpdateHarvestingFood(sf::RenderWindow& window, const float& de
 	if (!foodSourceFound)
 	{	// We need to search the neighbors now
 		vector<CollisionNode*> neighbors = CollisionGrid::GetInstance()->NeighborsOf(mCollisionNode);
-		for (int i = 0; i < neighbors.size(); i++)
+		for (uint32_t i = 0; i < neighbors.size(); i++)
 		{
 			auto neighborFoodSources = neighbors[i]->FoodSources();
 			for (auto iter = neighborFoodSources.begin(); iter != neighborFoodSources.end(); ++iter)
@@ -308,7 +308,7 @@ void EmployedBee::UpdateDepositingFood(sf::RenderWindow& window, const float& de
 	if (!foodSourceFound)
 	{
 		vector<CollisionNode*> neighbors = CollisionGrid::GetInstance()->NeighborsOf(mCollisionNode);
-		for (int i = 0; i < neighbors.size(); i++)
+		for (uint32_t i = 0; i < neighbors.size(); i++)
 		{
 			auto neighborFoodSources = neighbors[i]->FoodSources();
 			for (auto iter = neighborFoodSources.begin(); iter != neighborFoodSources.end(); ++iter)
