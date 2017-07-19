@@ -155,7 +155,7 @@ void Hive::RemoveFoodSource(FoodSource* const foodSource)
 
 void Hive::TriggerWaggleDance()
 {
-	if (mFoodSourceData.size() > 2)
+	if (mFoodSourceData.size() > 3)
 	{
 		mWaggleDanceClock.restart();
 		mWaggleDanceInProgress = true;
@@ -175,6 +175,8 @@ void Hive::CompleteWaggleDance()
 
 	float minYield = mFoodSourceData.begin()->second.first;
 	float maxYield = mFoodSourceData.begin()->second.first;
+	float minDistance = mFoodSourceData.begin()->second.second;
+	float maxDistance = mFoodSourceData.begin()->second.second;
 	for (auto iter = mFoodSourceData.begin(); iter != mFoodSourceData.end(); ++iter)
 	{	// Determine the range of values to help determine fitness
 		auto pair = iter->second;
@@ -186,15 +188,31 @@ void Hive::CompleteWaggleDance()
 		{
 			maxYield = pair.first;
 		}
+
+		if (pair.second < minDistance)
+		{
+			minDistance = pair.second;
+		}
+		if (pair.second > maxDistance)
+		{
+			maxDistance = pair.second;
+		}
 	}
 
 	for (auto iter = mFoodSourceData.begin(); iter != mFoodSourceData.end(); ++iter)
 	{
-		float weight = ComputeFitness(iter->second, minYield, maxYield, 0.0f, 0.0f);
+		float weight = ComputeFitness(iter->second, minYield, maxYield, minDistance, maxDistance);
 		std::pair<FoodSource* const, float> pair(iter->first, weight);
 		fitnessWeights.push_back(pair);
 		fitnessSum += weight;
 	}
+	
+	// TODO: Sort fitness weights by highest fitness first, to make them more likely to be selected
+	std::sort(fitnessWeights.begin(), fitnessWeights.end(), 
+		[](const std::pair<FoodSource* const, float>& lhs, const std::pair<FoodSource* const, float>& rhs)
+	{
+		return lhs.second > rhs.second;
+	});
 
 	for (auto iter = IdleBeesBegin(); iter != IdleBeesEnd(); ++iter)
 	{
@@ -225,16 +243,28 @@ float Hive::ComputeFitness(const std::pair<float, float>& foodData,
 	const float& minYield, const float& maxYield,
 	const float& minDistance, const float& maxDistance)
 {
-	UNREFERENCED_PARAMETER(minDistance);
-	UNREFERENCED_PARAMETER(maxDistance);
-
-	float distanceFromMinYield = foodData.first - minYield;
+	float offsetFromMinYield = foodData.first - minYield;
 	float yieldRange = maxYield - minYield;
 
-	float result = 1.0f;
-	if (yieldRange != 0.0f)
-	{
-		result = distanceFromMinYield / yieldRange;
+	float offsetFromMaxDistance = maxDistance - foodData.second;
+	float distanceRange = maxDistance - minDistance;
+
+	float result;
+	if (yieldRange == 0.0f && distanceRange == 0.0f)
+	{	// Avoid dividing by zero and apply uniform fitness
+		result = 1.0f;
+	}
+	else if (yieldRange == 0.0f)
+	{	// We apply uniform yield weight and compute distance
+		result = ((1.0f) + (offsetFromMaxDistance / distanceRange)) / 2.0f;
+	}
+	else if (distanceRange == 0.0f)
+	{	// We apply uniform distance weight and compute yield
+		result = ((offsetFromMinYield / yieldRange) + (1.0f) / 2.0f);
+	}
+	else
+	{	// We have two valid values
+		result = ((offsetFromMinYield / yieldRange) + (offsetFromMaxDistance / distanceRange)) / 2.0f;
 	}
 	return result;
 }

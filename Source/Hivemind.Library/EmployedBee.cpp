@@ -182,6 +182,7 @@ void EmployedBee::UpdateHarvestingFood(sf::RenderWindow& window, const float& de
 			mAbandoningFoodSource = true;
 		}
 		mFoodSourceData.first = mTargetFoodSource->GetFoodAmount();
+		mFoodSourceData.second = DistanceBetween(mTargetFoodSource->GetCenterTarget(), mParentHive.GetCenterTarget());
 		mTargeting = false;
 		mState = State::DeliveringFood;
 	}
