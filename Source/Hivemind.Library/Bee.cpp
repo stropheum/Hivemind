@@ -19,7 +19,8 @@ const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
 Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mParentHive(hive), mGenerator(), mBody(BodyRadius),
 	mFace(sf::Vector2f(BodyRadius, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED), mFoodAmount(0.0f),
-	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mTargeting(false), mState(State::SeekingTarget), mTargetFoodSource(nullptr)
+	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mTargeting(false), mState(State::SeekingTarget), mTargetFoodSource(nullptr), 
+	mMaxEnergy(100.0f), mEnergy(mMaxEnergy), mEnergyConsumptionRate(1.0f)
 {
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
@@ -54,7 +55,34 @@ Bee::~Bee()
 void Bee::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
-	UNREFERENCED_PARAMETER(deltaTime);
+
+	mEnergy -= mEnergyConsumptionRate * deltaTime;
+	if (Hungry())
+	{
+		if (mState == State::Idle || mState == State::DepositingFood)
+		{	// Fill yourself with energy
+			mEnergy += mParentHive.TakeFood(mMaxEnergy - mEnergy);
+		}
+		else if (mState == State::HarvestingFood)
+		{
+			mEnergy += mTargetFoodSource->TakeFood(mMaxEnergy - mEnergy);
+		}
+		else
+		{
+			float requiredEnergy = mMaxEnergy - mEnergy;
+			if (mFoodAmount < requiredEnergy)
+			{
+				requiredEnergy = mFoodAmount;
+			}
+			mEnergy += requiredEnergy;
+			mFoodAmount -= requiredEnergy;
+		}
+	}
+
+	if (mEnergy <= 0.0f)
+	{
+		MarkForDelete();
+	}
 
 	if (mCollisionNode != nullptr && !mCollisionNode->ContainsPoint(mPosition))
 	{	// If we haev a collision node and we leave it, invalidate the pointer
@@ -269,4 +297,10 @@ void Bee::SetState(const State& state)
 Bee::State Bee::GetState() const
 {
 	return mState;
+}
+
+bool Bee::Hungry() const
+{
+	// Hungry if less than 50% energy
+	return mEnergy / mMaxEnergy < 0.50f;
 }

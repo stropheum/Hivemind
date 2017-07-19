@@ -38,6 +38,11 @@ public:
 	/// @Param foodAmount: Amount of food being added to the hive
 	void DepositFood(const float& foodAmount);
 
+	/// TakesFood from the hive
+	/// @Param foodAmount: Amount of food being taken from the hive
+	/// @Return: The amount of food taken
+	float TakeFood(float foodAmount);
+
 	/// Adds an onlooker to the hive for easy tracking during waggle dance phase
 	/// @Param bee: Bee being added as idle to the hive
 	void AddIdleBee(OnlookerBee* const bee);

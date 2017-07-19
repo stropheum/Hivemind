@@ -132,6 +132,10 @@ public:
 	/// @Param octaveCount: The number of octaves that will be used to generate the flow fields
 	void SetEmployeeFlowFieldOctaveCount(const std::uint32_t& octaveCount);
 
+	/// Destroys a bee at the end of its life
+	/// @Param bee: The bee being destroyed
+	void DestroyBee(Bee* const bee);
+
 private:
 	/// Constructor
 	BeeManager();
@@ -151,7 +155,13 @@ private:
 	/// Removes all guards marked for delete
 	void CleanupGuard() = delete;
 
-	/// Removes all larva marked for delete
+	/// Removes all bees marked for delete
+	void CleanupBees();
+	void CleanupOnlookers();
+	void CleanupEmployees();
+	void CleanupQueens();
+	void CleanupDrones();
+	void CleanupGuards();
 	void CleanupLarva();
 
 	static BeeManager* sInstance;
@@ -161,6 +171,7 @@ private:
 	std::vector<class Drone*> mDrones;
 	std::vector<class Guard*> mGuards;
 	std::vector<class Larva*> mLarva;
+
 	const float FOOD_RETARGET_INTERVAL = 20.0f;
 	float mTimeSinceRetarget;
 	std::default_random_engine generator;

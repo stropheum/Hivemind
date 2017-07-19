@@ -3,10 +3,10 @@
 	[
 		{
 			"position": {"x": 0, "y": 0},
-			"Onlookers": 100,
+			"Onlookers": 500,
 			"Employees": 50,
-			"Drones": 50,
-			"Guards": 50
+			"Drones": 15,
+			"Guards": 15
 		}
 	],
 	"FoodSources":

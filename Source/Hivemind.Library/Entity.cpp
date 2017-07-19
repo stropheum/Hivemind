@@ -3,7 +3,7 @@
 
 
 Entity::Entity(const sf::Vector2f& position, const sf::Color& outlineColor, const sf::Color& fillColor) :
-	mPosition(position), mOutlineColor(outlineColor), mFillColor(fillColor), mCollisionNode(nullptr)
+	mPosition(position), mOutlineColor(outlineColor), mFillColor(fillColor), mCollisionNode(nullptr), mMarkedForDelete(false)
 {
 }
 
@@ -22,4 +22,14 @@ void Entity::SetPosition(const sf::Vector2f& position)
 const sf::Vector2f& Entity::GetPosition() const
 {
 	return mPosition;
+}
+
+bool Entity::MarkedForDelete() const
+{
+	return mMarkedForDelete;
+}
+
+void Entity::MarkForDelete()
+{
+	mMarkedForDelete = true;
 }

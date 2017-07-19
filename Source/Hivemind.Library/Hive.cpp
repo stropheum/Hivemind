@@ -7,7 +7,7 @@ using namespace std;
 
 Hive::Hive(const sf::Vector2f& position) :
 	Entity(position, sf::Color(196, 196, 196), sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
-	mFoodAmount(0.0f), mText(), mGenerator(), mWaggleDanceClock(), mWaggleDanceWaitPeriod(Bee::STANDARD_HARVESTING_DURATION), mWaggleDanceInProgress(false)
+	mFoodAmount(100.0f), mText(), mGenerator(), mWaggleDanceClock(), mWaggleDanceWaitPeriod(Bee::STANDARD_HARVESTING_DURATION), mWaggleDanceInProgress(false)
 {
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
@@ -72,9 +72,24 @@ const sf::Vector2f& Hive::GetDimensions() const
 	return mDimensions;
 }
 
+float Hive::GetFoodAmount() const
+{
+	return mFoodAmount;
+}
+
 void Hive::DepositFood(const float& foodAmount)
 {
 	mFoodAmount += foodAmount;
+}
+
+float Hive::TakeFood(float foodAmount)
+{
+	if (mFoodAmount < foodAmount)
+	{
+		foodAmount = mFoodAmount;
+	}
+	mFoodAmount -= foodAmount;
+	return foodAmount;
 }
 
 void Hive::AddIdleBee(OnlookerBee* const bee)
@@ -155,11 +170,12 @@ void Hive::RemoveFoodSource(FoodSource* const foodSource)
 
 void Hive::TriggerWaggleDance()
 {
-	if (mFoodSourceData.size() > 3)
+	if (mFoodSourceData.size() > 8)
 	{
 		mWaggleDanceClock.restart();
 		mWaggleDanceInProgress = true;
 		CompleteWaggleDance();
+		mFoodSourceData.clear();
 	}
 }
 
@@ -266,9 +282,4 @@ float Hive::ComputeFitness(const std::pair<float, float>& foodData,
 		result = ((offsetFromMinYield / yieldRange) + (offsetFromMaxDistance / distanceRange)) / 2.0f;
 	}
 	return result;
-}
-
-float Hive::GetFoodAmount() const
-{
-	return mFoodAmount;
 }

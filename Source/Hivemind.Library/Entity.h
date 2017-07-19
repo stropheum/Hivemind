@@ -61,11 +61,19 @@ public:
 	/// @Return: The entity's position
 	const sf::Vector2f& GetPosition() const;
 
+	/// Determines if the entity has been marked for deletion
+	/// @Return: True if the entity is marked for delete
+	bool MarkedForDelete() const;
+
+	/// Markes the entity for deletion
+	void MarkForDelete();
+
 #pragma endregion
 
 protected:
 	sf::Vector2f mPosition;
 	sf::Color mOutlineColor, mFillColor;
 	class CollisionNode* mCollisionNode;
+	bool mMarkedForDelete;
 };
 

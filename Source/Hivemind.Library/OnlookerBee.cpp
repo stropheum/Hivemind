@@ -16,6 +16,11 @@ void OnlookerBee::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	Bee::Update(window, deltaTime);
 
+	if (MarkedForDelete())
+	{
+		mParentHive.RemoveIdleBee(this);
+	}
+
 	auto facePosition = mFace.getPosition();
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 	float rotationAngle = rotationRadians * (180 / PI);

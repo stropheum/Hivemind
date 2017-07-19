@@ -128,6 +128,10 @@ public:
 	/// @Return: The state of the bee
 	State GetState() const;
 
+	/// Determines whether the bee requires food
+	/// @Return: True if the bee needs to eat
+	bool Hungry() const;
+
 #pragma endregion
 
 protected:
@@ -150,6 +154,9 @@ protected:
 	float mSpeed;
 	float mFoodAmount;
 	float mHarvestingDuration;
+	float mMaxEnergy;
+	float mEnergy;
+	float mEnergyConsumptionRate;
 	bool mTargeting;
 	State mState;
 	class FoodSource* mTargetFoodSource;

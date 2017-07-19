@@ -105,12 +105,11 @@ void BeeManager::Update(sf::RenderWindow& window, const float& deltaTime)
 	{
 		(*iter)->Update(window, deltaTime);
 	}
-
 	for (auto iter = mLarva.begin(); iter != mLarva.end(); ++iter)
 	{
 		(*iter)->Update(window, deltaTime);
 	}
-	CleanupLarva();
+	CleanupBees();
 }
 
 void BeeManager::Render(sf::RenderWindow& window)
@@ -244,6 +243,111 @@ void BeeManager::SetEmployeeFlowFieldOctaveCount(const std::uint32_t& octaveCoun
 	for (auto iter = mEmployees.begin(); iter != mEmployees.end(); ++iter)
 	{
 		(*iter)->SetFlowFieldOctaveCount(octaveCount);
+	}
+}
+
+void BeeManager::CleanupBees()
+{
+	CleanupOnlookers();
+	CleanupEmployees();
+	CleanupQueens();
+	CleanupDrones();
+	CleanupGuards();
+	CleanupLarva();
+}
+
+void BeeManager::CleanupOnlookers()
+{
+	bool onlookerRemoved = true;
+	while (onlookerRemoved)
+	{
+		onlookerRemoved = false;
+		for (auto iter = mOnlookers.begin(); iter != mOnlookers.end(); ++iter)
+		{
+			if ((*iter)->MarkedForDelete())
+			{
+				delete *iter;
+				mOnlookers.erase(iter);
+				onlookerRemoved = true;
+				break;
+			}
+		}
+	}
+}
+
+void BeeManager::CleanupEmployees()
+{
+	bool employeeRemoved = true;
+	while (employeeRemoved)
+	{
+		employeeRemoved = false;
+		for (auto iter = mEmployees.begin(); iter != mEmployees.end(); ++iter)
+		{
+			if ((*iter)->MarkedForDelete())
+			{
+				delete *iter;
+				mEmployees.erase(iter);
+				employeeRemoved = true;
+				break;
+			}
+		}
+	}
+}
+
+void BeeManager::CleanupQueens()
+{
+	bool queenRemoved = true;
+	while (queenRemoved)
+	{
+		queenRemoved = false;
+		for (auto iter = mQueens.begin(); iter != mQueens.end(); ++iter)
+		{
+			if ((*iter)->MarkedForDelete())
+			{
+				delete *iter;
+				mQueens.erase(iter);
+				queenRemoved = true;
+				break;
+			}
+		}
+	}
+}
+
+void BeeManager::CleanupDrones()
+{
+	bool droneRemoved = true;
+	while (droneRemoved)
+	{
+		droneRemoved = false;
+		for (auto iter = mDrones.begin(); iter != mDrones.end(); ++iter)
+		{
+			if ((*iter)->MarkedForDelete())
+			{
+				delete *iter;
+				mDrones.erase(iter);
+				droneRemoved = true;
+				break;
+			}
+		}
+	}
+}
+
+void BeeManager::CleanupGuards()
+{
+	bool guardRemoved = true;
+	while (guardRemoved)
+	{
+		guardRemoved = false;
+		for (auto iter = mGuards.begin(); iter != mGuards.end(); ++iter)
+		{
+			if ((*iter)->MarkedForDelete())
+			{
+				delete *iter;
+				mGuards.erase(iter);
+				guardRemoved = true;
+				break;
+			}
+		}
 	}
 }
 
