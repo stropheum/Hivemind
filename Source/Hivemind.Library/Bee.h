@@ -132,12 +132,16 @@ public:
 	/// @Return: True if the bee needs to eat
 	bool Hungry() const;
 
+	/// Accessor method for the parent hive
+	/// @Return: A reference to the hive that this bee belongs to
+	Hive& GetParentHive() const;
+
 #pragma endregion
 
 protected:
 	/// Constants
 	const float PI = 3.14159265359f;
-	const float EXTRACTION_YIELD = 10.0f;
+	const float EXTRACTION_YIELD = 5.0f;
 
 	/// Private API
 	void HandleFoodSourceCollisions();

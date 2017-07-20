@@ -20,7 +20,7 @@ Bee::Bee(const sf::Vector2f& position, Hive& hive) :
 	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mParentHive(hive), mGenerator(), mBody(BodyRadius),
 	mFace(sf::Vector2f(BodyRadius, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED), mFoodAmount(0.0f),
 	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mTargeting(false), mState(State::SeekingTarget), mTargetFoodSource(nullptr), 
-	mMaxEnergy(100.0f), mEnergy(mMaxEnergy), mEnergyConsumptionRate(1.0f)
+	mMaxEnergy(100.0f), mEnergy(mMaxEnergy), mEnergyConsumptionRate(0.2f)
 {
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
@@ -56,18 +56,19 @@ void Bee::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 
-	mEnergy -= mEnergyConsumptionRate * deltaTime;
-	if (Hungry())
+	mEnergy -= (mEnergyConsumptionRate * deltaTime);
+
+	if (mState == State::Idle || mState == State::DepositingFood)
+	{	
+		mEnergy += mParentHive.TakeFood(mMaxEnergy - mEnergy);
+	}
+	else if (mState == State::HarvestingFood)
 	{
-		if (mState == State::Idle || mState == State::DepositingFood)
-		{	// Fill yourself with energy
-			mEnergy += mParentHive.TakeFood(mMaxEnergy - mEnergy);
-		}
-		else if (mState == State::HarvestingFood)
-		{
-			mEnergy += mTargetFoodSource->TakeFood(mMaxEnergy - mEnergy);
-		}
-		else
+		mEnergy += mTargetFoodSource->TakeFood(mMaxEnergy - mEnergy);
+	}
+	else
+	{
+		if (Hungry())
 		{
 			float requiredEnergy = mMaxEnergy - mEnergy;
 			if (mFoodAmount < requiredEnergy)
@@ -270,6 +271,22 @@ void Bee::DetectStructureCollisions()
 			break;
 		}
 	}
+	if (!colliding)
+	{
+		auto neighbors = CollisionGrid::GetInstance()->NeighborsOf(mCollisionNode);
+		for (auto iter = neighbors.begin(); iter != neighbors.end(); ++iter)
+		{
+			auto neighborFoodSources = (*iter)->FoodSources();
+			for (auto it = neighborFoodSources.begin(); it != neighborFoodSources.end(); ++it)
+			{
+				if (CollidingWithFoodSource(*(*it)))
+				{
+					colliding = true;
+					break;
+				}
+			}
+		}
+	}
 
 	SetColor(colliding ? Bee::ALERT_COLOR : Bee::NORMAL_COLOR);
 }
@@ -303,4 +320,9 @@ bool Bee::Hungry() const
 {
 	// Hungry if less than 50% energy
 	return mEnergy / mMaxEnergy < 0.50f;
+}
+
+Hive& Bee::GetParentHive() const
+{
+	return mParentHive;
 }
