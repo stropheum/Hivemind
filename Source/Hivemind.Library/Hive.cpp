@@ -7,7 +7,9 @@ using namespace std;
 
 Hive::Hive(const sf::Vector2f& position) :
 	Entity(position, sf::Color(196, 196, 196), sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
-	mFoodAmount(100.0f), mText(), mGenerator(), mWaggleDanceClock(), mWaggleDanceWaitPeriod(Bee::STANDARD_HARVESTING_DURATION), mWaggleDanceInProgress(false)
+	mFoodAmount(5000.0f), mText(), mGenerator(), mWaggleDanceClock(), mWaggleDanceWaitPeriod(Bee::STANDARD_HARVESTING_DURATION), mWaggleDanceInProgress(false),
+	mStructuralComb(2000.0f), mHoneyComb(5000.0f), mBroodComb(550.0f),
+	mOnlookerCount(0), mEmployeeCount(0), mGuardCount(0), mQueenCount(0), mDroneCount(0)
 {
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
@@ -17,13 +19,23 @@ Hive::Hive(const sf::Vector2f& position) :
 	mBody.setOutlineColor(mOutlineColor);
 	mBody.setFillColor(mFillColor);
 
-	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
+	mText.setPosition(mPosition.x - mText.getLocalBounds().width / 2, mPosition.y);
 	mText.setFont(FontManager::GetInstance()->Hack());
 	mText.setCharacterSize(16);
 	mText.setOutlineColor(sf::Color::White);
 	mText.setFillColor(sf::Color::White);
 	std::stringstream ss;
-	ss << "Food: " << mFoodAmount;
+	ss << "Food: " << mFoodAmount << endl;
+	ss << "||Comb Types||" << endl;
+	ss << "Structural: " << mStructuralComb << endl;
+	ss << "Honey: " << mHoneyComb << endl;
+	ss << "Brood: " << mBroodComb << endl;
+	ss << "||Bees||" << endl;
+	ss << "Onlookers: " << mOnlookerCount << endl;
+	ss << "Employees: " << mEmployeeCount << endl;
+	ss << "Drones: " << mDroneCount << endl;
+	ss << "Guards: " << mGuardCount << endl;
+	ss << "Queens: " << mQueenCount << endl;
 	mText.setString(ss.str());
 }
 
@@ -51,9 +63,19 @@ void Hive::Update(sf::RenderWindow& window, const float& deltaTime)
 	}
 
 	std::stringstream ss;
-	ss << "Food: " << mFoodAmount;
+	ss << "Food: " << mFoodAmount << endl << endl;
+	ss << "||Comb Types||" << endl;
+	ss << "Structural: " << mStructuralComb << endl;
+	ss << "Honey: " << mHoneyComb << endl;
+	ss << "Brood: " << mBroodComb << endl << endl;
+	ss << "||Bees||" << endl;
+	ss << "Onlookers: " << mOnlookerCount << endl;
+	ss << "Employees: " << mEmployeeCount << endl;
+	ss << "Drones: " << mDroneCount << endl;
+	ss << "Guards: " << mGuardCount << endl;
+	ss << "Queens: " << mQueenCount << endl;
 	mText.setString(ss.str());
-	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
+	mText.setPosition(mPosition.x, mPosition.y + mText.getLocalBounds().height - 30);
 }
 
 void Hive::Render(sf::RenderWindow& window) const
@@ -254,6 +276,43 @@ void Hive::CompleteWaggleDance()
 	mWaggleDanceInProgress = false;
 }
 
+void Hive::AddStructuralComb(const float& combAmount)
+{
+	mStructuralComb += combAmount;
+}
+
+void Hive::RemoveStructuralComb(const float& combAmount)
+{
+	if (mStructuralComb > combAmount)
+	{
+		mStructuralComb -= combAmount;
+	}
+	else
+	{
+		mStructuralComb = 0;
+	}
+}
+
+void Hive::ConvertToHoneyComb(float combAmount)
+{
+	if (combAmount > mStructuralComb)
+	{
+		combAmount = mStructuralComb;
+	}
+	mStructuralComb -= combAmount;
+	mHoneyComb += combAmount;
+}
+
+void Hive::ConvertToBroodComb(float combAmount)
+{
+	if (combAmount > mStructuralComb)
+	{
+		combAmount = mStructuralComb;
+	}
+	mStructuralComb -= combAmount;
+	mBroodComb += combAmount;
+}
+
 float Hive::ComputeFitness(const std::pair<float, float>& foodData,
 	const float& minYield, const float& maxYield,
 	const float& minDistance, const float& maxDistance)
@@ -282,4 +341,64 @@ float Hive::ComputeFitness(const std::pair<float, float>& foodData,
 		result = ((offsetFromMinYield / yieldRange) + (offsetFromMaxDistance / distanceRange)) / 2.0f;
 	}
 	return result;
+}
+
+bool Hive::RequiresStructuralComb() const
+{
+	return mStructuralComb < 2000.0f;
+}
+
+bool Hive::RequiresHoneyComb() const
+{
+	return static_cast<uint32_t>(mHoneyComb) < mFoodAmount;
+}
+
+bool Hive::RequiresBroodComb() const
+{
+	auto beeSum = mOnlookerCount + mEmployeeCount + mQueenCount + mDroneCount + mGuardCount;
+	return static_cast<int>(mBroodComb) < beeSum;
+}
+
+void Hive::IncrementBeeCount(const BeeType& type)
+{
+	switch (type)
+	{
+	case Drone: 
+		mDroneCount++;
+		break;
+	case Employee: 
+		mEmployeeCount++;
+		break;
+	case Onlooker: 
+		mOnlookerCount++;
+		break;
+	case Queen: 
+		mQueenCount++;
+		break;
+	case Guard: 
+		mGuardCount++;
+		break;
+	}
+}
+
+void Hive::DecrementBeeCount(const BeeType& type)
+{
+	switch (type)
+	{
+	case Drone:
+		mDroneCount--;
+		break;
+	case Employee:
+		mEmployeeCount--;
+		break;
+	case Onlooker:
+		mOnlookerCount--;
+		break;
+	case Queen:
+		mQueenCount--;
+		break;
+	case Guard:
+		mGuardCount--;
+		break;
+	}
 }

@@ -19,7 +19,23 @@ void QueenBee::Update(sf::RenderWindow& window, const float& deltaTime)
 	mTimeSinceLarvaDeposit += deltaTime;
 	if (mTimeSinceLarvaDeposit >= mLarvaDepositInterval)
 	{
-		BeeManager::GetInstance()->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Onlooker);
+		uniform_int_distribution<int> distribution(0, 3);
+		auto roll = distribution(mGenerator);
+		switch (roll)
+		{
+		case 0:
+			BeeManager::GetInstance()->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Onlooker);
+			break;
+		case 1:
+			BeeManager::GetInstance()->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Employee);
+			break;
+		case 2:
+			BeeManager::GetInstance()->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Drone);
+			break;
+		case 3:
+			BeeManager::GetInstance()->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Guard);
+			break;
+		}
 		mTimeSinceLarvaDeposit = 0.0f;
 	}
 

@@ -6,6 +6,16 @@ class Hive :
 	public Entity
 {
 public:
+
+	enum BeeType
+	{
+		Drone,
+		Employee,
+		Onlooker,
+		Queen,
+		Guard
+	};
+
 	/// Constructor
 	/// @Param position: The starting position of the food source
 	explicit Hive(const sf::Vector2f& position);
@@ -74,6 +84,40 @@ public:
 	/// After wait period has ended and no new scouts have delivered food, allow bees to choose their food source
 	void CompleteWaggleDance();
 
+	/// Adds structural comb to the hive
+	/// @Param combAmount: The amount of structural comb being added
+	void AddStructuralComb(const float& combAmount);
+
+	/// Removes structural comb from the hive
+	/// @Param combAmount: The amount of structural comb being removed
+	void RemoveStructuralComb(const float& combAmount);
+
+	/// Converts existing structural comb to honey comb
+	/// @Param combAmount: The amount of comb being converted to honey comb
+	void ConvertToHoneyComb(float combAmount);
+
+	/// Converts existing structural comb to brood comb
+	/// @Param combAmount: The amount of comb being converted to brood comb
+	void ConvertToBroodComb(float combAmount);
+
+	bool RequiresStructuralComb() const;
+
+	/// Determines if the hive needs more comb to store additional honey
+	/// @Return: True if the hive needs more honey comb
+	bool RequiresHoneyComb() const;
+
+	/// Determines if the hive needs more comb to store additional brood
+	/// @Return: True if the hive needs more brood comb
+	bool RequiresBroodComb() const;
+
+	/// Increases the count of bees of a certain type
+	/// @Param type: The type of bee being incremented
+	void IncrementBeeCount(const BeeType& type);
+
+	/// Decreases the count of bees of a certain type
+	/// @Param type: The type of bee being decremented
+	void DecrementBeeCount(const BeeType& type);
+
 private:
 	/// Constants
 	const float STANDARD_WIDTH = 200.0f;
@@ -98,6 +142,10 @@ private:
 	std::default_random_engine mGenerator;
 	sf::Clock mWaggleDanceClock;
 	float mWaggleDanceWaitPeriod;
+	float mStructuralComb;
+	float mHoneyComb;
+	float mBroodComb;
 	bool mWaggleDanceInProgress;
+	int mOnlookerCount, mEmployeeCount, mDroneCount, mGuardCount, mQueenCount;
 };
 

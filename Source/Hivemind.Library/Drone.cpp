@@ -19,6 +19,8 @@ void Drone::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	Bee::Update(window, deltaTime);
 
+	HandleCombManagement(deltaTime);
+
 	auto facePosition = mFace.getPosition();
 	float rotationRadians = atan2(mTarget.y - facePosition.y, mTarget.x - facePosition.x);
 	float rotationAngle = rotationRadians * (180 / PI);
@@ -47,4 +49,22 @@ void Drone::Update(sf::RenderWindow& window, const float& deltaTime)
 void Drone::Render(sf::RenderWindow& window) const
 {
 	Bee::Render(window);
+}
+
+void Drone::HandleCombManagement(const float& deltaTime) const
+{
+	if (mParentHive.RequiresHoneyComb())
+	{
+		mParentHive.ConvertToHoneyComb(mEnergyConsumptionRate * 50 * deltaTime);
+	}
+
+	if (mParentHive.RequiresBroodComb())
+	{
+		mParentHive.ConvertToBroodComb(mEnergyConsumptionRate * deltaTime);
+	}
+
+	if (mParentHive.RequiresStructuralComb())
+	{
+		mParentHive.AddStructuralComb(mEnergyConsumptionRate * 25 * deltaTime);
+	}
 }

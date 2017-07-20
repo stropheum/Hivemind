@@ -56,26 +56,31 @@ BeeManager::~BeeManager()
 void BeeManager::SpawnOnlooker(const sf::Vector2f& position, Hive& hive)
 {
 	mOnlookers.push_back(new OnlookerBee(position, hive));
+	hive.IncrementBeeCount(Hive::BeeType::Onlooker);
 }
 
 void BeeManager::SpawnEmployee(const sf::Vector2f& position, Hive& hive)
 {
 	mEmployees.push_back(new EmployedBee(position, hive));
+	hive.IncrementBeeCount(Hive::BeeType::Employee);
 }
 
 void BeeManager::SpawnQueen(const sf::Vector2f& position, Hive& hive)
 {
 	mQueens.push_back(new QueenBee(position, hive));
+	hive.IncrementBeeCount(Hive::BeeType::Queen);
 }
 
 void BeeManager::SpawnDrone(const sf::Vector2f& position, Hive& hive)
 {
 	mDrones.push_back(new Drone(position, hive));
+	hive.IncrementBeeCount(Hive::BeeType::Drone);
 }
 
 void BeeManager::SpawnGuard(const sf::Vector2f& position, Hive& hive)
 {
 	mGuards.push_back(new Guard(position, hive));
+	hive.IncrementBeeCount(Hive::BeeType::Guard);
 }
 
 void BeeManager::SpawnLarva(const sf::Vector2f& position, Hive& hive, const Larva::LarvaType& larvaType)
@@ -266,6 +271,7 @@ void BeeManager::CleanupOnlookers()
 		{
 			if ((*iter)->MarkedForDelete())
 			{
+				(*iter)->GetParentHive().DecrementBeeCount(Hive::BeeType::Onlooker);
 				delete *iter;
 				mOnlookers.erase(iter);
 				onlookerRemoved = true;
@@ -285,6 +291,7 @@ void BeeManager::CleanupEmployees()
 		{
 			if ((*iter)->MarkedForDelete())
 			{
+				(*iter)->GetParentHive().DecrementBeeCount(Hive::BeeType::Employee);
 				delete *iter;
 				mEmployees.erase(iter);
 				employeeRemoved = true;
@@ -304,6 +311,7 @@ void BeeManager::CleanupQueens()
 		{
 			if ((*iter)->MarkedForDelete())
 			{
+				(*iter)->GetParentHive().DecrementBeeCount(Hive::BeeType::Queen);
 				delete *iter;
 				mQueens.erase(iter);
 				queenRemoved = true;
@@ -323,6 +331,7 @@ void BeeManager::CleanupDrones()
 		{
 			if ((*iter)->MarkedForDelete())
 			{
+				(*iter)->GetParentHive().DecrementBeeCount(Hive::BeeType::Drone);
 				delete *iter;
 				mDrones.erase(iter);
 				droneRemoved = true;
@@ -342,6 +351,7 @@ void BeeManager::CleanupGuards()
 		{
 			if ((*iter)->MarkedForDelete())
 			{
+				(*iter)->GetParentHive().DecrementBeeCount(Hive::BeeType::Guard);
 				delete *iter;
 				mGuards.erase(iter);
 				guardRemoved = true;

@@ -24,5 +24,11 @@ public:
 	/// @Param window: The window that the simulation is being rendered to
 	void Render(sf::RenderWindow& window) const override;
 
+private:
+
+	/// Determines if any comb is needed and constructrs/converts as much as it can
+	/// @Param deltaTime: Time since last update call was made
+	void HandleCombManagement(const float& deltaTime) const;
+
 };
 
