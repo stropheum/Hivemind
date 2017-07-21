@@ -189,15 +189,15 @@ namespace HivemindLibraryTest
 			bee.HarvestFood(10.0f);
 			Assert::AreNotEqual(0.0f, bee.GetFoodAmount());
 			Assert::AreEqual(10.0f, bee.GetFoodAmount());
-			Assert::AreEqual(0.0f, hive.GetFoodAmount());
+			Assert::AreEqual(5000.0f, hive.GetFoodAmount());
 
 			bee.DepositFood(6.0f);
 			Assert::AreEqual(4.0f, bee.GetFoodAmount());
-			Assert::AreEqual(6.0f, hive.GetFoodAmount());
+			Assert::AreEqual(5006.0f, hive.GetFoodAmount());
 
 			bee.DepositFood(6.0f);
 			Assert::AreEqual(0.0f, bee.GetFoodAmount());
-			Assert::AreEqual(10.0f, hive.GetFoodAmount());
+			Assert::AreEqual(5010.0f, hive.GetFoodAmount());
 		}
 
 		TEST_METHOD(Bee_State)
