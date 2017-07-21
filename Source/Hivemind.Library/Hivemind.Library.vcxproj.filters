@@ -79,6 +79,9 @@
     <Filter Include="Managers\CollisionGrid\CollisionNode">
       <UniqueIdentifier>{97974218-1c8e-4d96-9722-b667cf1c2c30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Structures\Hive\Hive HUD">
+      <UniqueIdentifier>{61fceedf-30b8-4c86-94ad-38f7177d9ba3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -144,6 +147,9 @@
     <ClCompile Include="CollisionGrid.cpp">
       <Filter>Managers\CollisionGrid</Filter>
     </ClCompile>
+    <ClCompile Include="HiveHUD.cpp">
+      <Filter>Entities\Structures\Hive\Hive HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -208,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="CollisionGrid.h">
       <Filter>Managers\CollisionGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="HiveHUD.h">
+      <Filter>Entities\Structures\Hive\Hive HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

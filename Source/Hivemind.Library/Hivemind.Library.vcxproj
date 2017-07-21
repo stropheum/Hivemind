@@ -197,6 +197,7 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     <ClInclude Include="FoodSourceManager.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Hive.h" />
+    <ClInclude Include="HiveHUD.h" />
     <ClInclude Include="HiveManager.h" />
     <ClInclude Include="Larva.h" />
     <ClInclude Include="OnlookerBee.h" />
@@ -220,6 +221,7 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     <ClCompile Include="FoodSourceManager.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="Hive.cpp" />
+    <ClCompile Include="HiveHUD.cpp" />
     <ClCompile Include="HiveManager.cpp" />
     <ClCompile Include="Larva.cpp" />
     <ClCompile Include="OnlookerBee.cpp" />

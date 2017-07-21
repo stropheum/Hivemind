@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "OnlookerBee.h"
+#include "HiveHUD.h"
 
 class Hive :
 	public Entity
@@ -147,5 +148,6 @@ private:
 	float mBroodComb;
 	bool mWaggleDanceInProgress;
 	int mOnlookerCount, mEmployeeCount, mDroneCount, mGuardCount, mQueenCount;
+	HiveHUD mHUD;
 };
 

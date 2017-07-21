@@ -22,7 +22,7 @@ FoodSource::FoodSource(const sf::Vector2f& position) :
 	std::stringstream ss;
 	ss << "Food: " << mFoodAmount;
 	mText.setString(ss.str());
-	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
+	mText.setPosition(mPosition.x + 30, mPosition.y);
 }
 
 float FoodSource::TakeFood(const float amount)
@@ -68,7 +68,7 @@ void FoodSource::Update(sf::RenderWindow& window, const float& deltaTime)
 	std::stringstream ss;
 	ss << "Food: " << mFoodAmount;
 	mText.setString(ss.str());
-	mText.setPosition(mPosition.x + mBody.getSize().x / 2 - mText.getLocalBounds().width / 2, mPosition.y);
+	mText.setPosition(mPosition.x + 30, mPosition.y);
 }
 
 void FoodSource::Render(sf::RenderWindow& window) const
