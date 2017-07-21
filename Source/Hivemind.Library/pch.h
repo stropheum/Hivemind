@@ -38,3 +38,4 @@
 #include "Larva.h"
 #include "CollisionNode.h"
 #include "CollisionGrid.h"
+#include "HiveHUD.h"

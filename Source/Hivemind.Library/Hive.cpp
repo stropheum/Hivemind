@@ -9,7 +9,9 @@ Hive::Hive(const sf::Vector2f& position) :
 	Entity(position, sf::Color(196, 196, 196), sf::Color(222, 147, 12)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
 	mFoodAmount(5000.0f), mText(), mGenerator(), mWaggleDanceClock(), mWaggleDanceWaitPeriod(Bee::STANDARD_HARVESTING_DURATION), mWaggleDanceInProgress(false),
 	mStructuralComb(2000.0f), mHoneyComb(5000.0f), mBroodComb(550.0f),
-	mOnlookerCount(0), mEmployeeCount(0), mGuardCount(0), mQueenCount(0), mDroneCount(0)
+	mOnlookerCount(0), mEmployeeCount(0), mGuardCount(0), mQueenCount(0), mDroneCount(0),
+	mHUD(mPosition + sf::Vector2f(-(mDimensions.x / 2.0f), mDimensions.y + 30), sf::Vector2f(mDimensions.x * 2, 20),
+		mOnlookerCount, mEmployeeCount, mDroneCount, mGuardCount, mQueenCount, mStructuralComb, mHoneyComb, mBroodComb, mFoodAmount)
 {
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
@@ -23,20 +25,6 @@ Hive::Hive(const sf::Vector2f& position) :
 	mText.setFont(FontManager::GetInstance()->Hack());
 	mText.setCharacterSize(16);
 	mText.setOutlineColor(sf::Color::White);
-	mText.setFillColor(sf::Color::White);
-	std::stringstream ss;
-	ss << "Food: " << mFoodAmount << endl;
-	ss << "||Comb Types||" << endl;
-	ss << "Structural: " << mStructuralComb << endl;
-	ss << "Honey: " << mHoneyComb << endl;
-	ss << "Brood: " << mBroodComb << endl;
-	ss << "||Bees||" << endl;
-	ss << "Onlookers: " << mOnlookerCount << endl;
-	ss << "Employees: " << mEmployeeCount << endl;
-	ss << "Drones: " << mDroneCount << endl;
-	ss << "Guards: " << mGuardCount << endl;
-	ss << "Queens: " << mQueenCount << endl;
-	mText.setString(ss.str());
 }
 
 Hive::~Hive()
@@ -62,26 +50,19 @@ void Hive::Update(sf::RenderWindow& window, const float& deltaTime)
 		mCollisionNode->RegisterHive(this);
 	}
 
-	std::stringstream ss;
-	ss << "Food: " << mFoodAmount << endl << endl;
-	ss << "||Comb Types||" << endl;
-	ss << "Structural: " << mStructuralComb << endl;
-	ss << "Honey: " << mHoneyComb << endl;
-	ss << "Brood: " << mBroodComb << endl << endl;
-	ss << "||Bees||" << endl;
-	ss << "Onlookers: " << mOnlookerCount << endl;
-	ss << "Employees: " << mEmployeeCount << endl;
-	ss << "Drones: " << mDroneCount << endl;
-	ss << "Guards: " << mGuardCount << endl;
-	ss << "Queens: " << mQueenCount << endl;
-	mText.setString(ss.str());
-	mText.setPosition(mPosition.x, mPosition.y + mText.getLocalBounds().height - 30);
+//	std::stringstream ss;
+//	ss << "Food: " << mFoodAmount << endl << endl;
+//	mText.setString(ss.str());
+//	mText.setPosition(mPosition.x + 30, mPosition.y);
+
+	mHUD.UpdateHUDValues();
 }
 
 void Hive::Render(sf::RenderWindow& window) const
 {
 	window.draw(mBody);
 	window.draw(mText);
+	mHUD.Render(window);
 }
 
 sf::Vector2f Hive::GetCenterTarget() const
