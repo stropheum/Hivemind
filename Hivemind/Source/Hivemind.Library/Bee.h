@@ -2,6 +2,10 @@
 #include "Entity.h"
 #include <random>
 
+/**
+*	@Author: Dale Diaz
+*	@Date: 7/21/2017
+*/
 
 class Hive;
 
@@ -29,124 +33,171 @@ public:
 
 #pragma region Constructors/Destructor
 
-	/// Constructor
-	/// @Param position: Starting p osition of the bee
-	/// @Param hive: The hive that this bee belongs to
+	/**
+	 * Constructor
+	 * @Param position: Starting p osition of the bee
+	 * @Param hive: The hive that this bee belongs to
+	 */
 	explicit Bee(const sf::Vector2f& position, Hive& hive);
 
-	/// Default destructor
+	/**
+	 *  Default destructor
+	 */
 	virtual ~Bee();
 
 #pragma endregion
 
 #pragma region Copy/Move Semantics
 
-	/// Copy constructor
-	/// @Param rhs: Bee being copied
+	/**
+	 * Copy constructor
+	 * @Param rhs: Bee being copied
+	 */
 	Bee(const Bee& rhs) = delete;
 
-	/// Assignment operator
-	/// @Param rhs: Bee being copied
-	/// @Return: A reference to the copied bee
+	/**
+	 * Assignment operator
+	 * @Param rhs: Bee being copied
+	 * @Return: A reference to the copied bee
+	 */
 	Bee& operator=(const Bee& rhs) = delete;
 
-	/// Move copy constructor
-	/// @Param rhs: The bee being moved
+	/**
+	 * Move copy constructor
+	 * @Param rhs: The bee being moved
+	 */
 	Bee(Bee&& rhs) = delete;
 
-	/// Move assignment operator
-	/// @Param rhs: The bee being moved
-	/// @Return: A reference to the moved bee
+	/**
+	 * Move assignment operator
+	 * @Param rhs: The bee being moved
+	 * @Return: A reference to the moved bee
+	 */
 	Bee& operator=(Bee&& rhs) = delete;
 
 #pragma endregion
 
 #pragma region Public API
 
-	/// Update method called by the main game loop
-	/// @Param window: The window that the simulation is being rendered to
-	/// @Param deltaTime: The time since the last Update call
+	/**
+	 * Update method called by the main game loop
+	 * @Param window: The window that the simulation is being rendered to
+	 * @Param deltaTime: The time since the last Update call
+	 */
 	void Update(sf::RenderWindow& window, const float& deltaTime) override;
 
-	/// Render method called by the main game loop
-	/// @Param window: The window that the simulation is being rendered to
+	/**
+	 * Render method called by the main game loop
+	 * @Param window: The window that the simulation is being rendered to
+	 */
 	void Render(sf::RenderWindow& window) const override;
 
-	/// Determines if the bee is colliding with the specified food source
-	/// @Param foodSource: The food source being checked
-	/// @Return: True if the bee is within the bounds of the food source. False otherwise
+	/**
+	 * Determines if the bee is colliding with the specified food source
+	 * @Param foodSource: The food source being checked
+	 * @Return: True if the bee is within the bounds of the food source. False otherwise
+	 */
 	bool CollidingWithFoodSource(const class FoodSource& foodSource) const;
 
-	/// Determines if the bee is close enough to detect the specified food source
-	/// @Param foodSource; The food source being checked
-	/// @return: True if the bee is within the detectable range of the food source. False otherwise
+	/**
+	 * Determines if the bee is close enough to detect the specified food source
+	 * @Param foodSource; The food source being checked
+	 * @return: True if the bee is within the detectable range of the food source. False otherwise
+	 */
 	bool DetectingFoodSource(const class FoodSource& foodSource) const;
 
-	/// Determines if the bee is colliding with the specified hive
-	/// @Param hive: The hive being checked
-	/// @Return: True if the bee is within the bounds of the hive. False otherwise
+	/**
+	 * Determines if the bee is colliding with the specified hive
+	 * @Param hive: The hive being checked
+	 * @Return: True if the bee is within the bounds of the hive. False otherwise
+	 */
 	bool CollidingWithHive(const class Hive& hive) const;
 
-	/// Sets the bee's body color to the specified value
-	/// @Param color: The new color of the bee's body
+	/**
+	 * Sets the bee's body color to the specified value
+	 * @Param color: The new color of the bee's body
+	 */
 	void SetColor(const sf::Color& color);
 
-	/// Sets the bee's target to the specified food source
-	/// @Param foodSource: The bee's new food source target
+	/**
+	 * Sets the bee's target to the specified food source
+	 * @Param foodSource: The bee's new food source target
+	 */
 	void SetTarget(class FoodSource* const foodSource);
 
-	/// Sets the bee's target tot he specified position
-	/// @Param position: The bee's new target position
+	/**
+	 * Sets the bee's target tot he specified position
+	 * @Param position: The bee's new target position
+	 */
 	void SetTarget(const sf::Vector2f& position);
 
-	/// Accessor method for the bee's current target location
-	/// @Return: A Vector2f position value of the bee's target
+	/**
+	 * Accessor method for the bee's current target location
+	 * @Return: A Vector2f position value of the bee's target
+	 */
 	const sf::Vector2f& GetTarget() const;
 
-	/// Determines if the bee currently has an active target
-	/// @Return: True if the bee has a target. False otherwise
+	/**
+	 * Determines if the bee currently has an active target
+	 * @Return: True if the bee has a target. False otherwise
+	 */
 	bool HasTarget() const;
 
-	/// Accessor method for the bee's current food amount
-	/// @Return: A float representing how much food the bee currently has
+	/**
+	 * Accessor method for the bee's current food amount
+	 * @Return: A float representing how much food the bee currently has
+	 */
 	float GetFoodAmount() const;
 
-	/// Adds food to the bee's body
-	/// @Param foodAmount: The amount of food being added to the bee
+	/**
+	 * Adds food to the bee's body
+	 * @Param foodAmount: The amount of food being added to the bee
+	 */
 	void HarvestFood(const float& foodAmount);
 
-	/// Deposits food from the bee's body to its parent hive
-	/// @Param foodAmount; The amount of food being deposited into the hive
+	/**
+	 * Deposits food from the bee's body to its parent hive
+	 * @Param foodAmount; The amount of food being deposited into the hive
+	 */
 	void DepositFood(float foodAmount);
 
-	/// Mutator method for the bee's current state
-	/// @Param state: The bee's new state
+	/**
+	 * Mutator method for the bee's current state
+	 * @Param state: The bee's new state
+	 */
 	void SetState(const State& state);
 
-	/// Accessor method for the bee's current state
-	/// @Return: The state of the bee
+	/**
+	 * Accessor method for the bee's current state
+	 * @Return: The state of the bee
+	 */
 	State GetState() const;
 
-	/// Determines whether the bee requires food
-	/// @Return: True if the bee needs to eat
+	/**
+	 * Determines whether the bee requires food
+	 * @Return: True if the bee needs to eat
+	 */
 	bool Hungry() const;
 
-	/// Accessor method for the parent hive
-	/// @Return: A reference to the hive that this bee belongs to
+	/**
+	 * Accessor method for the parent hive
+	 * @Return: A reference to the hive that this bee belongs to
+	 */
 	Hive& GetParentHive() const;
 
 #pragma endregion
 
 protected:
-	/// Constants
+	
+	// Constants
 	const float PI = 3.14159265359f;
 	const float EXTRACTION_YIELD = 5.0f;
 
-	/// Private API
+	// Private API
 	void HandleFoodSourceCollisions();
 	void DetectStructureCollisions();
 
-	/// Private fields
+	// Private fields
 	Hive& mParentHive;
 	std::default_random_engine mGenerator;
 	sf::CircleShape mBody;

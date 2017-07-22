@@ -4,6 +4,10 @@
 #include "FoodSource.h"
 #include "FoodSourceManager.h"
 
+/**
+*	@Author: Dale Diaz
+*	@Date: 7/21/2017
+*/
 
 using namespace std;
 

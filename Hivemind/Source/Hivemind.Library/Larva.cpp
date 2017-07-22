@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "Larva.h"
 
+/**
+*	@Author: Dale Diaz
+*	@Date: 7/21/2017
+*/
 
 Larva::Larva(const sf::Vector2f& position, Hive& hive, const LarvaType& larvaType) :
 	Bee(position, hive),
@@ -25,11 +29,6 @@ void Larva::Update(sf::RenderWindow& window, const float& deltaTime)
 void Larva::Render(sf::RenderWindow& window) const
 {
 	Bee::Render(window);
-}
-
-bool Larva::MarkedForDelete() const
-{
-	return mMarkedForDelete;
 }
 
 void Larva::Hatch()

@@ -2,6 +2,10 @@
 #include "FoodSourceManager.h"
 #include "FoodSource.h"
 
+/**
+*	@Author: Dale Diaz
+*	@Date: 7/21/2017
+*/
 
 FoodSourceManager* FoodSourceManager::sInstance = nullptr;
 

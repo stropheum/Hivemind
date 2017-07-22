@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "FontManager.h"
 
+/**
+*	@Author: Dale Diaz
+*	@Date: 7/21/2017
+*/
 
 FontManager* FontManager::sInstance = nullptr;
 

@@ -1,32 +1,47 @@
 #pragma once
+
+/**
+*	@Author: Dale Diaz
+*	@Date: 7/21/2017
+*/
+
 class HiveHUD
 {
 public:
 
-	/// Construtor
+	/**
+	 *  Construtor
+	 */
 	HiveHUD(
 		const sf::Vector2f& rootPosition, const sf::Vector2f& dimensions,
 		const int& onlookerCount, const int& employeeCount, int& droneCount, const int& guardCount, const int& queenCount,
 		const float& structuralComb, const float& honeyComb, const float& broodComb, const float& mFoodAmount);
 
-	/// Destructor
+	/**
+	 * Destructor
+	 */
 	~HiveHUD() = default;
 
-	/// Copy / Move semantics
+	// Copy / Move semantics
 	HiveHUD(const HiveHUD& rhs) = delete;
 	HiveHUD& operator=(const HiveHUD& rhs) = delete;
 	HiveHUD(HiveHUD&& rhs) = delete;
 	HiveHUD& operator=(HiveHUD&& rhs) = delete;
 
-	/// Renders the HUD to the screen
+	/**
+	 * Renders the HUD to the screen
+	 * @Param window: The window that the HUD is being rendered to
+	 */
 	void Render(sf::RenderWindow& window) const;
 
-	/// Updates the relative size representations of the contents of the hive
+	/**
+	 *  Updates the relative size representations of the contents of the hive
+	 */
 	void UpdateHUDValues();
 
 private:
 
-	/// Data references
+	// Data references
 	const int& mOnlookerCount;
 	const int& mEmployeeCount;
 	const int& mDroneCount;
@@ -37,7 +52,7 @@ private:
 	const float& mBroodComb;
 	const float& mFoodAmount;
 
-	/// Rendering components
+	// Rendering components
 	sf::Vector2f mRootPosition;
 	sf::Vector2f mDimensions;
 	sf::RectangleShape mBeeContainer;
