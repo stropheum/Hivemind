@@ -8,7 +8,7 @@
 
 Larva::Larva(const sf::Vector2f& position, Hive& hive, const LarvaType& larvaType) :
 	Bee(position, hive),
-	mTimeSinceBirth(0.0f), mLarvaDuration(3.0f), mLarvaType(larvaType), mMarkedForDelete(false)
+	mTimeSinceBirth(0.0f), mLarvaDuration(3.0f), mLarvaType(larvaType)
 {
 	mFillColor = sf::Color::Blue;
 	mFace.setSize(sf::Vector2f(0, 0));

@@ -33,8 +33,6 @@ string computeFrameRate();
 
 int main(int argc, char* argv[])
 {
-	UNREFERENCED_PARAMETER(argc);
-	UNREFERENCED_PARAMETER(argv);
 	// Allows console window to be shown for debugging, to display triggers or not-otherwise rendered data points
 #if _DEBUG
 	ShowWindow(GetConsoleWindow(), SW_RESTORE);
