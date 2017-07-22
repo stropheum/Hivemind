@@ -109,7 +109,8 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
-xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I
+xcopy "$(ProjectDir)big_world.json" "$(TargetDir)" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,7 +131,8 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
-xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I
+xcopy "$(ProjectDir)big_world.json" "$(TargetDir)" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -155,7 +157,8 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
-xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I
+xcopy "$(ProjectDir)big_world.json" "$(TargetDir)" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -180,7 +183,8 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)External\ucrtbased.dll" "$(TargetDir)"  /Y /I
-xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
+xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I
+xcopy "$(ProjectDir)big_world.json" "$(TargetDir)" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
