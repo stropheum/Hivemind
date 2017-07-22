@@ -21,6 +21,7 @@ using namespace std::chrono;
 
 	@Author: Dale Diaz
 	@Date: 7/21/2017
+
 */
 
 const float FRAME_INTERVAL = 1.0f / 120.0f;
