@@ -189,6 +189,7 @@ xcopy "$(ProjectDir)big_world.json" "$(TargetDir)" /Y /I</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Hivemind.cpp" />
@@ -201,6 +202,9 @@ xcopy "$(ProjectDir)big_world.json" "$(TargetDir)" /Y /I</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Hivemind.Desktop.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
