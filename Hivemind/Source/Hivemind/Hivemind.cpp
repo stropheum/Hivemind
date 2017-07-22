@@ -1,20 +1,27 @@
-#include "pch.h"
-#include <iostream>
-#include <chrono>
-#include <sstream>
-#include "BeeManager.h"
-#include "FoodSourceManager.h"
-#include "HiveManager.h"
-#include "Hive.h"
-#include "FlowField.h"
-#include "WorldGenerator.h"
-#include "FlowFieldManager.h"
-#include "CollisionNode.h"
-#include "CollisionGrid.h"
-
+﻿#include "pch.h"
 
 using namespace std;
 using namespace std::chrono;
+
+/**
+
+	██╗  ██╗██╗██╗   ██╗███████╗███╗   ███╗██╗███╗   ██╗██████╗
+	██║  ██║██║██║   ██║██╔════╝████╗ ████║██║████╗  ██║██╔══██╗
+	███████║██║██║   ██║█████╗  ██╔████╔██║██║██╔██╗ ██║██║  ██║
+	██╔══██║██║╚██╗ ██╔╝██╔══╝  ██║╚██╔╝██║██║██║╚██╗██║██║  ██║
+	██║  ██║██║ ╚████╔╝ ███████╗██║ ╚═╝ ██║██║██║ ╚████║██████╔╝
+	╚═╝  ╚═╝╚═╝  ╚═══╝  ╚══════╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═════╝
+
+	A simulation intended to represent the organic behavior of bees, predominantly focused on the foraging and communication patterns of bees.
+	Each bee is assigned a role at birth which will dictate their behavioral patterns and physical abilities. Beehives will attempt to reach
+	a homeostatic balance with their environment, ie continually seeking higher yield food sources, which not only allows a food source to
+	replenish, but also allows the hive to maintain more efficient harvests and stockpile honey more rapidly.
+
+	The foraging and communication patterns have been modeled after the "Artificial Bee Colony (ABC)" Algorithm developed by Karaboga in 2005
+
+	@Author: Dale Diaz
+	@Date: 7/21/2017
+*/
 
 const float FRAME_INTERVAL = 1.0f / 120.0f;
 const float CAMERA_SPEED = 350.0f;
