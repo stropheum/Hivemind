@@ -3,8 +3,8 @@
 	[
 		{
 			"position": {"x": 0, "y": 0},
-			"Onlookers": 500,
-			"Employees": 50,
+			"Onlookers": 250,
+			"Employees": 25,
 			"Drones": 15,
 			"Guards": 0
 		}

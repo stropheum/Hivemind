@@ -56,10 +56,10 @@ void EmployedBee::Update(sf::RenderWindow& window, const float& deltaTime)
 		mLineToFoodSource[1].color = sf::Color(255, 0, 0, 64);
 	}
 
-	stringstream ss;
-	ss << static_cast<int>(mVelocity.x) << ", " << static_cast<int>(mVelocity.y);
-	mText.setString(ss.str());
-	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
+//	stringstream ss;
+//	ss << mEnergy;
+//	mText.setString(ss.str());
+//	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
 }
 
 void EmployedBee::Render(sf::RenderWindow& window) const

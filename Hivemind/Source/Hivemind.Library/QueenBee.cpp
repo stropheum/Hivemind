@@ -12,6 +12,7 @@ QueenBee::QueenBee(const sf::Vector2f& position, Hive& hive) :
 	Bee(position, hive),
 	mLarvaDepositInterval(5.0f), mTimeSinceLarvaDeposit(0.0f)
 {
+	mState = State::Idle;
 	mFillColor = sf::Color::Magenta;
 	mBody.setFillColor(mFillColor);
 }
@@ -20,9 +21,34 @@ void QueenBee::Update(sf::RenderWindow& window, const float& deltaTime)
 {
 	Bee::Update(window, deltaTime);
 
+	auto beeManager = BeeManager::GetInstance();
+
+	if (mEnergy <= 0.0f)
+	{
+		beeManager->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Queen);
+	}
+
 	mTimeSinceLarvaDeposit += deltaTime;
 	if (mTimeSinceLarvaDeposit >= mLarvaDepositInterval)
 	{
+		// Lay all eggs needed to maintain minimum bee values
+		if (mParentHive.GetBeeCount(Bee::Type::Onlooker) < 50)
+		{
+			beeManager->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Onlooker);
+		}
+		if (mParentHive.GetBeeCount(Bee::Type::Employee) < 10)
+		{
+			beeManager->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Employee);
+		}
+		if (mParentHive.GetBeeCount(Bee::Type::Drone) < 5)
+		{
+			beeManager->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Drone);
+		}
+		if (mParentHive.GetBeeCount(Bee::Type::Guard) < 5)
+		{
+			beeManager->SpawnLarva(mPosition, mParentHive, Larva::LarvaType::Guard);
+		}
+
 		uniform_int_distribution<int> distribution(0, 3);
 		auto roll = distribution(mGenerator);
 		switch (roll)

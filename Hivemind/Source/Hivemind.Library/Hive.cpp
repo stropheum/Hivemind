@@ -387,3 +387,29 @@ void Hive::DecrementBeeCount(const BeeType& type)
 		break;
 	}
 }
+
+int Hive::GetBeeCount(const Bee::Type& type) const
+{
+	int result = 0;
+
+	switch (type)
+	{
+	case Bee::Onlooker: 
+		result = mOnlookerCount;
+		break;
+	case Bee::Employee: 
+		result = mEmployeeCount;
+		break;
+	case Bee::Drone: 
+		result = mDroneCount;
+		break;
+	case Bee::Guard: 
+		result = mGuardCount;
+		break;
+	case Bee::Queen: 
+		result = mQueenCount;
+		break;
+	}
+
+	return result;
+}

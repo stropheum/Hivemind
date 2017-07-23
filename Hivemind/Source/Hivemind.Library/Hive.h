@@ -180,6 +180,13 @@ public:
 	 */
 	void DecrementBeeCount(const BeeType& type);
 
+	/**
+	 * Accessor for different bee types in the hive
+	 * @Param type: The type of bee being counted
+	 * @Return: The number of bees associated with the specified type in the hive
+	 */
+	int GetBeeCount(const Bee::Type& type) const;
+
 private:
 
 	// Constants

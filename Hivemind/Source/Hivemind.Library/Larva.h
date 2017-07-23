@@ -11,6 +11,7 @@ class Larva :public Bee
 {
 public:
 
+	// TODO: Remove larva type enum and centralize use of Bee::Type
 	enum LarvaType
 	{
 		Drone,

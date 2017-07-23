@@ -13,6 +13,16 @@ class Bee : public Entity
 {
 public:
 
+	enum Type
+	{
+		Onlooker,
+		Employee,
+		Drone,
+		Guard,
+		Queen,
+		Larva
+	};
+
 	enum State
 	{
 		Idle,
