@@ -50,12 +50,17 @@ private:
 	 * Given a json array of bees, spawn them via the bee manager
 	 * @Param data: The data that the bees will belong to
 	 */
-	void GenerateBees(const rapidjson::Value& data, Hive& hive);
+	void GenerateBees(const rapidjson::Value& data, Hive& hive) const;
 
 	/**
 	 * Constructor
 	 */
 	WorldGenerator();
+
+	bool IsValidLocation(const sf::Vector2f& spawnLocation, const FoodSource& foodSource) const;
+
+	bool IsValidLocation(const sf::Vector2f& spawnLocation, const Hive& hive) const;
+
 
 	/**
 	 * Base-level data object for the world data

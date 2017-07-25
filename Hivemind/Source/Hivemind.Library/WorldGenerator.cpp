@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "WorldGenerator.h"
+#include <cassert>
 
 /**
 *	@Author: Dale Diaz
@@ -86,6 +87,7 @@ void WorldGenerator::GenerateFoodSources()
 	assert(mData["FoodSources"].IsArray());
 	auto& foodSources = mData["FoodSources"];
 	auto foodSourceManager = FoodSourceManager::GetInstance();
+	auto hiveManager = HiveManager::GetInstance();
 
 	for (uint32_t i = 0; i < foodSources.Size(); i++)
 	{	// Construct food source data and pass it to the food source manager
@@ -107,13 +109,42 @@ void WorldGenerator::GenerateFoodSources()
 			assert(lower.IsDouble());
 			assert(upper.IsDouble());
 
-			std::uniform_real_distribution<float> distribution(lower.GetDouble(), upper.GetDouble());
-			foodSourceManager->SpawnFoodSource(sf::Vector2f(distribution(mGenerator), distribution(mGenerator)));
+			bool collidingWithStructures = true;
+			sf::Vector2f spawnLocation;
+
+			while (collidingWithStructures)
+			{
+				collidingWithStructures = false;
+				std::uniform_real_distribution<float> distribution(lower.GetDouble(), upper.GetDouble());
+				spawnLocation = sf::Vector2f(sf::Vector2f(distribution(mGenerator), distribution(mGenerator)));
+
+				// Check if spawn location is valid with food sources
+				for (auto iter = foodSourceManager->Begin(); iter != foodSourceManager->End(); ++iter)
+				{
+					if (!IsValidLocation(spawnLocation, *(*iter)))
+					{
+						collidingWithStructures = true;
+						break;
+					}
+				}
+
+				// Check if spawn location is valid with hives
+				for (auto iter = hiveManager->Begin(); iter != hiveManager->End(); ++iter)
+				{
+					if (!IsValidLocation(spawnLocation, *(*iter)))
+					{
+						collidingWithStructures = true;
+						break;
+					}
+				}
+			}
+
+			foodSourceManager->SpawnFoodSource(spawnLocation);
 		}
 	}
 }
 
-void WorldGenerator::GenerateBees(const rapidjson::Value& data, Hive& hive)
+void WorldGenerator::GenerateBees(const rapidjson::Value& data, Hive& hive) const
 {
 	auto beeManager = BeeManager::GetInstance();
 	auto spawnLocation = hive.GetCenterTarget();
@@ -151,4 +182,35 @@ void WorldGenerator::GenerateBees(const rapidjson::Value& data, Hive& hive)
 			beeManager->SpawnGuard(spawnLocation, hive);
 		}
 	}
+}
+
+bool WorldGenerator::IsValidLocation(const sf::Vector2f& spawnLocation, const FoodSource& foodSource) const
+{
+	auto position = foodSource.GetPosition();
+	auto dimensions = foodSource.GetDimensions();
+	bool leftSideWithinBounds = spawnLocation.x <= (position.x + dimensions.x) && spawnLocation.x >= position.x;
+	bool rightSideWithinBounds = (spawnLocation.x + FoodSource::STANDARD_WIDTH >= position.x) && (spawnLocation.x + FoodSource::STANDARD_WIDTH <= position.x + dimensions.x);
+	bool topSideWithinBounds = (spawnLocation.y >= position.y) && (spawnLocation.y <= position.y + dimensions.y);
+	bool bottomSideWithinBounds = (spawnLocation.y + FoodSource::STANDARD_WIDTH >= position.y) && (spawnLocation.y + FoodSource::STANDARD_WIDTH <= position.y + dimensions.y);
+	
+	return !(leftSideWithinBounds && topSideWithinBounds ||
+		leftSideWithinBounds && bottomSideWithinBounds ||
+		rightSideWithinBounds && topSideWithinBounds ||
+		rightSideWithinBounds && bottomSideWithinBounds);
+}
+
+bool WorldGenerator::IsValidLocation(const sf::Vector2f& spawnLocation, const Hive& hive) const
+{
+	auto position = hive.GetPosition();
+	auto dimensions = hive.GetDimensions();
+	auto buffer = 300;
+	bool leftSideWithinBounds = spawnLocation.x <= (position.x + dimensions.x + buffer) && spawnLocation.x >= position.x - buffer;
+	bool rightSideWithinBounds = (spawnLocation.x + FoodSource::STANDARD_WIDTH >= position.x - buffer) && (spawnLocation.x + FoodSource::STANDARD_WIDTH <= position.x + dimensions.x + buffer);
+	bool topSideWithinBounds = (spawnLocation.y >= position.y - buffer) && (spawnLocation.y <= position.y + dimensions.y + buffer);
+	bool bottomSideWithinBounds = (spawnLocation.y + FoodSource::STANDARD_WIDTH >= position.y - buffer) && (spawnLocation.y + FoodSource::STANDARD_WIDTH <= position.y + dimensions.y + buffer);
+
+	return !(leftSideWithinBounds && topSideWithinBounds ||
+		leftSideWithinBounds && bottomSideWithinBounds ||
+		rightSideWithinBounds && topSideWithinBounds ||
+		rightSideWithinBounds && bottomSideWithinBounds);
 }

@@ -8,6 +8,8 @@
 
 using namespace std;
 
+const float FoodSource::STANDARD_WIDTH = 200.0f;
+const float FoodSource::STANDARD_HEIGHT = 200.0f;
 float FoodSource::DetectionRadius = 400.0f;
 
 FoodSource::FoodSource(const sf::Vector2f& position) :

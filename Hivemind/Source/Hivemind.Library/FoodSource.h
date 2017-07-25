@@ -10,6 +10,10 @@ class FoodSource : public Entity
 {
 public:
 
+	// Constants
+	static const float STANDARD_WIDTH;
+	static const float STANDARD_HEIGHT;
+
 #pragma region Constructors / Destructor / Move semantics
 
 	/**
@@ -120,10 +124,6 @@ public:
 #pragma endregion
 
 private:
-
-	// Constants
-	const float STANDARD_WIDTH = 200.0f;
-	const float STANDARD_HEIGHT = 200.0f;
 
 	// Fields
 	sf::Vector2f mDimensions;
