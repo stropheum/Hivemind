@@ -29,8 +29,6 @@ const float CAMERA_SPEED = 350.0f;
 sf::Clock deltaClock;
 sf::Clock uiDeltaClock;
 
-string computeFrameRate();
-
 int main(int argc, char* argv[])
 {
 	// Allows console window to be shown for debugging, to display triggers or not-otherwise rendered data points
@@ -195,8 +193,6 @@ int main(int argc, char* argv[])
 		fpsMeter.setPosition(
 			sf::Vector2f(view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2));
 		window.setView(view);
-		fpsMeter.setString(computeFrameRate());
-		window.draw(fpsMeter);
 
 		hiveManager->Render(window);
 		foodSourceManager->Render(window);
@@ -208,26 +204,4 @@ int main(int argc, char* argv[])
 	}
 
     return EXIT_SUCCESS;
-}
-
-string computeFrameRate()
-{
-	stringstream ss;
-	static const int MAX_FRAMES = 1000000;
-	static high_resolution_clock::time_point startTime = high_resolution_clock::now();
-	static uint32_t frameCount = 0;
-	frameCount++;
-
-	int timeSinceStart = static_cast<int>(duration_cast<milliseconds>(high_resolution_clock::now() - startTime).count() / 1000.0f);
-
-	string result = timeSinceStart != 0 ? to_string(frameCount / timeSinceStart) : "0";
-	ss << "FPS: " << result << endl << endl;
-
-	if (frameCount >= MAX_FRAMES)
-	{	// If we surpass max frames then we reset the FPS counter
-		startTime = high_resolution_clock::now();
-		frameCount = 0;
-	}
-
-	return ss.str();
 }
