@@ -6,7 +6,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 using namespace std;
@@ -21,7 +21,7 @@ EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive) :
 	mBody.setFillColor(mFillColor);
 }
 
-void EmployedBee::Update(sf::RenderWindow& window, const float& deltaTime)
+void EmployedBee::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	Bee::Update(window, deltaTime);
 

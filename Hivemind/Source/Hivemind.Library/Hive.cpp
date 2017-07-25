@@ -4,7 +4,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 using namespace std;
@@ -37,7 +37,7 @@ Hive::~Hive()
 	mFoodSourceData.clear();
 }
 
-void Hive::Update(sf::RenderWindow& window, const float& deltaTime)
+void Hive::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);

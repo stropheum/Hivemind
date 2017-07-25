@@ -4,7 +4,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 class QueenBee : public Bee
@@ -28,7 +28,7 @@ public:
 	 * @Param window: The window that the simulation is being rendered to
 	 * @Param deltaTime: The time since the last Update call
 	 */
-	void Update(sf::RenderWindow& window, const float& deltaTime) override;
+	void Update(sf::RenderWindow& window, const double& deltaTime) override;
 
 	/**
 	 * Render method called by the main game loop

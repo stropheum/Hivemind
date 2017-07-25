@@ -54,7 +54,7 @@ bool FoodSource::IsViable() const
 	return mFoodAmount > 0.0f;
 }
 
-void FoodSource::Update(sf::RenderWindow& window, const float& deltaTime)
+void FoodSource::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);

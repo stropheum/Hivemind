@@ -3,7 +3,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 using namespace std;
@@ -17,7 +17,7 @@ QueenBee::QueenBee(const sf::Vector2f& position, Hive& hive) :
 	mBody.setFillColor(mFillColor);
 }
 
-void QueenBee::Update(sf::RenderWindow& window, const float& deltaTime)
+void QueenBee::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	Bee::Update(window, deltaTime);
 

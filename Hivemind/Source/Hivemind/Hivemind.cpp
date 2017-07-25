@@ -24,7 +24,6 @@ using namespace std::chrono;
 
 */
 
-const float FRAME_INTERVAL = 1.0f / 120.0f;
 const float CAMERA_SPEED = 350.0f;
 sf::Clock deltaClock;
 sf::Clock uiDeltaClock;
@@ -178,7 +177,7 @@ int main(int argc, char* argv[])
 		// Handle business logic updates
 		if (running)
 		{
-			auto deltaTime = deltaClock.restart().asSeconds();
+			double deltaTime = deltaClock.restart().asSeconds();
 			hiveManager->Update(window, deltaTime);
 			beeManager->Update(window, deltaTime);
 			foodSourceManager->Update(window, deltaTime); 

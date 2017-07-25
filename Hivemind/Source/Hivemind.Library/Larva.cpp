@@ -3,7 +3,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 Larva::Larva(const sf::Vector2f& position, Hive& hive, const LarvaType& larvaType) :
@@ -15,7 +15,7 @@ Larva::Larva(const sf::Vector2f& position, Hive& hive, const LarvaType& larvaTyp
 	mBody.setRadius(BodyRadius / 3.0f);
 }
 
-void Larva::Update(sf::RenderWindow& window, const float& deltaTime)
+void Larva::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	Bee::Update(window, deltaTime);
 

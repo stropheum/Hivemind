@@ -3,7 +3,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 using namespace std;
@@ -15,7 +15,7 @@ Guard::Guard(const sf::Vector2f& position, Hive& hive) :
 	mBody.setFillColor(mFillColor);
 }
 
-void Guard::Update(sf::RenderWindow& window, const float& deltaTime)
+void Guard::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	Bee::Update(window, deltaTime);
 

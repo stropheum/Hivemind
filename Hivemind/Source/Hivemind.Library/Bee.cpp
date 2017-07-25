@@ -7,7 +7,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 using namespace std;
@@ -56,7 +56,7 @@ Bee::~Bee()
 {
 }
 
-void Bee::Update(sf::RenderWindow& window, const float& deltaTime)
+void Bee::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 

@@ -3,7 +3,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 using namespace std;
@@ -41,7 +41,7 @@ CollisionNode::~CollisionNode()
 {
 }
 
-void CollisionNode::Update(sf::RenderWindow& window, const float& deltaTime)
+void CollisionNode::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);

@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+*	@Author: Dale Diaz
+*	@Date: 7/25/2017
+*/
+
 class FooEntity : public Entity
 {
 public:
@@ -9,7 +15,7 @@ public:
 
 	virtual ~FooEntity() = default;
 
-	virtual void Update(sf::RenderWindow& window, const float& deltaTime) override;
+	virtual void Update(sf::RenderWindow& window, const double& deltaTime) override;
 	virtual void Render(sf::RenderWindow& window) const override;
 };
 

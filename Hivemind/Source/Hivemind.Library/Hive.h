@@ -5,7 +5,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 class Hive :
@@ -38,7 +38,7 @@ public:
 	 * @Param window: The screen that the game is being rendered to
 	 * @Param deltaTime: The time elapsed since last Update
 	 */
-	void Update(sf::RenderWindow& window, const float& deltaTime) override;
+	void Update(sf::RenderWindow& window, const double& deltaTime) override;
 
 	/**
 	 * Renders the hive to the screen

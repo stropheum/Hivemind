@@ -6,7 +6,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 using namespace std;
@@ -79,7 +79,7 @@ FlowField& FlowField::operator=(const FlowField& rhs)
 	return (*this);
 }
 
-void FlowField::Update(sf::RenderWindow& window, const float& deltaTime)
+void FlowField::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	UNREFERENCED_PARAMETER(window);
 	UNREFERENCED_PARAMETER(deltaTime);

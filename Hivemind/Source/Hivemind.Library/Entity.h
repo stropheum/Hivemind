@@ -2,7 +2,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 class Entity
@@ -61,7 +61,7 @@ public:
 	 * @Param window: The window that the simulation is being rendered to
 	 * @Param deltaTime: The time since the last Update call
 	 */
-	virtual void Update(sf::RenderWindow& window, const float& deltaTime) = 0;
+	virtual void Update(sf::RenderWindow& window, const double& deltaTime) = 0;
 
 	/**
 	 * Render method called by the main game loop

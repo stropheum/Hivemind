@@ -5,7 +5,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/21/2017
+*	@Date: 7/25/2017
 */
 
 using namespace std;
@@ -16,7 +16,7 @@ OnlookerBee::OnlookerBee(const sf::Vector2f& position, Hive& hive) :
 	mState = State::DeliveringFood;
 }
 
-void OnlookerBee::Update(sf::RenderWindow& window, const float& deltaTime)
+void OnlookerBee::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	Bee::Update(window, deltaTime);
 
