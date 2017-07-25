@@ -57,8 +57,20 @@ private:
 	 */
 	WorldGenerator();
 
+	/**
+	 * Determines if the proposed spawn location will collide with the specified food source
+	 * @Param spawnLocation: The spawn location in question
+	 * @Param foodSource: The food source in question
+	 * @Return: True if the spawn location will not collide with the food source
+	 */
 	bool IsValidLocation(const sf::Vector2f& spawnLocation, const FoodSource& foodSource) const;
 
+	/**
+	* Determines if the proposed spawn location will collide with the specified hive
+	* @Param spawnLocation: The spawn location in question
+	* @Param hive: The hive in question
+	* @Return: True if the spawn location will not collide with the hive
+	*/
 	bool IsValidLocation(const sf::Vector2f& spawnLocation, const Hive& hive) const;
 
 
