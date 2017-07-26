@@ -82,6 +82,9 @@
     <Filter Include="Entities\Structures\Hive\Hive HUD">
       <UniqueIdentifier>{61fceedf-30b8-4c86-94ad-38f7177d9ba3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Wasp">
+      <UniqueIdentifier>{01a0bb9d-b858-446e-9129-dd662e5f6df7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -150,6 +153,9 @@
     <ClCompile Include="HiveHUD.cpp">
       <Filter>Entities\Structures\Hive\Hive HUD</Filter>
     </ClCompile>
+    <ClCompile Include="Wasp.cpp">
+      <Filter>Entities\Wasp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -217,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="HiveHUD.h">
       <Filter>Entities\Structures\Hive\Hive HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Wasp.h">
+      <Filter>Entities\Wasp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

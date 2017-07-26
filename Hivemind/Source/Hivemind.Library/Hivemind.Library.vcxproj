@@ -204,6 +204,7 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     <ClInclude Include="pch.h" />
     <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="QueenBee.h" />
+    <ClInclude Include="Wasp.h" />
     <ClInclude Include="WorldGenerator.h" />
   </ItemGroup>
   <ItemGroup>
@@ -233,6 +234,7 @@ xcopy "$(SolutionDir)External\Hack-Regular.ttf" "$(TargetDir)"  /Y /I</Command>
     </ClCompile>
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="QueenBee.cpp" />
+    <ClCompile Include="Wasp.cpp" />
     <ClCompile Include="WorldGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>

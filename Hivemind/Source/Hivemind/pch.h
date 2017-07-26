@@ -24,3 +24,4 @@
 #include "FlowFieldManager.h"
 #include "CollisionNode.h"
 #include "CollisionGrid.h"
+#include "Wasp.h"

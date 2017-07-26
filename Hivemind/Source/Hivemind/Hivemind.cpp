@@ -65,6 +65,7 @@ int main(int argc, char* argv[])
 	auto hiveManager = HiveManager::GetInstance();
 	auto foodSourceManager = FoodSourceManager::GetInstance();
 	auto collisionGrid = CollisionGrid::GetInstance();
+	Wasp wasp(sf::Vector2f(0, 2000));
 
 	string worldConfig = argc >= 2 ? argv[1] : "big_world.json";
 	WorldGenerator::GetInstance()->Generate(worldConfig);
@@ -181,6 +182,7 @@ int main(int argc, char* argv[])
 			hiveManager->Update(window, deltaTime);
 			beeManager->Update(window, deltaTime);
 			foodSourceManager->Update(window, deltaTime); 
+			wasp.Update(window, deltaTime);
 		}
 
 		auto uiDeltaTime = uiDeltaClock.restart().asSeconds();
@@ -197,6 +199,7 @@ int main(int argc, char* argv[])
 		foodSourceManager->Render(window);
 		beeManager->Render(window);
 		collisionGrid->Render(window);
+		wasp.Render(window);
 
 		window.display();
 		
