@@ -51,7 +51,7 @@ void Wasp::Render(sf::RenderWindow& window) const
 
 void Wasp::GenerateNewTarget()
 {
-	uniform_real_distribution<float> distribution(-50.0f, 50.0f);
+	uniform_real_distribution<float> distribution(-500.0f, 500.0f);
 	sf::Vector2f offset(distribution(mGenerator), distribution(mGenerator));
 	mTarget = mPosition + offset;
 }

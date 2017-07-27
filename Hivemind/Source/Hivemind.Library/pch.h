@@ -40,3 +40,4 @@
 #include "CollisionGrid.h"
 #include "HiveHUD.h"
 #include "Wasp.h"
+#include "WaspManager.h"

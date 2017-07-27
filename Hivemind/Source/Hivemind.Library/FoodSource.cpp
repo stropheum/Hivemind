@@ -71,7 +71,7 @@ void FoodSource::Update(sf::RenderWindow& window, const double& deltaTime)
 		mCollisionNode->RegisterFoodSource(this);
 	}
 
-	mBody.setFillColor(sf::Color(32, 128 * (mFoodAmount / mMaxFoodAmount), 32));
+	mBody.setFillColor(sf::Color(32, 32 + 96 * (mFoodAmount / mMaxFoodAmount), 32));
 
 	std::stringstream ss;
 	ss << "Food: " << mFoodAmount;
