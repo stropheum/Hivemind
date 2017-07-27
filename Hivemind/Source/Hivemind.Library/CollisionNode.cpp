@@ -129,6 +129,25 @@ void CollisionNode::UnregisterBee(Bee* const bee)
 	UpdateTextDisplay();
 }
 
+void CollisionNode::RegisterWasp(Wasp* const wasp)
+{
+	mWasps.push_back(wasp);
+	UpdateTextDisplay();
+}
+
+void CollisionNode::UnregisterWasp(Wasp* const wasp)
+{
+	for (auto iter = mWasps.begin(); iter != mWasps.end(); ++iter)
+	{
+		if (*iter == wasp)
+		{
+			mWasps.erase(iter);
+			break;
+		}
+	}
+	UpdateTextDisplay();
+}
+
 bool CollisionNode::ContainsPoint(const sf::Vector2f& point) const
 {
 	return
@@ -153,11 +172,17 @@ std::vector<Bee*> CollisionNode::Bees() const
 	return mBees;
 }
 
+std::vector<Wasp*> CollisionNode::Wasps() const
+{
+	return mWasps;
+}
+
 void CollisionNode::UpdateTextDisplay()
 {
 	stringstream ss;
 	ss << "Hives: " << mHives.size() << endl;
 	ss << "Food Sources: " << mFoodSources.size() << endl;
 	ss << "Bees: " << mBees.size() << endl;
+	ss << "Wasps: " << mWasps.size() << endl;
 	mText.setString(ss.str());
 }

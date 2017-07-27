@@ -67,7 +67,7 @@ std::vector<Wasp*>::iterator WaspManager::End()
 void WaspManager::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	mTimeSinceSpawn += deltaTime;
-	if (mTimeSinceSpawn >= mSpawnInterval)
+	if (mTimeSinceSpawn >= mSpawnInterval && mWasps.size() <= 50)
 	{
 		mTimeSinceSpawn = 0.0f;
 		uniform_real_distribution<float> distribution(-10000.0f, 10000.0f);
@@ -78,6 +78,7 @@ void WaspManager::Update(sf::RenderWindow& window, const double& deltaTime)
 	{
 		(*iter)->Update(window, deltaTime);
 	}
+
 	CleanupWasps();
 }
 

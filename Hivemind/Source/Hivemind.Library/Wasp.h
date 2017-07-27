@@ -69,5 +69,6 @@ private:
 	State mState;
 	sf::Vector2f mTarget;
 	std::default_random_engine mGenerator;
+	Hive* mTargetHive;
 };
 
