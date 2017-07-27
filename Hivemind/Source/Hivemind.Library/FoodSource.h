@@ -147,6 +147,7 @@ private:
 	// Fields
 	sf::Vector2f mDimensions;
 	sf::RectangleShape mBody;
+	float mMaxFoodAmount;
 	float mFoodAmount;
 	sf::Text mText;
 	bool mPairedWithEmployee;

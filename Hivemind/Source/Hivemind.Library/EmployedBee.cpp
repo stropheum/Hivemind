@@ -64,7 +64,7 @@ void EmployedBee::Render(sf::RenderWindow& window) const
 
 	if (mPairedFoodSource != nullptr && mState != State::Scouting)
 	{
-		window.draw(mLineToFoodSource);
+//		window.draw(mLineToFoodSource);
 	}
 }
 
@@ -90,9 +90,10 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 {
 	UNREFERENCED_PARAMETER(window);
 
-	auto bounds = 5000;
+	auto bounds = 10000;
 	if (mPosition.x < mParentHive.GetCenterTarget().x - bounds || mPosition.x > mParentHive.GetCenterTarget().x + bounds || 
-		mPosition.y < mParentHive.GetCenterTarget().y - bounds || mPosition.y > mParentHive.GetCenterTarget().y + bounds)
+		mPosition.y < mParentHive.GetCenterTarget().y - bounds || mPosition.y > mParentHive.GetCenterTarget().y + bounds ||
+		(mEnergy / mMaxEnergy) < 0.30f)
 	{
 		mState = State::DeliveringFood;
 	}

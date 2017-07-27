@@ -35,9 +35,9 @@ HiveHUD::HiveHUD(const sf::Vector2f& rootPosition, const sf::Vector2f& dimension
 	mBarQueens.setFillColor(sf::Color::Magenta);
 
 	mBarStructuralComb.setFillColor(sf::Color(225, 225, 225));
-	mBarHoneyComb.setFillColor(sf::Color(255, 220, 0));
+	mBarHoneyComb.setFillColor(sf::Color::Green);
 	mBarBroodComb.setFillColor(sf::Color(255, 164, 0));
-	mBarFoodAmount.setFillColor(sf::Color(255, 220, 0));
+	mBarFoodAmount.setFillColor(sf::Color::Green);
 
 	mBarOnlookers.setOutlineColor(sf::Color::Transparent);
 	mBarEmployees.setOutlineColor(sf::Color::Transparent);

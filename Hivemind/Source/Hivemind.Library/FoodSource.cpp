@@ -14,7 +14,7 @@ float FoodSource::DetectionRadius = 400.0f;
 
 FoodSource::FoodSource(const sf::Vector2f& position) :
 	Entity(position, sf::Color(196, 196, 196), sf::Color(32, 128, 32)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
-	mFoodAmount(10000.0f), mText(), mPairedWithEmployee(false), mRegisteredHives()
+	mMaxFoodAmount(10000.0f), mFoodAmount(mMaxFoodAmount), mText(), mPairedWithEmployee(false), mRegisteredHives()
 {
 	mBody.setPosition(mPosition);
 	mBody.setOutlineThickness(14);
@@ -70,6 +70,8 @@ void FoodSource::Update(sf::RenderWindow& window, const double& deltaTime)
 		mCollisionNode = CollisionGrid::GetInstance()->CollisionNodeFromPosition(mPosition);
 		mCollisionNode->RegisterFoodSource(this);
 	}
+
+	mBody.setFillColor(sf::Color(32, 128 * (mFoodAmount / mMaxFoodAmount), 32));
 
 	std::stringstream ss;
 	ss << "Food: " << mFoodAmount;
