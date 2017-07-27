@@ -121,6 +121,25 @@ public:
 	 */
 	void SetPairedWithEmployee(const bool& pairedWithEmployee);
 
+	/**
+	 * Adds a hive to the list of hives interacting with this food source
+	 * @Param hive: The hive being registered with this food source
+	 */
+	void RegisterHive(Hive* const hive);
+
+	/**
+	 * Removes a hive from the list of hives interacting with this food source, if it exists
+	 * @Param hive: The hive being removed from the list of registered food sources
+	 */
+	void UnregisterHive(Hive* const hive);
+
+	/**
+	 * Determines if a hive is currently registered with this food source
+	 * @Param hive: The hive in consideration
+	 * @Return: True if the specified hive is registered with this food source
+	 */
+	bool ContainsRegisteredHive(Hive* const hive) const;
+
 #pragma endregion
 
 private:
@@ -131,5 +150,6 @@ private:
 	float mFoodAmount;
 	sf::Text mText;
 	bool mPairedWithEmployee;
+	std::vector<Hive*> mRegisteredHives;
 };
 

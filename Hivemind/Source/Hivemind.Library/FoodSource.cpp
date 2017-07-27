@@ -3,7 +3,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/25/2017
+*	@Date: 7/26/2017
 */
 
 using namespace std;
@@ -14,7 +14,7 @@ float FoodSource::DetectionRadius = 400.0f;
 
 FoodSource::FoodSource(const sf::Vector2f& position) :
 	Entity(position, sf::Color(196, 196, 196), sf::Color(32, 128, 32)), mDimensions(STANDARD_WIDTH, STANDARD_HEIGHT), mBody(mDimensions),
-	mFoodAmount(10000.0f), mText(), mPairedWithEmployee(false)
+	mFoodAmount(10000.0f), mText(), mPairedWithEmployee(false), mRegisteredHives()
 {
 	mBody.setPosition(mPosition);
 	mBody.setOutlineThickness(14);
@@ -111,4 +111,37 @@ bool FoodSource::PairedWithEmployee() const
 void FoodSource::SetPairedWithEmployee(const bool& pairedWithEmployee)
 {
 	mPairedWithEmployee = pairedWithEmployee;
+}
+
+void FoodSource::RegisterHive(Hive* const hive)
+{
+	mRegisteredHives.push_back(hive);
+}
+
+void FoodSource::UnregisterHive(Hive* const hive)
+{
+	for (auto iter = mRegisteredHives.begin(); iter != mRegisteredHives.end(); ++iter)
+	{
+		if ((*iter) == hive)
+		{
+			mRegisteredHives.erase(iter);
+			break;
+		}
+	}
+}
+
+bool FoodSource::ContainsRegisteredHive(Hive* const hive) const
+{
+	bool result = false;
+	
+	for (auto iter = mRegisteredHives.begin(); iter != mRegisteredHives.end(); ++iter)
+	{
+		if ((*iter) == hive)
+		{
+			result = true;
+			break;
+		}
+	}
+
+	return result;
 }

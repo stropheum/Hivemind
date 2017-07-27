@@ -6,7 +6,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/25/2017
+*	@Date: 7/26/2017
 */
 
 using namespace std;
@@ -110,11 +110,12 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 	auto foodSources = FoodSourceManager::GetInstance();
 	for (auto iter = foodSources->Begin(); iter != foodSources->End(); ++iter)
 	{
-		if (DetectingFoodSource(*(*iter)) && !(*iter)->PairedWithEmployee())
+		if (DetectingFoodSource(*(*iter)) && !(*iter)->ContainsRegisteredHive(&mParentHive))//!(*iter)->PairedWithEmployee())
 		{
 			mPairedFoodSource = (*iter);
 			mTargetFoodSource = (*iter);
 			mTargetFoodSource->SetPairedWithEmployee(true);
+			mTargetFoodSource->RegisterHive(&mParentHive);
 			SetTarget(mTargetFoodSource->GetCenterTarget());
 			mHarvestingClock.restart();
 			mState = State::HarvestingFood;
@@ -280,6 +281,7 @@ void EmployedBee::UpdateDepositingFood(sf::RenderWindow& window, const float& de
 			if (mPairedFoodSource != nullptr)
 			{
 				mPairedFoodSource->SetPairedWithEmployee(false);
+				mPairedFoodSource->UnregisterHive(&mParentHive);
 			}
 			mPairedFoodSource = nullptr;
 			mAbandoningFoodSource = false;

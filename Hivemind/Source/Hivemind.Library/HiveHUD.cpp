@@ -110,5 +110,10 @@ void HiveHUD::UpdateHUDValues()
 	mFoodContainer.setSize(mDimensions);
 
 	mBarFoodAmount.setPosition(mFoodContainer.getPosition());
-	mBarFoodAmount.setSize(sf::Vector2f(mBarHoneyComb.getSize().x * (mFoodAmount / mHoneyComb), mDimensions.y));
+	float barPercentage = mFoodAmount / mHoneyComb;
+	if (barPercentage > 1.0f)
+	{	// Clamp food amount
+		barPercentage = 1.0f;
+	}
+	mBarFoodAmount.setSize(sf::Vector2f(mBarHoneyComb.getSize().x * barPercentage, mDimensions.y));
 }
