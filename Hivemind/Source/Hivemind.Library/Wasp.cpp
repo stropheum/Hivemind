@@ -115,3 +115,8 @@ void Wasp::UpdateAttackingState(sf::RenderWindow& window, const double& deltaTim
 		mTarget = mTargetHive->GetCenterTarget() + offset;
 	}
 }
+
+Hive* Wasp::GetTargetHive() const
+{
+	return mTargetHive;
+}

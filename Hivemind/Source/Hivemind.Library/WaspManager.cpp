@@ -94,3 +94,16 @@ void WaspManager::SpawnWasp(const sf::Vector2f& position)
 {
 	mWasps.push_back(new Wasp(position));
 }
+
+void WaspManager::DestroyWasp(Wasp* const wasp)
+{
+	for (auto iter = mWasps.begin(); iter != mWasps.end(); ++iter)
+	{
+		if (*iter == wasp)
+		{
+			delete *iter;
+			mWasps.erase(iter);
+			break;
+		}
+	}
+}

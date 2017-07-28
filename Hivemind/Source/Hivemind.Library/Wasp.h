@@ -44,6 +44,12 @@ public:
 	 */
 	void Render(sf::RenderWindow& window) const override;
 
+	/**
+	 * Accessor for the hive that the wasp is currently attacking, if any
+	 * @Return: A pointer to the hive being attacked, if any. Nullptr otherwise
+	 */
+	Hive* GetTargetHive() const;
+
 private:
 
 	/**

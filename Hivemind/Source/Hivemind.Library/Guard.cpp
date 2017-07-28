@@ -42,6 +42,18 @@ void Guard::Update(sf::RenderWindow& window, const double& deltaTime)
 	mBody.setPosition(sf::Vector2f(mPosition.x - BodyRadius, mPosition.y - BodyRadius));
 	mFace.setPosition(mPosition.x, mPosition.y);
 	mFace.setRotation(rotationAngle);
+
+	auto waspManager = WaspManager::GetInstance();
+	for (auto iter = waspManager->Begin(); iter != waspManager->End(); ++iter)
+	{
+		if ((*iter)->GetTargetHive() == &mParentHive && !(*iter)->MarkedForDelete() && 
+			DistanceBetween(mParentHive.GetCenterTarget(), (*iter)->GetPosition()) < mParentHive.GetDimensions().x)
+		{
+			MarkForDelete();
+			(*iter)->MarkForDelete();
+			break;
+		}
+	}
 }
 
 void Guard::Render(sf::RenderWindow& window) const

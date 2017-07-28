@@ -41,6 +41,12 @@ public:
 	 */
 	void SpawnWasp(const sf::Vector2f& position);
 
+	/**
+	 * Destroys a wasp and removes it from the list, if it exists
+	 * @Param wasp: The wasp being destroyed
+	 */
+	void DestroyWasp(Wasp* const wasp);
+
 private:
 
 	/**
