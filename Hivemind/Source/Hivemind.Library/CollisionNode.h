@@ -6,8 +6,11 @@
 *	@Date: 7/25/2017
 */
 
+class Wasp;
+
 class CollisionNode :public Entity
 {
+
 public:
 
 	/**
@@ -64,13 +67,13 @@ public:
 
 	/**
 	* Removes a hive from the known entities of the collision node
-	* @Param hive: The hive being added to the collision node
+	* @Param hive: The hive being removed from the collision node
 	*/
 	void UnregisterHive(Hive* const hive);
 
 	/**
 	* Adds a food source to the known entities of the collision node
-	* @Param foodSource: The food source being removed from the collision node
+	* @Param foodSource: The food source being added to the collision node
 	*/
 	void RegisterFoodSource(FoodSource* const foodSource);
 
@@ -82,7 +85,7 @@ public:
 
 	/**
 	* Adds a bee to the known entities of the collision node
-	* @Param bee: The bee being removed from the collision node
+	* @Param bee: The bee being added to the collision node
 	*/
 	void RegisterBee(Bee* const bee);
 
@@ -91,6 +94,18 @@ public:
 	* @Param bee: The bee being removed from the collision node
 	*/
 	void UnregisterBee(Bee* const bee);
+
+	/**
+	 * Adds a wasp to the known entities of the collision node
+	 * @Param wasp: The wasp being added to the collision node
+	 */
+	void RegisterWasp(Wasp* const wasp);
+
+	/**
+	 * Removes a wasp from the known entities of the collision node
+	 * @Param wasp: The wasp being removed from the collision node
+	 */
+	void UnregisterWasp(Wasp* const wasp);
 
 	/**
 	 * Determines if the specified point is contained within the collision node
@@ -117,6 +132,12 @@ public:
 	*/
 	std::vector<Bee*> Bees() const;
 
+	/**
+	 * Accessor method for the list of wasp pointers registered with the collision node
+	 * @Return: A vector of wasp pointers currently registered with the collision node;
+	 */
+	std::vector<Wasp*> Wasps() const;
+
 private:
 
 	/**
@@ -140,6 +161,7 @@ private:
 	std::vector<Hive*> mHives;
 	std::vector<FoodSource*> mFoodSources;
 	std::vector<Bee*> mBees;
+	std::vector<Wasp*> mWasps;
 
 	// The square size of the collision node
 	int mSize;

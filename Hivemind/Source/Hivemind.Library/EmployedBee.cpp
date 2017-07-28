@@ -6,13 +6,13 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/25/2017
+*	@Date: 7/26/2017
 */
 
 using namespace std;
 
 EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive) :
-	Bee(position, hive), mPairedFoodSource(nullptr), mFlowField(FlowFieldManager::GetInstance()->GetField()), mDisplayFlowField(false),
+	Bee(position, hive), mPairedFoodSource(nullptr), mDisplayFlowField(false),
 	mLineToFoodSource(sf::LineStrip, 2), mFoodSourceData(0.0f, 0.0f), mAbandoningFoodSource(false)
 {
 	mState = State::Scouting;
@@ -24,8 +24,6 @@ EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive) :
 void EmployedBee::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	Bee::Update(window, deltaTime);
-
-	UpdateFlowField(window, deltaTime);
 
 	switch (mState)
 	{
@@ -55,11 +53,6 @@ void EmployedBee::Update(sf::RenderWindow& window, const double& deltaTime)
 		mLineToFoodSource[1].position = mPairedFoodSource->GetCenterTarget();
 		mLineToFoodSource[1].color = sf::Color(255, 0, 0, 64);
 	}
-
-//	stringstream ss;
-//	ss << mEnergy;
-//	mText.setString(ss.str());
-//	mText.setPosition(mPosition - sf::Vector2f(mText.getLocalBounds().width / 2.0f, 35));
 }
 
 void EmployedBee::Render(sf::RenderWindow& window) const
@@ -67,17 +60,12 @@ void EmployedBee::Render(sf::RenderWindow& window) const
 	Bee::Render(window);
 	if (mState == State::Scouting && mDisplayFlowField)
 	{
-		mFlowField.Render(window);
 	}
 
 	if (mPairedFoodSource != nullptr && mState != State::Scouting)
 	{
-		window.draw(mLineToFoodSource);
+//		window.draw(mLineToFoodSource);
 	}
-//	if (mState == State::Scouting)
-//	{
-//		window.draw(mText);
-//	}
 }
 
 void EmployedBee::ToggleFlowField()
@@ -87,8 +75,9 @@ void EmployedBee::ToggleFlowField()
 
 void EmployedBee::SetFlowFieldOctaveCount(const std::uint32_t& octaveCount)
 {
-	mFlowField = FlowFieldManager::GetInstance()->GetField();
-	mFlowField.SetOctaveCount(octaveCount);
+	UNREFERENCED_PARAMETER(octaveCount);
+//	mFlowField = FlowFieldManager::GetInstance()->GetField();
+//	mFlowField.SetOctaveCount(octaveCount);
 }
 
 void EmployedBee::WaggleDance() const
@@ -101,29 +90,33 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 {
 	UNREFERENCED_PARAMETER(window);
 
-	//TODO: Remove this when metabolism can trigger giving up on scouting. for not. just give up if you go too far
-	auto bounds = 5000;
+	auto bounds = 10000;
 	if (mPosition.x < mParentHive.GetCenterTarget().x - bounds || mPosition.x > mParentHive.GetCenterTarget().x + bounds || 
-		mPosition.y < mParentHive.GetCenterTarget().y - bounds || mPosition.y > mParentHive.GetCenterTarget().y + bounds)
+		mPosition.y < mParentHive.GetCenterTarget().y - bounds || mPosition.y > mParentHive.GetCenterTarget().y + bounds ||
+		(mEnergy / mMaxEnergy) < 0.30f)
 	{
 		mState = State::DeliveringFood;
 	}
 
-	float rotationRadians = mFlowField.RadianValueAtPosition(mPosition);
-	
-	mVelocity.x += 2 * cos(rotationRadians);
-	mVelocity.y += 2 * sin(rotationRadians);
+	sf::Vector2f newPosition = mPosition;
+	float rotationRadians = atan2(mTarget.y - mPosition.y, mTarget.x - mPosition.x);
+	newPosition.x += (cos(rotationRadians) * mSpeed * deltaTime);
+	newPosition.y += (sin(rotationRadians) * mSpeed * deltaTime);
 
-	sf::Vector2f newPosition = mPosition + (mVelocity * deltaTime);
+	if (DistanceBetween(mPosition, mTarget) <= mBody.getRadius())
+	{
+		GenerateNewTarget();
+	}
 
 	auto foodSources = FoodSourceManager::GetInstance();
 	for (auto iter = foodSources->Begin(); iter != foodSources->End(); ++iter)
 	{
-		if (DetectingFoodSource(*(*iter)) && !(*iter)->PairedWithEmployee())
+		if (DetectingFoodSource(*(*iter)) && !(*iter)->ContainsRegisteredHive(&mParentHive))//!(*iter)->PairedWithEmployee())
 		{
 			mPairedFoodSource = (*iter);
 			mTargetFoodSource = (*iter);
 			mTargetFoodSource->SetPairedWithEmployee(true);
+			mTargetFoodSource->RegisterHive(&mParentHive);
 			SetTarget(mTargetFoodSource->GetCenterTarget());
 			mHarvestingClock.restart();
 			mState = State::HarvestingFood;
@@ -289,6 +282,7 @@ void EmployedBee::UpdateDepositingFood(sf::RenderWindow& window, const float& de
 			if (mPairedFoodSource != nullptr)
 			{
 				mPairedFoodSource->SetPairedWithEmployee(false);
+				mPairedFoodSource->UnregisterHive(&mParentHive);
 			}
 			mPairedFoodSource = nullptr;
 			mAbandoningFoodSource = false;
@@ -347,13 +341,9 @@ void EmployedBee::UpdatePosition(const sf::Vector2f& position, const float& rota
 	mFace.setRotation(rotationAngle);
 }
 
-void EmployedBee::UpdateFlowField(sf::RenderWindow& window, const float& deltaTime)
+void EmployedBee::GenerateNewTarget()
 {
-	auto fieldDimensions = mFlowField.GetDimensions();
-	if (!mFlowField.CollidingWith(mPosition))
-	{	// If we're not colliding with the flow field anymore, reset it on top of us
-		mFlowField = FlowFieldManager::GetInstance()->GetField();
-		mFlowField.SetPosition(sf::Vector2f(mPosition.x - (fieldDimensions.x / 2.0f), mPosition.y - (fieldDimensions.y / 2.0f)));
-	}
-	mFlowField.Update(window, deltaTime);
+	uniform_real_distribution<float> distribution(-500.0f, 500.0f);
+	sf::Vector2f offset(distribution(mGenerator), distribution(mGenerator));
+	mTarget = mPosition + offset;
 }

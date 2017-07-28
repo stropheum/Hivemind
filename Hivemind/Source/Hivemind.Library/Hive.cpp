@@ -413,3 +413,17 @@ int Hive::GetBeeCount(const Bee::Type& type) const
 
 	return result;
 }
+
+bool Hive::FoodSourceIsKnown(FoodSource* const foodSource) const
+{
+	bool result = false;
+	for (auto iter = mFoodSourceData.begin(); iter != mFoodSourceData.end(); ++iter)
+	{
+		if ((*iter).first == foodSource)
+		{
+			result = true;
+			break;
+		}
+	}
+	return result;
+}

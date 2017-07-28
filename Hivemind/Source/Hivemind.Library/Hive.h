@@ -187,6 +187,13 @@ public:
 	 */
 	int GetBeeCount(const Bee::Type& type) const;
 
+	/**
+	 * Determines if a food source is known by the hive
+	 * @Param foodSource: The food source under consideration
+	 * @Return: True if the food source is currently known by the hive
+	 */
+	bool FoodSourceIsKnown(FoodSource* const foodSource) const;
+
 private:
 
 	// Constants

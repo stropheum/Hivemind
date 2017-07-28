@@ -4,7 +4,7 @@
 
 /**
 *	@Author: Dale Diaz
-*	@Date: 7/25/2017
+*	@Date: 7/26/2017
 */
 
 namespace sf {
@@ -106,10 +106,12 @@ private:
 	 * @Param window: The screen that the game is being rendered to
 	 * @Param deltaTime: The time since last Update of the flow field
 	 */
-	void UpdateFlowField(sf::RenderWindow& window, const float& deltaTime);
+//	void UpdateFlowField(sf::RenderWindow& window, const float& deltaTime);
+
+	void GenerateNewTarget();
 
 	class FoodSource* mPairedFoodSource;
-	FlowField mFlowField;
+//	FlowField mFlowField;
 	bool mDisplayFlowField;
 	sf::VertexArray mLineToFoodSource;
 	std::pair<float, float> mFoodSourceData;
