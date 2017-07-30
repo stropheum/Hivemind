@@ -245,12 +245,165 @@ For the improved movement, I received a criticism from my advisor that the bees 
 
 The queen was relatively simple to implement. Since she really only does one thing, she didn't have a lot of states to consider when implementing her AI. She simply wanders around the hive, and when a type of larva is needed, she will lay one and it will hatch into th ebee type that it was specified on construction. For right now, she will just randomly decide what type of bee she wants to spawn, but once the comb structure is implemented, she will have a better idea of what ratio of bee types are needed so she can make more intelligent decisions as to what type of larva she lays
 
-## Week 7 - 
+## Week 7 - Data Data Data
 
-## Week 8 - 
+Week 7 is a week all about the data. Having the world generation be data driven is a very important goal for this project, as it will allow me the flexibility of not only being able to test very isolated circumstances without having to wait for simulations to run their course, but it will also look very interesting from a demonstration standpoint, and will allow for the user to generate worlds in whatever manner they see fit. In addition to that, I also took a large portion of the week to migrate the business logic of my simulation to a core library, so I could unit test and also open up the door to easily making the simulation mutli-platform down the road, if I so desire.
 
-## Week 9 - 
+#JSON!
+I had decided to use JSON just because I felt it offered a very good format for textually representing all of the data I wanted to have laid out in the world. This was fairly simple to implement; I added rapidjson to my project via NuGet, and simply created a manager to parse files and generate a world from them. An example world in my JSON grammar looks like the following:
+```
+{
+	"Hives": 
+	[
+		{
+			"position": {"x": 700, "y": 350},
+			"Onlookers": 50,
+			"Employees": 10,
+			"Drones": 5,
+			"Guards": 5
+		}
+	],
+	"FoodSources":
+	[
+		{"position": {"x": -35, "y": -75}},
+		{"position": {"x": 175, "y": -75}},
+		{"position": {"x": 385, "y": -75}},
+		{"position": {"x": 595, "y": -75}},
+		{"position": {"x": 805, "y": -75}},
+		{"position": {"x": 1015, "y": -75}},
+		{"position": {"x": 1225, "y": -75}},
+		{"position": {"x": 1435, "y": -75}},
+
+		{"random_position": {"lower_bound": -10000.0 , "upper_bound": 10000.0}},
+		{"random_position": {"lower_bound": -10000.0 , "upper_bound": 10000.0}},
+		{"random_position": {"lower_bound": -10000.0 , "upper_bound": 10000.0}},
+		{"random_position": {"lower_bound": -10000.0 , "upper_bound": 10000.0}}
+	]
+}
+```
+
+So you can see pretty clearly from the textual reprsentation that the hives are an array (denoted by []), each of which contains five data points: a position, and a number associated to each type of bee. I defaulted the number of queens to one per hive just for the sake of simplicity, but I should note that in the real world, hives can spawn additional queens when they're anticipating their own queen leaving the hive, or in response to the hive swarming, leaving some members behind.
+
+Also it is worth noting that I added support for not only discrete positioning of hives and food sources, but also supporting random ranges for them as well. The last four food sources, for example, will spawn with a random x and a y between -10,000 and +10,000 respectively. This is also the specified size of the simulation area that I have specified, but both are arbitrary
+
+#Speed!
+Since I had differentiated bees based on speed, I thought it would be a nice touch to have time-dependent tasks be assocaited with their speed as well. So now, bees that are faster effectively are faster in every regard. Now, they will travel faster, metabolise faster (use up more energy per second), and they will accomplish tasks faster. This is important to note, becuase now not only will faster bees travel toward their destination faster, but they will also get a head start, which increases the spread and drastically improves the organic feel of the simulation
+
+## Week 8 - Home is where the comb is
+
+Here we are drastically approaching the minimum viable product for what I would consider a simulation. During this week, I focused primarily on getting comb structure implemented in the hive. For this, I needed to not only set up the infrastructure to track the amount of comb in the hive, but have the queen spawn larva based off of the amount of comb, and have drones actually work for a change. Now, the drones will take a look at how much comb is distributed across the hive, and if any comb is needed, they will construct or convert it accordingly. So, the general procedure for a drone is the following: Idle in the hive until comb is needed. If brood is needed to lay additional larva, convert some structural comb into brood comb. If more honey is in the hive than can adequately be stored, convert structural comb into honey comb. On top of that, whenever structural comb is consumed, construct more structural comb. It should be noted that constructing comb takes longer than simply appropriating it, so it could be the case that more drones are needed to build comb faster, which if that is the case, a request will be made to the queen to notify her that more drone larva are needed
+
+#Optimizaiton!
+Another aspect of the simulation I wanted to address during this week was implementing a collision grid. This would allow me to significantly reduce the collision checking that I'm doing in larger simulations. Currently, any entity checking for collisions with another entity will have to iterate over the entire list of entities, which can get pretty perofrmance draining. So I implemented what I called a "collision node" which is just a container which stores lists of entity pointers. Now, any entity registers itself with one collision node at a time, and they can check their own collision node as well as the 8 neighbors to it to perform collision calculations. These collision nodes are laid out in a grid that covers the entire simulation space, and even though it is not currently being used, it lays the foundation for drastic optimizations down the road
+
+## Week 9 - The beginning of the end
+
+This is the week where I try to get as much done as humanly possible, so I can finalize all of my work and prepare my presentation. The list of tasks I wanted to complete are as follows:
+
+- Manage collision detections using collision grid
+- Add metabolism and death conditions for bees
+- Add Comb structure to hive
+- Have workers build/convert comb as needed
+- Have queen spawn most-needed larva, and only if the hive can support more
+
+Hooking the collision detections up to the collision grid was suprisingly simple. Any time I wanted to perform collision checks, previously I would get the start iterator over the food source manager for example, and iterate over all food sources to check for collisions. Now, instead all I had to do was swap that iterator out for the start iterator of the collision node's food source vector. If there were no hits on the collision node, I would then expand my search to all 8 neighbors, breaking whenever I got a hit. After hooking these systems up to my collision grid system, I saw a factor of 10 performance increase on the collision checking system, which goes without saying, is a marked increase in performance.
+
+Another large component to implement this week was a death condition. Bees had to start consuming energy. This was a fairly simple implementation, as all I needed to do was set an energy consumption rate, multiply that value by their speed percentage, and then the bees would consume energy from different sources depending on their state. For example, any time the bee is out of the hive, it will deplete energy from its own energy reserves, but if it is in a hive or a food source for any reason, it will consume energy from those storage sources rather than its own reserves. This added a very large layer of depth to the simulation, as now when running the simulation, the user can see the hive achieving homeostasis with the environment aorund it. If there are too many of one type of bee, they will start to die off and achieve a balance that fits the environment properly. Something that was a bit of a gotcha as far as managing death, was that all entities were stored in vectors in their respective manager singletons. For the savvy among you, you might know that if you delete an element in a vector, all iterators become invalidated. This became a problem if you were trying to destroy bees during the update loop. The solution to this was to simply add a mMarkedForDelete boolean in the entity class, so that way, after the update loop was completed, I could simply go through the vector and delete each value without having to worry about update calls being interrupted or iterators being invalidated. This required me to add a cleanup method for every entity type in all of my managers though, which is just an annoying bit of housekeeping I had to keep in consideration.
+
+The final aspects I wanted to implement all occurred within the hive itself. I made it so that drones began building comb as needed, and queens would spawn larva based on that information. If there was enough comb to support more larva production, it would utilize as much of the brood comb as needed. Similarly, if there was enough food stored in the hive, it would increase the total yield of the hive, and lay however many larva were appropriate to meet the max hive size as well as maintaining the proper ratio of bee roles.
 
 ## Week 10 -
 
-## Week 11 -
+So this was the last week of work that I had scheduled for the semester, so my goal was to improve the visual aspect of the simulation as much as humanly possible. This included the following tasks:
+ an intuitive HUD for hives to represent their internal features
+	- Ratio of bee types represented in the hive
+	- D
+- Implementistribution of comb types in the hive (strutrual, brood, honey)
+	- Representation of the amount of food in the hive
+- Performance optimization as much as I possibly can
+- Leveraging the data driven system to flesh out multiple worlds for my final presentation
+- Prepare the demo, dry run and make no changes after that point
+- Get wasps spawning and attacking as a proof of concept of hive predation
+
+#Information!
+So the HUD itself was fairly simple, as you can see in the following code, I essentially created a class that would hook into the class members of the Hive, and just represent them visually with a simple collection of sf::RectangleShape objects:
+
+```
+class HiveHUD
+{
+public:
+
+	/**
+	 *  Construtor
+	 */
+	HiveHUD(
+		const sf::Vector2f& rootPosition, const sf::Vector2f& dimensions,
+		const int& onlookerCount, const int& employeeCount, int& droneCount, const int& guardCount, const int& queenCount,
+		const float& structuralComb, const float& honeyComb, const float& broodComb, const float& mFoodAmount);
+
+	/**
+	 * Destructor
+	 */
+	~HiveHUD() = default;
+
+	// Copy / Move semantics
+	HiveHUD(const HiveHUD& rhs) = delete;
+	HiveHUD& operator=(const HiveHUD& rhs) = delete;
+	HiveHUD(HiveHUD&& rhs) = delete;
+	HiveHUD& operator=(HiveHUD&& rhs) = delete;
+
+	/**
+	 * Renders the HUD to the screen
+	 * @Param window: The window that the HUD is being rendered to
+	 */
+	void Render(sf::RenderWindow& window) const;
+
+	/**
+	 *  Updates the relative size representations of the contents of the hive
+	 */
+	void UpdateHUDValues();
+
+private:
+
+	// Data references
+	const int& mOnlookerCount;
+	const int& mEmployeeCount;
+	const int& mDroneCount;
+	const int& mQueenCount;
+	const int& mGuardCount;
+	const float& mStructuralComb;
+	const float& mHoneyComb;
+	const float& mBroodComb;
+	const float& mFoodAmount;
+
+	// Rendering components
+	sf::Vector2f mRootPosition;
+	sf::Vector2f mDimensions;
+	sf::RectangleShape mBeeContainer;
+	sf::RectangleShape mCombContainer;
+	sf::RectangleShape mFoodContainer;
+	sf::RectangleShape mBarOnlookers;
+	sf::RectangleShape mBarEmployees;
+	sf::RectangleShape mBarDrones;
+	sf::RectangleShape mBarGuards;
+	sf::RectangleShape mBarQueens;
+	sf::RectangleShape mBarStructuralComb;
+	sf::RectangleShape mBarHoneyComb;
+	sf::RectangleShape mBarBroodComb;
+	sf::RectangleShape mBarFoodAmount;
+	
+	float mOutlineThickness;
+};
+```
+#Power!
+For the performance optimization step, I decided to finally give up on the perlin noise flow field implementation I was using for the wandering system. After doing a performance profile on the application, I noticed a significant amount of memory allocations were being made when new flow fields were being generated, and trying to scale the simulation up to handle a large number of hives and bees, this became increasingly impractical. I decided to switch the flow field generation out in favor of simply randomly choosing a point at a set distance away, and traveling to it. This turned out to look fine in the simulation, resulted in bees finding food sources more readily, and a significant performance increase, to the point where I could have 5 full size hives with 500+ bees running on start with no slowdown whatsoever, compared to the simulation lagging with one large hive with 50 scouts. This was a very good lesson in being prepared to kill your own baby, because I was very proud of my flow field system, and I still believe it could work effectively and look really nice in some implementation, it was simply way too performant to not include it, so the baby had to die this time.
+
+#Data! 
+So I had implemented the JSON parsing algorithm for world generation, and I needed to demonstrate quite a few things in a short period of time, so I thought that it would behoove me to leverage this system to benefit my demonstration.  My concern for presenting the simulation initially to people who haven't been as intimately familiar with the menutia as I have for the past several months, I wanted to ease them into understanding what they were seeing on the screen. For this, I wanted to introduce the roles of the bees in the presentation, then show a simple controlled environment with a very few number of bees to actually show how the interactions behave, and then progress to a large world where these interations would be massively up-scaled.
+The benefit of demonstrating in this fashion, was that it also allowed me to demonstrate the data-driven aspect of the simulation, as the audience could see me loading drastically different worlds with simply changing of a command-line argument
+
+#Bad Guys!
+So the last thing I wanted to do, even though I had to limit my scope with adverse conditions, I wanted to implement a proof-of-concept predator that would at least introduce some conflict into the hive simulation. For this, I implemented a very basic wasp. He essentially has two states: wandering and attacking. he will behave exacxtly like the scout bee, randomly choosing locations to fly to, until he finds something he can interact with. In the case of the wasp, it looks for a hive. When a hive is encountered, it will begin randomly killing off bees until a guard bee intervenes. When a guard bee attacks the wasp, he kills the wasp as well as himself (for those of you that don't know, honey bees only have one good sting in them. When they sting they rip their stinger off and bleed to death). This implementation allowed me to demonstrate other features that were in place yet hard to notice, because the colonies do a very good job of maintaining homeostasis as it turns out. Now when bees die, the queen will be forced to prioritize larva that are needed, and she'll have to consume more energy to lay more larva, which in turn will influence the comb requirements, and all of a sudden there is just a lot more happening in the simulation, even though the infrastructure was already behaving "properly", the affects of that behavior were not completely apparent.
+
+#Summary
+All-in-all, I'm very happy with where I arrived with this project. It is the largest personal project of my own design that I have ever undertaken and I am immensely proud with where it has gone. I definitely intend to tinker with this over time and I'm curious just how far I can get this to go. I hope you all enjoyed it! Please feel free to fork and hack to your heart's content. I'll stay pretty active on this repo in the near future, so if you do something neat, feel free to throw a pull request my way, and I'll check it out!
