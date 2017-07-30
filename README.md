@@ -202,3 +202,55 @@ The next task from here was naturally to develop the scouting/employed bee, whic
 [![Hivemind Employed Bee Demo](https://img.youtube.com/vi/w_m1j3X1hvY/0.jpg)](https://www.youtube.com/watch?v=w_m1j3X1hvY)
 
 And that's about it. There were a lot of minor optimizations that I had to do this week regarding how to store references, minimizing iterations over collections, managing data lifetimes, and the like, which ate significantly into my time specifically regarding the hive implementation. I intended to get started with working on the structural aspects of the hive such as the worker bees, implementing brood/honey/structural comb, etc, but I simply did not get to it in time, so that will carry over into week 5, where I focus mostly on the structural aspects of the hive, and breeding, as well as refining the decision making process of the bees, and how the food source selection happens, rather than by simple random chance. More to come!
+
+## Week 5 - Wanderlust
+
+So week 5 was an interesting week for me. I saw some of my classmates utilizing perlin noise, and I saw some interesting organic movement simulations utilizing perlin noise flow fields, so I figured i would try my hand at it tos ee where I could get. This ended up being a very nice learning experience, but in the end I ditched it in favor or targeting random directions within a radius from the scout's current position.
+
+The original implementation involved each scout bee generating a localized flow field around them; this flow field would add to their velocity in a given direction, from 0-2 radians based off the color of the pixel in that field. The problem with this was that it became increasingly non-performant as each scout would have to manually generate several thousand pixels of perlin noise whenever they left the local flow field. To optimize this, I created a flow field manager which would generate a few hundred flow fields, and disperse copies of them to bees as needed. This saved the cpu cost of generating the flow fields in real time, but the downside was that this still involved a significant amount of memory allocations, which I have yet to be able to address in a way that I completely like. That being said, it works, and for now I'm going to leave it until it becomes a problem.
+
+Additionally, I implemented the weighted dice roll selection for onlooker bees. Now, whenever a scout returns to the hive, he performs a waggle dance, adding his food information to the hive, and then all onlookers that happen to be in the hive during hte waggle dance will look at the fitness of each of these food sources, currently only considering their food yield, and will choose slightly randomly, but heavily favored towards food sources that are more fit.
+
+## Week 6 - Squad Goals 
+
+Since we have the broad-strokes implementation of the ABC algorithm in terms of actually getting a communication system in place for scouting and foraging, the goal of this week is to flesh out those parts of the simulation that are not represented by the Artificial Bee Colony Algorithm. At a high-level perspective, these were my tasks for the week:
+
+Improve movement/scouting  system
+-	Give bees varied speed
+-	Scouts pair with food source until it becomes unviable, then randomly scout again
+-	Fix weighted selection bug for onlooker bees
+
+Implement basic queen functionality
+-	Determining when larva need to be spawned and laying them
+-	Queen spawns larva based on two criteria:
+	o	If the hive can support more bees, a larva will be spawned (ratio of total comb/bee population)
+	o	Larva type is selected based on which type is needed most (each type has an optimal % of total population)
+
+Implement basic larva
+-	Spawns with a timer
+-	Consumes hive resources until timer runs out
+-	When timer runs out, destroys itself and spawns a bee
+
+Implement basic drone features
+-	Consumes resources to build structural comb
+-	When a type of comb is needed, consumes energy to convert structural comb into honey comb or brood comb
+
+Implement very basic soldier features
+-	No enemies yet, so I can’t implement any way to attack
+-	For now, the soldier will wander around the base, and they will be spawned if there aren’t enough soldiers
+
+As you can see it seems like quite a lot compared to other weeks, but a lot of this work was simple foundational work; creating the base classes for different bee types, establishing their basic behhavior, and just get stuff moving on the screen.
+
+For the improved movement, I received a criticism from my advisor that the bees tended to clump too much when they were persuing a food source; this made it hard to see what they were doing and it also simply didn't look organic. It was just too clear that they were all receiving simultaneous signals to perform tasks. The simple solution to this was to apply a slight randomness to the speed values of the bees. What this did was allow the bees to spread apart a bit when they received signals to travel to food sources, and really added to the organic feel of the simulation
+
+The queen was relatively simple to implement. Since she really only does one thing, she didn't have a lot of states to consider when implementing her AI. She simply wanders around the hive, and when a type of larva is needed, she will lay one and it will hatch into th ebee type that it was specified on construction. For right now, she will just randomly decide what type of bee she wants to spawn, but once the comb structure is implemented, she will have a better idea of what ratio of bee types are needed so she can make more intelligent decisions as to what type of larva she lays
+
+## Week 7 - 
+
+## Week 8 - 
+
+## Week 9 - 
+
+## Week 10 -
+
+## Week 11 -
