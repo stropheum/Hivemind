@@ -5,7 +5,7 @@ Hivemind is a project I've started as an intersection of several interests of mi
 ## Installation Instructions
 
 If you are interested in running or modifying the simulation, there are a few steps you will have to take to make sure the dependencies for SFML are set up properly
-1. [Download the SFML v2.4.2](https://www.sfml-dev.org/download/sfml/2.4.2/) You will need this build of SFML to run the visualization for the simulation. Either x86 or x64 will work, but x64 is recommended if possible
+1. [Download SFML v2.4.2](https://www.sfml-dev.org/download/sfml/2.4.2/) You will need this build of SFML to run the visualization for the simulation. Either x86 or x64 will work, but x64 is recommended if possible
 2. Navigate to the solution directory of the project. This should be the base Directory Hivemind/
 3. If it does not exist, create a folder and name it "External". In that folder should be two additional folders titled "x64" and "x86", respectively. If they do not exist then create them as well.
 4. Extract the SFML build into its associated platform directory in the External Folder. For example, if you installed the 64-bit version of SFML, then its path should be path-to-project/Hivemind/External/x64/SFML2.4.2/
