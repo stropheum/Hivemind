@@ -57,6 +57,16 @@ namespace HivemindLibraryTest
 			Assert::IsTrue(true, L"Test not implemented");
 		}
 
+		TEST_METHOD(Employee_Update)
+		{
+			Assert::Fail(L"Test not implemented");
+		}
+
+		TEST_METHOD(Employee_GenerateNewTarget)
+		{
+			Assert::Fail(L"Test not implemented");
+		}
+
 		static _CrtMemState sStartMemState;
 	};
 
