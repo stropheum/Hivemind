@@ -12,7 +12,7 @@
 
 using namespace std;
 
-const float Bee::STANDARD_BEE_SPEED = 300.0f;
+const float Bee::STANDARD_BEE_SPEED = 250.0f;
 const float Bee::BodyRadius = 12.0f;
 const float Bee::TARGET_RADIUS = 5.0f;
 const float Bee::STANDARD_HARVESTING_DURATION = 5.0f;
