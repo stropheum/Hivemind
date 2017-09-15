@@ -47,6 +47,11 @@ public:
 	 */
 	void Render(sf::RenderWindow& window) const override;
 
+protected:
+
+	// Larva don't have states so we don't need to use the function map
+	virtual void PopulateFunctionMaps() override {}
+
 private:
 
 	/**

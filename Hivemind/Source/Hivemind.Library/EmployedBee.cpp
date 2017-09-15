@@ -4,10 +4,6 @@
 #include "FoodSource.h"
 #include "FoodSourceManager.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/26/2017
-*/
 
 using namespace std;
 
@@ -16,35 +12,18 @@ EmployedBee::EmployedBee(const sf::Vector2f& position, Hive& hive) :
 	mLineToFoodSource(sf::LineStrip, 2), mFoodSourceData(0.0f, 0.0f), mAbandoningFoodSource(false)
 {
 	mState = State::Scouting;
-
 	mFillColor = sf::Color::Cyan;
 	mBody.setFillColor(mFillColor);
+
+	EmployedBee::PopulateFunctionMaps();
 }
 
 void EmployedBee::Update(sf::RenderWindow& window, const double& deltaTime)
 {
 	Bee::Update(window, deltaTime);
 
-	switch (mState)
-	{
-	case Scouting:
-		UpdateScouting(window, deltaTime);
-		break;
-	case State::SeekingTarget:
-		UpdateSeekingTarget(window, deltaTime);
-		break;
-	case State::HarvestingFood:
-		UpdateHarvestingFood(window, deltaTime);
-		break;
-	case State::DeliveringFood:
-		UpdateDeliveringFood(window, deltaTime);
-		break;
-	case State::DepositingFood:
-		UpdateDepositingFood(window, deltaTime);
-		break;
-	default:
-		break;
-	}
+	assert(mState != State::Idle);
+	mUpdate[mState](window, deltaTime);
 
 	if (mPairedFoodSource != nullptr)
 	{
@@ -64,7 +43,7 @@ void EmployedBee::Render(sf::RenderWindow& window) const
 
 	if (mPairedFoodSource != nullptr && mState != State::Scouting)
 	{
-//		window.draw(mLineToFoodSource);
+		//		window.draw(mLineToFoodSource);
 	}
 }
 
@@ -76,8 +55,26 @@ void EmployedBee::ToggleFlowField()
 void EmployedBee::SetFlowFieldOctaveCount(const std::uint32_t& octaveCount)
 {
 	UNREFERENCED_PARAMETER(octaveCount);
-//	mFlowField = FlowFieldManager::GetInstance()->GetField();
-//	mFlowField.SetOctaveCount(octaveCount);
+	//	mFlowField = FlowFieldManager::GetInstance()->GetField();
+	//	mFlowField.SetOctaveCount(octaveCount);
+}
+
+void EmployedBee::PopulateFunctionMaps()
+{
+	mUpdate[State::Scouting] = [&](sf::RenderWindow& window, const double& deltaTime)
+	{ this->UpdateScouting(window, deltaTime); };
+
+	mUpdate[State::SeekingTarget] = [&](sf::RenderWindow& window, const double& deltaTime)
+	{ this->UpdateSeekingTarget(window, deltaTime); };
+
+	mUpdate[State::HarvestingFood] = [&](sf::RenderWindow& window, const double& deltaTime)
+	{ this->UpdateHarvestingFood(window, deltaTime); };
+
+	mUpdate[State::DeliveringFood] = [&](sf::RenderWindow& window, const double& deltaTime)
+	{ this->UpdateDeliveringFood(window, deltaTime); };
+
+	mUpdate[State::DepositingFood] = [&](sf::RenderWindow& window, const double& deltaTime)
+	{ this->UpdateDepositingFood(window, deltaTime); };
 }
 
 void EmployedBee::WaggleDance() const
@@ -91,7 +88,7 @@ void EmployedBee::UpdateScouting(sf::RenderWindow& window, const float& deltaTim
 	UNREFERENCED_PARAMETER(window);
 
 	auto bounds = 10000;
-	if (mPosition.x < mParentHive.GetCenterTarget().x - bounds || mPosition.x > mParentHive.GetCenterTarget().x + bounds || 
+	if (mPosition.x < mParentHive.GetCenterTarget().x - bounds || mPosition.x > mParentHive.GetCenterTarget().x + bounds ||
 		mPosition.y < mParentHive.GetCenterTarget().y - bounds || mPosition.y > mParentHive.GetCenterTarget().y + bounds ||
 		(mEnergy / mMaxEnergy) < 0.30f)
 	{

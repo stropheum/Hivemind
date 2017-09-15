@@ -35,5 +35,10 @@ public:
 	 * @Param window: The window that the simulation is being rendered to
 	 */
 	void Render(sf::RenderWindow& window) const override;
+
+protected:
+
+	// Guards don't use state so we don't need to use the function map
+	virtual void PopulateFunctionMaps() override {}
 };
 

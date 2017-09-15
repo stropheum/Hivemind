@@ -1,6 +1,8 @@
 #pragma once
 #include "Entity.h"
 #include <random>
+#include <map>
+#include <functional>
 
 /**
 *	@Author: Dale Diaz
@@ -198,6 +200,14 @@ public:
 #pragma endregion
 
 protected:
+	/**
+	 * Method children must do to populate their function maps (if used)
+	 * //TODO: Move function map and methods to a component
+	 */
+	virtual void PopulateFunctionMaps() = 0;
+
+	typedef std::function<void(sf::RenderWindow&, const double&)> UpdateCallback;
+	std::map<State, UpdateCallback> mUpdate;
 	
 	// Constants
 	const float PI = 3.14159265359f;

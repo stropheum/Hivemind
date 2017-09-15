@@ -2,10 +2,6 @@
 #include "Bee.h"
 #include <SFML/System/Vector2.hpp>
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 class OnlookerBee :
 	public Bee
@@ -30,5 +26,24 @@ public:
 	 * @Param deltaTime: The time since the last Update call
 	 */
 	void Update(sf::RenderWindow& window, const double& deltaTime) override;
+
+protected:
+
+	virtual void PopulateFunctionMaps() override;
+
+private:
+
+	void UpdateIdle(sf::RenderWindow& window, const double& deltaTime);
+	void UpdateSeekingTarget(sf::RenderWindow& window, const double& deltaTime);
+	void UpdateHarvestingFood(sf::RenderWindow& window, const double& deltaTime);
+	void UpdateDeliveringFood(sf::RenderWindow& window, const double& deltaTime);
+	void UpdateDepositingFood(sf::RenderWindow& window, const double& deltaTime);
+
+	/**
+	 * Sets the position and rotation of the bee after computed in update
+	 * @Param newPosition: The bee's new position after update
+	 * @Param rotationAngle: The bee's new rotation after update
+	 */
+	void PostUpdate(const sf::Vector2f& newPosition, const float& rotationAngle);
 };
 

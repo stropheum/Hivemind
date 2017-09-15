@@ -1,11 +1,6 @@
 #pragma once
 #include "Bee.h"
-#include "Flowfield.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/26/2017
-*/
 
 namespace sf {
 	class RenderWindow;
@@ -51,6 +46,13 @@ public:
 	 * @Param octaveCount: The number of octaves of noise used for blending of the flow field
 	 */
 	void SetFlowFieldOctaveCount(const std::uint32_t& octaveCount);
+
+protected:
+
+	/**
+	* Populates all of the function pointers into the function map
+	*/
+	virtual void PopulateFunctionMaps() override;
 
 private:
 
@@ -101,17 +103,9 @@ private:
 	 */
 	void UpdatePosition(const sf::Vector2f& position, const float& rotation);
 
-	/**
-	 * Updates the flow field based on the wandering state
-	 * @Param window: The screen that the game is being rendered to
-	 * @Param deltaTime: The time since last Update of the flow field
-	 */
-//	void UpdateFlowField(sf::RenderWindow& window, const float& deltaTime);
-
 	void GenerateNewTarget();
 
 	class FoodSource* mPairedFoodSource;
-//	FlowField mFlowField;
 	bool mDisplayFlowField;
 	sf::VertexArray mLineToFoodSource;
 	std::pair<float, float> mFoodSourceData;

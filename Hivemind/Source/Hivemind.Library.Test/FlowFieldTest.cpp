@@ -41,13 +41,6 @@ namespace HivemindLibraryTest
 			FinalizeLeakDetection();
 		}
 
-		TEST_METHOD(FlowField_Stub)
-		{
-			sf::Vector2f position(0, 0);
-			FlowField ff(position);
-			Assert::IsTrue(true, L"Test not implemented");
-		}
-
 		static _CrtMemState sStartMemState;
 	};
 

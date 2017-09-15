@@ -36,6 +36,11 @@ public:
 	 */
 	void Render(sf::RenderWindow& window) const override;
 
+protected:
+
+	// Drones don't have state so we don't need to use the function map
+	virtual void PopulateFunctionMaps() override {}
+
 private:
 
 	/**

@@ -20,11 +20,11 @@ const sf::Color Bee::NORMAL_COLOR = sf::Color(192, 192, 192);
 const sf::Color Bee::ALERT_COLOR = sf::Color::Red;
 const sf::Color Bee::STANDARD_BODY_COLOR = sf::Color(255, 204, 0);
 
-Bee::Bee(const sf::Vector2f& position, Hive& hive):
-	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mParentHive(hive), mGenerator(), mBody(BodyRadius),
-	mFace(sf::Vector2f(BodyRadius, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED), mFoodAmount(0.0f),
-	mHarvestingDuration(STANDARD_HARVESTING_DURATION), mMaxEnergy(10.0f), mEnergy(mMaxEnergy), mEnergyConsumptionRate(0.2f), 
-	mTargeting(false), mState(State::SeekingTarget), mTargetFoodSource(nullptr)
+Bee::Bee(const sf::Vector2f& position, Hive& hive) :
+	Entity(position, NORMAL_COLOR, STANDARD_BODY_COLOR), mUpdate(), mParentHive(hive), mGenerator(),
+	mBody(BodyRadius), mFace(sf::Vector2f(BodyRadius, 2)), mTarget(position), mHarvestingClock(), mSpeed(STANDARD_BEE_SPEED),
+	mFoodAmount(0.0f), mHarvestingDuration(STANDARD_HARVESTING_DURATION), mMaxEnergy(10.0f), mEnergy(mMaxEnergy),
+	mEnergyConsumptionRate(0.2f), mTargeting(false), mState(State::SeekingTarget), mTargetFoodSource(nullptr)
 {
 	std::random_device device;
 	mGenerator = std::default_random_engine(device());
