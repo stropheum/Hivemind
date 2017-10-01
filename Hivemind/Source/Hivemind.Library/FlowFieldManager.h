@@ -1,10 +1,6 @@
 #pragma once
 #include "FlowField.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 class FlowFieldManager
 {

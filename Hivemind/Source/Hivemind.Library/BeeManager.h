@@ -1,12 +1,7 @@
 #pragma once
 #include "Bee.h"
-#include <random>
 #include "Larva.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/21/2017
-*/
 
 class BeeManager
 {

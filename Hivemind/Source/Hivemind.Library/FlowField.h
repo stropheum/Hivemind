@@ -2,10 +2,6 @@
 #include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 class FlowField : public Entity
 {

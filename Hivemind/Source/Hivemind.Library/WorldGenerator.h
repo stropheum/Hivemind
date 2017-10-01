@@ -1,10 +1,6 @@
 #pragma once
 #include <rapidjson/document.h>
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 class WorldGenerator
 {

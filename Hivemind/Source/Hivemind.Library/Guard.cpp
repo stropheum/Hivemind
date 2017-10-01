@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "Guard.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 using namespace std;
 

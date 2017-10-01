@@ -1,11 +1,6 @@
 #include "pch.h"
 #include "PerlinNoise.h"
-#include <chrono>
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/21/2017
-*/
 
 PerlinNoise::PerlinNoise()
 {

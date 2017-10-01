@@ -1,11 +1,6 @@
 #include "pch.h"
 #include "WorldGenerator.h"
-#include <cassert>
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 using namespace std;
 using namespace rapidjson;

@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "FlowFieldManager.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/21/2017
-*/
 
 FlowFieldManager* FlowFieldManager::sInstance = nullptr;
 

@@ -1,8 +1,5 @@
 #include "pch.h"
 #include "EmployedBee.h"
-#include "Hive.h"
-#include "FoodSource.h"
-#include "FoodSourceManager.h"
 
 
 using namespace std;

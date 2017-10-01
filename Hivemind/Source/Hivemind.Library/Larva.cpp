@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "Larva.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 Larva::Larva(const sf::Vector2f& position, Hive& hive, const LarvaType& larvaType) :
 	Bee(position, hive),

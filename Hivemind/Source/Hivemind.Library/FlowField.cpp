@@ -1,13 +1,6 @@
 #include "pch.h"
 #include "FlowField.h"
-#include <SFML/Graphics/Image.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include "PerlinNoise.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 using namespace std;
 

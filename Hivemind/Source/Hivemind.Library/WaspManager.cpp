@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "WaspManager.h"
 
-/**
- * @Author: Dale Diaz
- * @Date: 7/27/2017
- */
 
 using namespace std;
 

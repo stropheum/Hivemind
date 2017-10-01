@@ -2,10 +2,6 @@
 #include "Bee.h"
 #include <SFML/System/Vector2.hpp>
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 class QueenBee : public Bee
 {

@@ -3,10 +3,6 @@
 #include "OnlookerBee.h"
 #include "HiveHUD.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 class Hive :
 	public Entity

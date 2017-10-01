@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "Wasp.h"
 
-/**
- * @Author: Dale Diaz
- * @Date: 7/26/2017
- */
 
 using namespace std;
 

@@ -1,10 +1,6 @@
 #pragma once
 #include <random>
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/21/2017
-*/
 
 class Hive;
 

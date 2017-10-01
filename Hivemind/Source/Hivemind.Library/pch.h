@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SDKDDKVer.h>
-
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
 
@@ -12,11 +11,16 @@
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/Image.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <iostream>
 #include <math.h>
 #include <sstream>
 #include <fstream>
 #include <rapidjson/document.h>
+#include <random>
+#include <cassert>
+#include <chrono>
 
 
 ///////////////////////////
@@ -41,3 +45,4 @@
 #include "HiveHUD.h"
 #include "Wasp.h"
 #include "WaspManager.h"
+#include "PerlinNoise.h"

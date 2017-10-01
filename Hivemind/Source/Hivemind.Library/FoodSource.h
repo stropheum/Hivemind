@@ -1,10 +1,6 @@
 #pragma once
 #include "Entity.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 class FoodSource : public Entity
 {

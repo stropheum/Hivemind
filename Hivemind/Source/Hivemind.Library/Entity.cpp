@@ -1,15 +1,10 @@
 #include "pch.h"
 #include "Entity.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/21/2017
-*/
 
 Entity::Entity(const sf::Vector2f& position, const sf::Color& outlineColor, const sf::Color& fillColor) :
 	mPosition(position), mOutlineColor(outlineColor), mFillColor(fillColor), mCollisionNode(nullptr), mMarkedForDelete(false)
-{
-}
+{}
 
 float Entity::DistanceBetween(const sf::Vector2f& position_1, const sf::Vector2f& position_2)
 {

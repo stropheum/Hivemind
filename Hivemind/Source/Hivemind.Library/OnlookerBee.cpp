@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "OnlookerBee.h"
-#include "FoodSourceManager.h"
-#include "Hive.h"
 
 
 using namespace std;
@@ -24,26 +22,6 @@ void OnlookerBee::Update(sf::RenderWindow& window, const double& deltaTime)
 
 	assert(mState != State::Scouting);
 	mUpdate[mState](window, deltaTime);
-//	switch (mState)
-//	{
-//	case Idle:
-//		UpdateIdle(window, deltaTime);
-//		break;
-//	case State::SeekingTarget:
-//		UpdateSeekingTarget(window, deltaTime);
-//		break;
-//	case State::HarvestingFood:
-//		UpdateHarvestingFood(window, deltaTime);
-//		break;
-//	case State::DeliveringFood:
-//		UpdateDeliveringFood(window, deltaTime);
-//		break;
-//	case State::DepositingFood:
-//		UpdateDepositingFood(window, deltaTime);
-//		break;
-//	default:
-//		break;
-//	}
 }
 
 void OnlookerBee::PopulateFunctionMaps()

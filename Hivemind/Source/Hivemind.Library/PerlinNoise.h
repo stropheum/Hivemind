@@ -2,10 +2,6 @@
 #include <random>
 #include <SFML/System/Vector2.hpp>
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/21/2017
-*/
 
 class PerlinNoise
 {

@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "QueenBee.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 using namespace std;
 

@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Precompiled Header">
-      <UniqueIdentifier>{a0be82d7-0a03-401a-a542-402ec58e6202}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Entities">
       <UniqueIdentifier>{6b233883-4f3f-43d6-a06a-dc25811a3430}</UniqueIdentifier>
     </Filter>
@@ -88,10 +85,13 @@
     <Filter Include="Managers\WaspManager">
       <UniqueIdentifier>{0cf81530-768e-4180-97ff-5953bc499c67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="_PrecompiledHeader">
+      <UniqueIdentifier>{a0be82d7-0a03-401a-a542-402ec58e6202}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
-      <Filter>Precompiled Header</Filter>
+      <Filter>_PrecompiledHeader</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Entities\Entity</Filter>
@@ -165,7 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
-      <Filter>Precompiled Header</Filter>
+      <Filter>_PrecompiledHeader</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Entities\Entity</Filter>

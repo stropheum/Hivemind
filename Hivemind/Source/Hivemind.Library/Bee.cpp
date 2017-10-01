@@ -1,14 +1,6 @@
 #include "pch.h"
 #include "Bee.h"
-#include "BeeManager.h"
-#include "FoodSource.h"
-#include "FoodSourceManager.h"
-#include "Hive.h"
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 using namespace std;
 

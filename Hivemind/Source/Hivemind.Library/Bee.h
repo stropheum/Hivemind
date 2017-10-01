@@ -4,10 +4,6 @@
 #include <map>
 #include <functional>
 
-/**
-*	@Author: Dale Diaz
-*	@Date: 7/25/2017
-*/
 
 class Hive;
 
