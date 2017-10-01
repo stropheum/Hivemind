@@ -5,24 +5,24 @@ class HiveHUD
 {
 public:
 
-	/**
-	 *  Construtor
-	 */
+#pragma region Construction/Copy/Assignment
+
 	HiveHUD(
 		const sf::Vector2f& rootPosition, const sf::Vector2f& dimensions,
 		const int& onlookerCount, const int& employeeCount, int& droneCount, const int& guardCount, const int& queenCount,
 		const float& structuralComb, const float& honeyComb, const float& broodComb, const float& mFoodAmount);
 
-	/**
-	 * Destructor
-	 */
 	~HiveHUD() = default;
 
-	// Copy / Move semantics
 	HiveHUD(const HiveHUD& rhs) = delete;
-	HiveHUD& operator=(const HiveHUD& rhs) = delete;
-	HiveHUD(HiveHUD&& rhs) = delete;
-	HiveHUD& operator=(HiveHUD&& rhs) = delete;
+	
+    HiveHUD& operator=(const HiveHUD& rhs) = delete;
+	
+    HiveHUD(HiveHUD&& rhs) = delete;
+	
+    HiveHUD& operator=(HiveHUD&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Renders the HUD to the screen

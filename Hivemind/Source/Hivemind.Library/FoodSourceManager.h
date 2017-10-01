@@ -12,10 +12,25 @@ public:
 	 */
 	static FoodSourceManager* GetInstance();
 
-	/**
-	 *  Destructor
-	 */
+#pragma region Construction/Copy/Assignment
+
+private:
+
+    FoodSourceManager();
+
+public:
+
 	~FoodSourceManager();
+
+    FoodSourceManager(const FoodSourceManager& rhs) = delete;
+
+    FoodSourceManager& operator=(const FoodSourceManager& rhs) = delete;
+
+    FoodSourceManager(FoodSourceManager&& rhs) = delete;
+
+    FoodSourceManager& operator=(FoodSourceManager&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Spawns a food source at the specified position and adds it to the collection of food sources
@@ -64,12 +79,8 @@ public:
 
 private:
 
-	/**
-	 *  Constructor
-	 */
-	FoodSourceManager();
-
 	static FoodSourceManager* sInstance;
 	std::vector<FoodSource*> mFoodSources;
+
 };
 

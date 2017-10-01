@@ -5,7 +5,10 @@
 
 class Drone : public Bee
 {
+
 public:
+
+#pragma region Construction/Copy/Assignment
 
 	/**
 	 * Constructor
@@ -14,10 +17,17 @@ public:
 	 */
 	explicit Drone(const sf::Vector2f& position, Hive& hive);
 
-	/**
-	 *  Destructor
-	 */
 	virtual ~Drone();
+
+    Drone(const Drone& rhs) = delete;
+
+    Drone& operator=(const Drone& rhs) = delete;
+
+    Drone(Drone&& rhs) = delete;
+
+    Drone& operator=(Drone&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Update method called by the main game loop
@@ -35,7 +45,7 @@ public:
 protected:
 
 	// Drones don't have state so we don't need to use the function map
-	virtual void PopulateFunctionMaps() override {}
+	void PopulateFunctionMaps() override {}
 
 private:
 

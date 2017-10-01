@@ -2,8 +2,7 @@
 #include "Entity.h"
 
 
-class Wasp :
-	public Entity
+class Wasp : public Entity
 {
 
 public:
@@ -16,16 +15,25 @@ public:
 		Attacking
 	};
 
+#pragma region Construction/Copy/Assignment
+
 	/**
 	 * Constructor
 	 * @Param position: The starting position of the wasp
 	 */
 	explicit Wasp(const sf::Vector2f& position);
 
-	/**
-	 * Destructor
-	 */
-	~Wasp();
+	virtual ~Wasp();
+
+    Wasp(const Wasp& rhs) = delete;
+
+    Wasp& operator=(const Wasp& rhs) = delete;
+
+    Wasp(Wasp&& rhs) = delete;
+    
+    Wasp& operator=(Wasp&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Updates the wasp's current state

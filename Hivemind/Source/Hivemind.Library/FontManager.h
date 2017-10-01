@@ -3,6 +3,7 @@
 
 class FontManager
 {
+
 public:
 
 	/**
@@ -11,10 +12,25 @@ public:
 	 */
 	static FontManager* GetInstance();
 
-	/**
-	 *  Destructor
-	 */
+#pragma region Construction/Copy/Assignment
+
+private:
+
+    FontManager();
+
+public:
+
 	~FontManager();
+
+    FontManager(const FontManager& rhs) = delete;
+
+    FontManager& operator=(const FontManager& rhs) = delete;
+
+    FontManager(FontManager&& rhs) = delete;
+
+    FontManager& operator=(FontManager&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Accessor method for hack font
@@ -26,11 +42,6 @@ private:
 
 	// Singleton instance
 	static FontManager* sInstance;
-
-	/**
-	 *  Constructor
-	 */
-	FontManager();
 
 	/**
 	 *  Loads all fonts and stores them locally

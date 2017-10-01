@@ -3,10 +3,12 @@
 #include <SFML/System/Vector2.hpp>
 
 
-class OnlookerBee :
-	public Bee
+class OnlookerBee : public Bee
 {
+
 public:
+
+#pragma region Construction/Copy/Assignment
 
 	/**
 	 * Constructor
@@ -15,10 +17,17 @@ public:
 	 */
 	OnlookerBee(const sf::Vector2f& position, Hive& hive);
 
-	/**
-	 *  Destructor
-	 */
 	virtual ~OnlookerBee() = default;
+
+    OnlookerBee(const OnlookerBee& rhs) = delete;
+
+    OnlookerBee& operator=(const OnlookerBee& rhs) = delete;
+
+    OnlookerBee(OnlookerBee&& rhs) = delete;
+
+    OnlookerBee& operator=(OnlookerBee&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Update method called by the main game loop
@@ -29,7 +38,7 @@ public:
 
 protected:
 
-	virtual void PopulateFunctionMaps() override;
+	void PopulateFunctionMaps() override;
 
 private:
 
@@ -45,5 +54,6 @@ private:
 	 * @Param rotationAngle: The bee's new rotation after update
 	 */
 	void PostUpdate(const sf::Vector2f& newPosition, const float& rotationAngle);
+
 };
 

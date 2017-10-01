@@ -3,19 +3,26 @@
 
 class CollisionGrid
 {
+
+#pragma region Construction/Copy/Assignment
+
 private:
 
-	/**
-	 *  Constructor
-	 */
 	CollisionGrid();
 
 public:
 
-	/**
-	 *  Destructor
-	 */
 	~CollisionGrid();
+
+    CollisionGrid(const CollisionGrid& rhs) = delete;
+
+    CollisionGrid& operator=(const CollisionGrid& rhs) = delete;
+
+    CollisionGrid(CollisionGrid&& rhs) = delete;
+
+    CollisionGrid& operator=(CollisionGrid&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Singleton accesssor method
@@ -49,11 +56,13 @@ public:
 	std::vector<CollisionNode*> NeighborsOf(CollisionNode* const node) const;
 
 private:
+
 	static CollisionGrid* sInstance;
 	class CollisionNode** mGrid;
 	int mGridSize;
 	int mNodeSize;
 	sf::Vector2f mGridOrigin;
 	bool mVisible;
+
 };
 

@@ -13,10 +13,25 @@ public:
 	 */
 	static BeeManager* GetInstance();
 
-	/**
-	 *  Destructor
-	 */
+#pragma region Construction/Copy/Assignment
+
+private:
+
+    BeeManager();
+
+public:
+
 	~BeeManager();
+
+    BeeManager(const BeeManager& rhs) = delete;
+
+    BeeManager& operator=(const BeeManager& rhs) = delete;
+
+    BeeManager(BeeManager&& rhs) = delete;
+
+    BeeManager& operator=(BeeManager&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Spawns an Onlooker bee and adds it to the local vector of onlooker bees
@@ -193,11 +208,6 @@ public:
 	void SetEmployeeFlowFieldOctaveCount(const std::uint32_t& octaveCount);
 
 private:
-	
-	/**
-	 *  Constructor
-	 */
-	BeeManager();
 
 	/**
 	 * Removes all bees marked for delete

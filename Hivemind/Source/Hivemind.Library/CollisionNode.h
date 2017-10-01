@@ -9,20 +9,23 @@ class CollisionNode :public Entity
 
 public:
 
-	/**
-	 *  Default Constructor
-	 */
+#pragma region Construction/Copy/Assignment
+
 	CollisionNode();
 
-	/**
-	 *  Constructor
-	 */
 	CollisionNode(const sf::Vector2f& position, const int& size);
 
-	/**
-	 *  Destructor
-	 */
 	virtual ~CollisionNode();
+
+    CollisionNode(const CollisionNode& rhs) = delete;
+
+    CollisionNode& operator=(const CollisionNode& rhs) = delete;
+
+    CollisionNode(CollisionNode&& rhs) = delete;
+
+    CollisionNode& operator=(CollisionNode&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Updates the Collision Node

@@ -3,12 +3,26 @@
 
 class WaspManager
 {
+
+#pragma region Construction/Copy/Assignment
+
+private:
+
+    WaspManager();
+
 public:
 
-	/**
-	 * Destructor
-	 */
 	~WaspManager();
+
+    WaspManager(const WaspManager& rhs) = delete;
+
+    WaspManager& operator=(const WaspManager& rhs) = delete;
+
+    WaspManager(WaspManager&& rhs) = delete;
+
+    WaspManager& operator=(WaspManager&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Singleton accessor method
@@ -52,11 +66,6 @@ public:
 private:
 
 	/**
-	 * Constructor
-	 */
-	WaspManager();
-
-	/**
 	 * Iterates over all wasps and removes them if they are marked for delete
 	 */
 	void CleanupWasps();
@@ -67,5 +76,6 @@ private:
 	const float mSpawnInterval = 5.0f;
 	std::default_random_engine mGenerator;
 	float mTimeSinceSpawn;
+
 };
 

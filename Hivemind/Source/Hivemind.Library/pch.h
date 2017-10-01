@@ -21,6 +21,8 @@
 #include <random>
 #include <cassert>
 #include <chrono>
+#include <map>
+#include <functional>
 
 
 ///////////////////////////

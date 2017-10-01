@@ -2,26 +2,36 @@
 #include "Bee.h"
 
 
-namespace sf {
+namespace sf 
+{
 	class RenderWindow;
 }
 
-class EmployedBee :
-	public Bee
+class EmployedBee : public Bee
 {
+
 public:
 
-	/**
-	 * Constructor
-	 * @Param position: The starting position of the bee
-	 * @Param hive: The hive that this bee belongs to
-	 */
-	EmployedBee(const sf::Vector2f& position, class Hive& hive);
+#pragma region Construction/Copy/Assignment
 
-	/**
-	 *  Default destructor
-	 */
-	virtual ~EmployedBee() = default;
+    /**
+    * Constructor
+    * @Param position: The starting position of the bee
+    * @Param hive: The hive that this bee belongs to
+    */
+    EmployedBee(const sf::Vector2f& position, class Hive& hive);
+
+    virtual ~EmployedBee() = default;
+
+    EmployedBee(const EmployedBee& rhs) = delete;
+
+    EmployedBee& operator=(const EmployedBee& rhs) = delete;
+
+    EmployedBee(EmployedBee&& rhs) = delete;
+
+    EmployedBee& operator=(EmployedBee&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Update method called by the main game loop
@@ -52,7 +62,7 @@ protected:
 	/**
 	* Populates all of the function pointers into the function map
 	*/
-	virtual void PopulateFunctionMaps() override;
+	void PopulateFunctionMaps() override;
 
 private:
 
@@ -111,5 +121,6 @@ private:
 	std::pair<float, float> mFoodSourceData;
 	bool mAbandoningFoodSource;
 	sf::Vector2f mVelocity;
+
 };
 

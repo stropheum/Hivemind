@@ -4,13 +4,13 @@
 
 class FoodSource : public Entity
 {
+
 public:
 
-	// Constants
 	static const float STANDARD_WIDTH;
 	static const float STANDARD_HEIGHT;
 
-#pragma region Constructors / Destructor / Move semantics
+#pragma region Construction/Copy/Assignment
 
 	/**
 	 * Constructor
@@ -65,8 +65,6 @@ public:
 	static float DetectionRadius;
 
 #pragma endregion 
-
-#pragma region Public API
 
 	/**
 	 * Update method called by the main game loop
@@ -136,8 +134,6 @@ public:
 	 */
 	bool ContainsRegisteredHive(Hive* const hive) const;
 
-#pragma endregion
-
 private:
 
 	// Fields
@@ -148,5 +144,6 @@ private:
 	sf::Text mText;
 	bool mPairedWithEmployee;
 	std::vector<Hive*> mRegisteredHives;
+
 };
 

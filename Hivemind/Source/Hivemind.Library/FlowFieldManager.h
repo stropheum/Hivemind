@@ -4,19 +4,26 @@
 
 class FlowFieldManager
 {
+
+#pragma region Construction/Copy/Assignment
+
 private:
 
-	/**
-	 *  Constructor
-	 */
 	FlowFieldManager();
 
 public:
 
-	/**
-	 *  Destructor
-	 */
 	~FlowFieldManager();
+
+    FlowFieldManager(const FlowFieldManager& rhs) = delete;
+
+    FlowFieldManager& operator=(const FlowFieldManager& rhs) = delete;
+
+    FlowFieldManager(FlowFieldManager&& rhs) = delete;
+
+    FlowFieldManager& operator=(FlowFieldManager&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Accessor for singleton instance
@@ -42,5 +49,6 @@ private:
 
 	std::vector<FlowField*> mFlowFields;
 	std::default_random_engine mGenerator;
+
 };
 

@@ -17,6 +17,8 @@ public:
 		Guard
 	};
 
+#pragma region Construction/Copy/Assignment
+
 	/**
 	 * Constructor
 	 * @Param position: The starting position of the larva
@@ -25,10 +27,17 @@ public:
 	 */
 	Larva(const sf::Vector2f& position, Hive& hive, const LarvaType& larvaType);
 
-	/**
-	 *  Destructor
-	 */
 	~Larva() = default;
+
+    Larva(const Larva& rhs) = delete;
+
+    Larva& operator=(const Larva& rhs) = delete;
+
+    Larva(Larva&& rhs) = delete;
+
+    Larva& operator=(Larva&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Update method called by the main game loop
@@ -46,7 +55,7 @@ public:
 protected:
 
 	// Larva don't have states so we don't need to use the function map
-	virtual void PopulateFunctionMaps() override {}
+	void PopulateFunctionMaps() override {}
 
 private:
 
@@ -58,5 +67,6 @@ private:
 	float mTimeSinceBirth;
 	float mLarvaDuration;
 	LarvaType mLarvaType;
+
 };
 

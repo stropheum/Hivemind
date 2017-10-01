@@ -4,6 +4,7 @@
 
 class WorldGenerator
 {
+
 public:
 
 	/**
@@ -12,10 +13,25 @@ public:
 	 */
 	static WorldGenerator* GetInstance();
 
-	/**
-	 * Destructor
-	 */
+#pragma region Construction/Copy/Assignment
+
+private:
+
+    WorldGenerator();
+
+public:
+
 	~WorldGenerator();
+
+    WorldGenerator(const WorldGenerator& rhs) = delete;
+
+    WorldGenerator& operator=(const WorldGenerator& rhs) = delete;
+
+    WorldGenerator(WorldGenerator&& rhs) = delete;
+
+    WorldGenerator& operator=(WorldGenerator&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Generates the world based on the json file provided
@@ -47,11 +63,6 @@ private:
 	 * @Param data: The data that the bees will belong to
 	 */
 	void GenerateBees(const rapidjson::Value& data, Hive& hive) const;
-
-	/**
-	 * Constructor
-	 */
-	WorldGenerator();
 
 	/**
 	 * Determines if the proposed spawn location will collide with the specified food source

@@ -5,7 +5,10 @@
 
 class QueenBee : public Bee
 {
+
 public:
+    
+#pragma region Construction/Copy/Assignment
 
 	/**
 	 * Constructor
@@ -14,10 +17,17 @@ public:
 	 */
 	explicit QueenBee(const sf::Vector2f& position, Hive& hive);
 
-	/**
-	 * Destructor
-	 */
 	~QueenBee() = default;
+
+    QueenBee(const QueenBee& rhs) = delete;
+
+    QueenBee& operator=(const QueenBee& rhs) = delete;
+
+    QueenBee(QueenBee&& rhs) = delete;
+
+    QueenBee& operator=(QueenBee&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Update method called by the main game loop
@@ -35,7 +45,7 @@ public:
 protected:
 	
 	// Bees don't operate on state so we don't need to use the function map
-	virtual void PopulateFunctionMaps() override {}
+	void PopulateFunctionMaps() override {}
 
 private:
 

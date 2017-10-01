@@ -6,6 +6,7 @@ class Hive;
 
 class HiveManager
 {
+
 public:
 
 	/**
@@ -14,10 +15,25 @@ public:
 	 */
 	static HiveManager* GetInstance();
 
-	/**
-	 *  Destructor
-	 */
+#pragma region Construction/Copy/Assignment
+
+private:
+
+    HiveManager();
+
+public:
+
 	~HiveManager();
+
+    HiveManager(const HiveManager& rhs) = delete;
+
+    HiveManager& operator=(const HiveManager& rhs) = delete;
+
+    HiveManager(HiveManager&& rhs) = delete;
+
+    HiveManager& operator=(HiveManager&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Spawns a hive and adds it to the list of existing hives
@@ -59,13 +75,9 @@ public:
 
 private:
 
-	/**
-	 *  Constructor
-	 */
-	HiveManager();
-
 	static HiveManager* sInstance;
 	std::vector<Hive*> mHives;
 	std::default_random_engine generator;
+
 };
 

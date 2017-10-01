@@ -4,8 +4,7 @@
 #include "HiveHUD.h"
 
 
-class Hive :
-	public Entity
+class Hive : public Entity
 {
 public:
 
@@ -192,7 +191,6 @@ public:
 
 private:
 
-	// Constants
 	const float STANDARD_WIDTH = 200.0f;
 	const float STANDARD_HEIGHT = 200.0f;
 
@@ -223,5 +221,6 @@ private:
 	bool mWaggleDanceInProgress;
 	int mOnlookerCount, mEmployeeCount, mDroneCount, mGuardCount, mQueenCount;
 	HiveHUD mHUD;
+
 };
 

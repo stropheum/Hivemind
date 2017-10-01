@@ -39,53 +39,26 @@ public:
 	const static sf::Color ALERT_COLOR;
 	const static sf::Color Bee::STANDARD_BODY_COLOR;
 
-#pragma region Constructors/Destructor
+#pragma region Construction/Copy/Assignment
 
 	/**
 	 * Constructor
-	 * @Param position: Starting p osition of the bee
+	 * @Param position: Starting world position of the bee
 	 * @Param hive: The hive that this bee belongs to
 	 */
 	explicit Bee(const sf::Vector2f& position, Hive& hive);
 
-	/**
-	 *  Default destructor
-	 */
 	virtual ~Bee();
 
-#pragma endregion
-
-#pragma region Copy/Move Semantics
-
-	/**
-	 * Copy constructor
-	 * @Param rhs: Bee being copied
-	 */
 	Bee(const Bee& rhs) = delete;
 
-	/**
-	 * Assignment operator
-	 * @Param rhs: Bee being copied
-	 * @Return: A reference to the copied bee
-	 */
 	Bee& operator=(const Bee& rhs) = delete;
 
-	/**
-	 * Move copy constructor
-	 * @Param rhs: The bee being moved
-	 */
 	Bee(Bee&& rhs) = delete;
 
-	/**
-	 * Move assignment operator
-	 * @Param rhs: The bee being moved
-	 * @Return: A reference to the moved bee
-	 */
 	Bee& operator=(Bee&& rhs) = delete;
 
 #pragma endregion
-
-#pragma region Public API
 
 	/**
 	 * Update method called by the main game loop
@@ -193,9 +166,8 @@ public:
 	 */
 	Hive& GetParentHive() const;
 
-#pragma endregion
-
 protected:
+
 	/**
 	 * Method children must do to populate their function maps (if used)
 	 * //TODO: Move function map and methods to a component
@@ -230,4 +202,5 @@ protected:
 	bool mTargeting;
 	State mState;
 	class FoodSource* mTargetFoodSource;
+
 };

@@ -3,9 +3,10 @@
 
 class Entity
 {
+
 public:
 
-#pragma region Constructors / Destructor / Move Semantics
+#pragma region Construction/Copy/Assignment
 
 	/**
 	 * Constructor
@@ -17,40 +18,17 @@ public:
 		const sf::Color& outlineColor = sf::Color::White,
 		const sf::Color& fillColor = sf::Color::White);
 
-	/**
-	 * Default Destructor
-	 */
 	virtual ~Entity() = default;
 
-	/**
-	 * Default Copy Constructor
-	 * @Param rhs: Entity being copied
-	 */
 	Entity(const Entity& rhs) = default;
 
-	/**
-	 * Default Assignment Operator
-	 * @Param rhs: Entity being assigned to
-	 * @Return: A copy of the specified entity
-	 */
 	Entity& operator=(const Entity& rhs) = default;
 
-	/**
-	 * Default Move Copy Constructor
-	 * @Param rhs: Entity being moved
-	 */
 	Entity(Entity&& rhs) = default;
 
-	/**
-	 * Default Move Assignment Operator
-	 * @Param rhs: Entity being moved
-	 * @Return: A reference to the moved entity
-	 */
 	Entity& operator=(Entity&& rhs) = default;
 
 #pragma endregion
-
-#pragma region Public API
 
 	/**
 	 * Update method called by the main game loop
@@ -96,12 +74,12 @@ public:
 	 */
 	void MarkForDelete();
 
-#pragma endregion
-
 protected:
+
 	sf::Vector2f mPosition;
 	sf::Color mOutlineColor, mFillColor;
 	class CollisionNode* mCollisionNode;
 	bool mMarkedForDelete;
+
 };
 

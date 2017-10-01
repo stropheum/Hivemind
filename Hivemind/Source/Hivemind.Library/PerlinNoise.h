@@ -5,17 +5,24 @@
 
 class PerlinNoise
 {
+
 public:
 
-	/**
-	 *  Constructor
-	 */
+#pragma region Construction/Copy/Assignment
+
 	PerlinNoise();
 
-	/**
-	 *  Destructor
-	 */
 	~PerlinNoise() = default;
+
+    PerlinNoise(const PerlinNoise& rhs) = delete;
+
+    PerlinNoise& operator=(const PerlinNoise& rhs) = delete;
+
+    PerlinNoise(PerlinNoise&& rhs) = delete;
+
+    PerlinNoise& operator=(PerlinNoise&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Method which generates a base noise map
@@ -54,5 +61,6 @@ private:
 	static float Interpolate(float x0, float x1, float alpha);
 
 	std::default_random_engine mGenerator;
+
 };
 

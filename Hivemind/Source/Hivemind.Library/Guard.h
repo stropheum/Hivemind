@@ -7,6 +7,8 @@ class Guard :public Bee
 {
 public:
 
+#pragma region Construction/Copy/Assignment
+
 	/**
 	 * Constructor
 	 * @Param position: The starting position of the bee
@@ -14,10 +16,17 @@ public:
 	 */
 	Guard(const sf::Vector2f& position, class Hive& hive);
 
-	/**
-	 *  Destructor
-	 */
 	~Guard() = default;
+
+    Guard(const Guard& rhs) = delete;
+
+    Guard& operator=(const Guard& rhs) = delete;
+
+    Guard(Guard&& rhs) = delete;
+
+    Guard& operator=(Guard&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Update method called by the main game loop
@@ -35,6 +44,6 @@ public:
 protected:
 
 	// Guards don't use state so we don't need to use the function map
-	virtual void PopulateFunctionMaps() override {}
+	void PopulateFunctionMaps() override {}
 };
 

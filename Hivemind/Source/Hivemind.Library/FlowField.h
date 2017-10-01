@@ -5,7 +5,10 @@
 
 class FlowField : public Entity
 {
+
 public:
+
+#pragma region Construction/Copy/Assignment
 
 	/**
 	 * Constructor
@@ -13,22 +16,17 @@ public:
 	 */
 	explicit FlowField(const sf::Vector2f& position);
 
-	/**
-	 *  Destructor
-	 */
 	~FlowField();
 
-	/**
-	 * Copy Constructor
-	 * @Param rhs: The flow field being copied
-	 */
-	FlowField(const FlowField& rhs);
+    FlowField(const FlowField& rhs);
 
-	/**
-	 * Assignment operator
-	 * @Param rhs: The flow field being assigned to
-	 */
-	FlowField& operator=(const FlowField& rhs);
+    FlowField& operator=(const FlowField& rhs);
+
+    FlowField(FlowField&& rhs) = delete;
+
+    FlowField& operator=(FlowField&& rhs) = delete;
+
+#pragma endregion
 
 	/**
 	 * Update method called by the main game loop
@@ -81,11 +79,13 @@ public:
 	void SetPosition(const sf::Vector2f& position) override;
 
 private:
+
 	const sf::Vector2i mFieldDimensions = sf::Vector2i(300, 300);
 	sf::Image mImage;
 	sf::Sprite mSprite;
 	sf::Texture mTexture;
 	sf::Uint8** mValues;
 	std::uint32_t mOctaveCount;
+
 };
 
